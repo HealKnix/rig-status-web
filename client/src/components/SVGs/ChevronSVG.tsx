@@ -1,0 +1,19 @@
+export default function ChevronSVG() {
+  return (
+    <svg
+      width="6"
+      height="12"
+      viewBox="0 0 6 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 1L5 6L1 11"
+        stroke="#3A7CFF"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

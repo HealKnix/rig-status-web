@@ -1,0 +1,40 @@
+@import url('./colors-button.scss');
+
+button {
+  --color: var(--primary-color);
+  --color-outline: var(--primary-light-color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 500;
+  outline: 0 solid transparent;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.8em 1.2em;
+  background-color: var(--color);
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.05s ease-in-out;
+}
+
+button:hover {
+  background-color: color-mix(in srgb, var(--color) 100%, white 10%);
+}
+
+button:active {
+  scale: 0.975;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--color-outline);
+  outline-offset: -4px;
+}
+
+button > * {
+  pointer-events: none;
+}

@@ -1,6 +1,12 @@
 :root {
   --primary-color: #3A7CFF;
+  --primary-light-color: color-mix(
+    in srgb,
+    var(--primary-color) 10%,
+    transparent 100%
+  );
   --background-color: #F2F2F3;
+  --border-color: #E2E4E9;
   --error-color: #FF4D55;
   --warning-color: #FFB200;
   --success-color: #00C472;

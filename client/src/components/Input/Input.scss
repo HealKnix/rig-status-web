@@ -1,0 +1,37 @@
+@import url('../../assets/colors.css');
+
+.input__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+
+  & > input {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  & > .input-title--movable-placeholder {
+    pointer-events: none;
+    position: absolute;
+    padding: 2px 4px;
+    left: 4px;
+    top: 50%;
+    color: var(--text-additional-color);
+    transform: translate(6px, -50%);
+    transition: all 0.15s ease-in-out;
+
+    &:has(+ input:not(:placeholder-shown)) {
+      background-color: var(--white);
+      font-size: 12px;
+      top: 0;
+      transform: translate(6px, -50%);
+    }
+
+    &:has(+ input:focus),
+    &:has(+ input:focus-visible) {
+      color: var(--primary-color);
+    }
+  }
+}

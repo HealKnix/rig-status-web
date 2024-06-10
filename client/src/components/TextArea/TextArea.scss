@@ -1,0 +1,11 @@
+.input--text-area__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input--text-area {
+  max-width: 100%;
+  min-height: 50px;
+  max-height: 100dvh;
+}

@@ -1,35 +1,49 @@
 import './App.scss';
 
-import { Link } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
+import Header from '@/components/layouts/Header/Header';
+import Main from '@/components/layouts/Main/Main';
+import Sidebar from '@/components/layouts/Sidebar/Sidebar';
+import { useInitializeAuth } from '@/hooks/useInitializeAuth';
+
+import Login from '../LoginPage/Login';
+import SignUp from '../SignUpPage/SignUp';
 
 export default function App() {
-  return (
-    <>
-      <div className="sidebar">
-        <div className="sidebar-logo"></div>
-        <div className="sidebar-navs">
-          <ul>
-            <li>
-              <Link to={'/console'}>Консоль</Link>
-            </li>
-            <li>
-              <Link to={'/screens'}>Экраны</Link>
-            </li>
-            <li>
-              <Link to={'/signals'}>Сигналы</Link>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <Link to={'/objects'}>Объекты</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+  const { isAuthenticated, loading } = useInitializeAuth();
+
+  const authorizedRoutes = (
+    <div className="app__wrapper">
+      <Sidebar />
       <div className="content__wrapper">
-        <header></header>
-        <main></main>
+        <Header />
+        <Main />
       </div>
-    </>
+
+      <Routes>
+        <Route path="*" element={<Navigate to="/console" replace />} />
+        <Route path="/console" />
+        <Route path="/screens" />
+        <Route path="/signals" />
+        <Route path="/objects" />
+      </Routes>
+    </div>
   );
+
+  const unAuthorizedRoutes = (
+    <div className="login__wrapper">
+      <Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+      </Routes>
+    </div>
+  );
+
+  if (loading) {
+    return <span>Загрузка...</span>;
+  }
+
+  return isAuthenticated ? authorizedRoutes : unAuthorizedRoutes;
 }
