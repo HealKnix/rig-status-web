@@ -1,11 +1,9 @@
 import './Main.scss';
 
-import { Outlet } from 'react-router-dom';
+interface MainProps {
+  children: JSX.Element[] | JSX.Element;
+}
 
-export default function Main() {
-  return (
-    <main>
-      <Outlet />
-    </main>
-  );
+export default function Main({ children }: MainProps) {
+  return <main>{children}</main>;
 }

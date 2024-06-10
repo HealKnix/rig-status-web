@@ -1,0 +1,62 @@
+.screens__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.row {
+  display: flex;
+  gap: 25px;
+}
+
+.row > * {
+  border-radius: 8px;
+  background-color: var(--white);
+  padding: 25px;
+}
+
+.row:has(> .row--fill) {
+  flex-direction: column;
+}
+
+.row > *.row--fill {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+}
+
+.row__back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--white) 100%,
+      var(--primary-color) 15%
+    );
+  }
+
+  & > svg {
+    rotate: 180deg;
+    width: 20px;
+    height: 15px;
+
+    & > path {
+      stroke: var(--text-color);
+    }
+  }
+}
+
+.object-selector {
+  width: 100%;
+
+  & > select {
+    border: none;
+    font-size: 20px;
+  }
+}
