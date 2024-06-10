@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
-        <img src="../../../public/logo.svg" alt="Логотип" height="60" />
+        <img src="/logo.svg" alt="Логотип" height="60" />
       </div>
       <div className="sidebar__navs">
         <ul>
