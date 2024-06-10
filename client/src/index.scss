@@ -1,0 +1,24 @@
+@import url('assets/fonts/Geometria/stylesheet.css');
+@import url('assets/fonts/DMSans/stylesheet.css');
+@import url('assets/colors.css');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: Geometria;
+  overflow: hidden;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
