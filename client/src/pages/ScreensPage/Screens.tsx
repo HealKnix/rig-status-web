@@ -12,7 +12,7 @@ import ChevronSVG from '@/components/SVGs/ChevronSVG';
 export default function Screens() {
   const [data, setData] = useState([
     {
-      name: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+      name: `${new Date().toLocaleTimeString()}`,
       x: 1,
       y: 25,
     },
@@ -23,7 +23,7 @@ export default function Screens() {
       setData((data) => [
         ...data,
         {
-          name: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+          name: `${new Date().toLocaleTimeString()}`,
           x: data[data.length - 1].x + 1,
           y: Math.floor(Math.random() * (60 - 20)) + 20,
         },
@@ -89,6 +89,7 @@ export default function Screens() {
                     dataKey="y"
                     stroke="var(--primary-color)"
                     fill="#3A7CFF66"
+                    animationDuration={500}
                   />
                 </AreaChart>
               </ResponsiveContainer>
