@@ -88,7 +88,7 @@ export default function Screens() {
                     type="monotone"
                     dataKey="y"
                     stroke="var(--primary-color)"
-                    fill="var(--primary-color)"
+                    fill="#3A7CFF66"
                   />
                 </AreaChart>
               </ResponsiveContainer>
