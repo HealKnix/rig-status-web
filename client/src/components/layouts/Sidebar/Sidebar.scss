@@ -3,9 +3,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 350px;
+  max-width: 270px;
   height: 100%;
   background-color: var(--white);
+  overflow: hidden;
 
   & > .sidebar__logo {
     flex: none;
@@ -67,6 +68,19 @@
           }
         }
       }
+    }
+  }
+}
+
+@media (width <= 1000px) {
+  .sidebar {
+    max-width: 55px;
+  }
+  .sidebar__navs > ul {
+    padding-right: 0 !important;
+
+    & > li > a {
+      border-radius: 0 !important;
     }
   }
 }
