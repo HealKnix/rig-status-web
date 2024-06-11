@@ -9,26 +9,27 @@
 .row {
   display: flex;
   gap: 25px;
+
+  & > * {
+    border-radius: 8px;
+    background-color: var(--white);
+    padding: 25px;
+  }
 }
 
-.row > * {
-  border-radius: 8px;
-  background-color: var(--white);
-  padding: 25px;
-}
-
-.row:has(> .row--fill) {
-  flex-direction: column;
-}
-
-.row > *.row--fill {
+.bento {
   display: flex;
   flex-direction: column;
   gap: 25px;
   width: 100%;
+
+  & > .bento__content {
+    display: flex;
+    justify-content: center;
+  }
 }
 
-.row__back {
+.bento_back_btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +53,7 @@
   }
 }
 
-.object-selector {
+.bento-object-selector {
   width: 100%;
 
   & > select {

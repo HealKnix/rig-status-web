@@ -1,75 +1,44 @@
 import './Screens.scss';
 
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+    Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis
 } from 'recharts';
 
+import RadialProgressBar from '@/components/RadialProgressBar/RadialProgressBar';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
 
-const data = [
-  {
-    name: '10:00',
-    x: 1,
-    y: 25,
-  },
-  {
-    name: '11:00',
-    x: 2,
-    y: 32,
-  },
-  {
-    name: '12:00',
-    x: 3,
-    y: 30,
-  },
-  {
-    name: '13:00',
-    x: 4,
-    y: 31,
-  },
-  {
-    name: '14:00',
-    x: 5,
-    y: 35,
-  },
-  {
-    name: '15:00',
-    x: 6,
-    y: 28,
-  },
-  {
-    name: '16:00',
-    x: 7,
-    y: 37,
-  },
-  {
-    name: '17:00',
-    x: 8,
-    y: 45,
-  },
-  {
-    name: '18:00',
-    x: 9,
-    y: 38,
-  },
-];
-
 export default function Screens() {
+  const [data, setData] = useState([
+    {
+      name: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+      x: 1,
+      y: 25,
+    },
+  ]);
+
+  useEffect(() => {
+    setInterval(() => {
+      setData((data) => [
+        ...data,
+        {
+          name: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+          x: data[data.length - 1].x + 1,
+          y: Math.floor(Math.random() * (60 - 20)) + 20,
+        },
+      ]);
+    }, 10000);
+  }, []);
+
   return (
     <>
       <div className="screens__wrapper">
         <div className="screens__header row">
-          <Link to="/console" className="row__back">
+          <Link to="/console" className="bento_back_btn">
             <ChevronSVG />
           </Link>
-          <div className="object-selector">
+          <div className="bento-object-selector">
             <select name="objects" id="object-select">
               <option value="0">Объект_0</option>
               <option value="1">Объект_1</option>
@@ -84,8 +53,14 @@ export default function Screens() {
         </div>
 
         <div className="row">
-          <div className="row--fill">
-            <h2>Датчик: Температура</h2>
+          <div className="bento">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура
+            </h2>
             <hr />
             <div
               style={{
@@ -117,6 +92,31 @@ export default function Screens() {
                   />
                 </AreaChart>
               </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 61 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
             </div>
           </div>
         </div>

@@ -1,0 +1,27 @@
+progress {
+  display: none;
+}
+
+.radial-progress-bar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: radial-gradient(
+      closest-side,
+      var(--white) 85%,
+      transparent 80% 100%
+    ),
+    conic-gradient(var(--primary-color) calc(0 * 1%), var(--border-color) 0);
+
+  & > .radial-progress-bar__text {
+    color: var(--color);
+    font-family: DM Sans;
+    font-size: 48px;
+    font-weight: bold;
+  }
+}
