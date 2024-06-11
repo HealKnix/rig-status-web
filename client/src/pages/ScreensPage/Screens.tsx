@@ -28,7 +28,7 @@ export default function Screens() {
           y: Math.floor(Math.random() * (60 - 20)) + 20,
         },
       ]);
-    }, 10000);
+    }, 5000);
   }, []);
 
   return (
@@ -103,7 +103,7 @@ export default function Screens() {
                 color: 'var(--text-additional-color)',
               }}
             >
-              Датчик: Температура
+              Датчик: Температура 1
             </h2>
             <hr />
             <div className="bento__content">
@@ -112,7 +112,145 @@ export default function Screens() {
                 value={data[data.length - 1].y}
                 postfix="°"
                 boundaries={[
-                  { color: 'var(--error-color)', value: 61 },
+                  { color: 'var(--error-color)', value: 60 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура 2
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 60 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура 3
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 60 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура 4
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 60 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура 5
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 60 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура 6
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 60 },
+                  { color: 'var(--warning-color)', value: 50 },
+                  { color: 'var(--success-color)', value: 30 },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="bento fit">
+            <h2
+              style={{
+                color: 'var(--text-additional-color)',
+              }}
+            >
+              Датчик: Температура 7
+            </h2>
+            <hr />
+            <div className="bento__content">
+              <RadialProgressBar
+                maxValue={60}
+                value={data[data.length - 1].y}
+                postfix="°"
+                boundaries={[
+                  { color: 'var(--error-color)', value: 60 },
                   { color: 'var(--warning-color)', value: 50 },
                   { color: 'var(--success-color)', value: 30 },
                 ]}

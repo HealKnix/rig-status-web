@@ -2,7 +2,8 @@
   flex: none;
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
   height: 100%;
   background-color: var(--white);
 

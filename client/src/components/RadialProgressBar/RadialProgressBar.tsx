@@ -26,7 +26,7 @@ export default function RadialProgressBar({
     if (!boundaries) return;
 
     boundaries.forEach((bound) => {
-      if (value < bound.value) {
+      if (value <= bound.value) {
         setColor(bound.color);
       }
     });

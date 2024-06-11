@@ -1,19 +1,23 @@
 .screens__wrapper {
   display: flex;
-  flex-direction: column;
   gap: 25px;
-  height: 100%;
-  overflow-y: scroll;
+  padding: 25px;
+  flex-direction: column;
 }
 
 .row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
 
+  &.screens__header {
+    display: flex;
+  }
+
   & > * {
+    padding: 25px;
     border-radius: 8px;
     background-color: var(--white);
-    padding: 25px;
   }
 }
 

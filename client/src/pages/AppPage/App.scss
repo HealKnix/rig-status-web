@@ -18,7 +18,7 @@
 }
 
 .content__wrapper {
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  display: grid;
+  grid-template-rows: 75px 1fr;
 }
