@@ -37,6 +37,14 @@ header {
       }
     }
 
+    & > svg {
+      rotate: 90deg;
+
+      & > path {
+        stroke: var(--text-additional-color);
+      }
+    }
+
     &:hover {
       background-color: var(--primary-light-color);
     }
