@@ -37,3 +37,17 @@ button.red {
   background-color: var(--color);
   color: var(--white);
 }
+
+button.outlined {
+  --color: var(--white);
+  --color-outline: var(--primary-color);
+
+  border: 2px solid var(--color-outline);
+  background-color: var(--color);
+  color: var(--color-outline);
+
+  &:hover {
+    background-color: var(--color-outline);
+    color: var(--color);
+  }
+}

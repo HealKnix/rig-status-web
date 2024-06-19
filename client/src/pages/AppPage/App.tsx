@@ -8,6 +8,7 @@ import Sidebar from '@/components/layouts/Sidebar/Sidebar';
 import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
 import Login from '../LoginPage/Login';
+import Objects from '../ObjectsPage/Objects';
 import Screens from '../ScreensPage/Screens';
 import SignUp from '../SignUpPage/SignUp';
 
@@ -25,7 +26,7 @@ export default function App() {
             <Route path="/console" />
             <Route path="/screens" element={<Screens />} />
             <Route path="/signals" />
-            <Route path="/objects" />
+            <Route path="/objects" element={<Objects />} />
           </Routes>
         </Main>
       </div>

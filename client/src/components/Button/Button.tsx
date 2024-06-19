@@ -3,7 +3,7 @@ import './Button.scss';
 import { FC } from 'react';
 
 interface ButtonProps {
-  color?: 'accent' | 'light' | 'black' | 'red' | 'white';
+  color?: 'accent' | 'light' | 'black' | 'red' | 'white' | 'outlined';
   children?: string | JSX.Element | JSX.Element[];
   className?: string;
 

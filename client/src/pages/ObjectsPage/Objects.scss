@@ -1,0 +1,95 @@
+.objects__wrapper {
+  display: flex;
+  gap: 25px;
+  padding: 25px;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+
+  &.objects__header {
+    display: flex;
+  }
+
+  & > * {
+    padding: 25px;
+    border-radius: 8px;
+    background-color: var(--white);
+  }
+}
+
+.bento-object-selector {
+  width: 100%;
+
+  & > label {
+    display: flex;
+    gap: 15px;
+
+    & > span {
+      font-size: 20px;
+    }
+
+    & > select {
+      border: none;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+}
+
+.cards__wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 25px;
+
+  & > .card-object {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 240px;
+    padding: 25px;
+    border-bottom: 3px solid var(--success-color);
+    border-radius: 8px;
+    background-color: var(--white);
+
+    & > .object-id {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-size: 12px;
+      color: var(--text-additional-color);
+    }
+    & > .object-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    & > .object-location {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-additional-color);
+    }
+    & > .object-drilling-progress {
+      width: 100%;
+    }
+    & > .object-status {
+      font-weight: bold;
+      color: var(--text-additional-color);
+    }
+  }
+}
+
+.progress-bar {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 25px;
+  border-radius: 1000px;
+  background-color: var(--success-color);
+}
