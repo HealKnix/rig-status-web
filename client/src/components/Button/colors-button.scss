@@ -49,5 +49,6 @@ button.outlined {
   &:hover {
     background-color: var(--color-outline);
     color: var(--color);
+    outline-color: var(--white);
   }
 }

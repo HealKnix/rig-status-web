@@ -28,7 +28,7 @@ export default function Objects() {
 
         <div className="cards__wrapper">
           {rigList.map((rig) => (
-            <ObjectCard {...rig} />
+            <ObjectCard {...rig} key={rig.id} />
           ))}
         </div>
       </div>
