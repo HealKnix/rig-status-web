@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import ObjectCard from '@/components/ObjectCard/ObjectCard';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
+import { rigList } from '@/models/mock/rig';
 
 export default function Objects() {
   return (
@@ -26,42 +27,9 @@ export default function Objects() {
         </div>
 
         <div className="cards__wrapper">
-          <ObjectCard
-            id={1}
-            name="Объект_1"
-            location="59.02° 93.83°"
-            connection_speed={150}
-            drillingProgressValue={74}
-            drillingProgressStatus="Работает"
-            status="нормально"
-          />
-          <ObjectCard
-            id={2}
-            name="Объект_2"
-            location="58.95° 95.72°"
-            connection_speed={43}
-            drillingProgressValue={74}
-            drillingProgressStatus="Запуск..."
-            status="удовлетворительно"
-          />
-          <ObjectCard
-            id={3}
-            name="Объект_3"
-            location="58.64° 94.83°"
-            connection_speed={1}
-            drillingProgressValue={74}
-            drillingProgressStatus="Авария"
-            status="требуется ТО"
-          />
-          <ObjectCard
-            id={4}
-            name="Объект_4"
-            location="58.64° 94.83°"
-            connection_speed={0}
-            drillingProgressValue={74}
-            drillingProgressStatus="Отключено"
-            status="не в сети"
-          />
+          {rigList.map((rig) => (
+            <ObjectCard {...rig} />
+          ))}
         </div>
       </div>
     </>
