@@ -1,3 +1,10 @@
+#main-logo {
+  background: url('/logo.svg') no-repeat center;
+  background-size: contain;
+  width: 100%;
+  height: 80%;
+}
+
 .sidebar {
   flex: none;
   display: flex;
@@ -7,6 +14,7 @@
   height: 100%;
   background-color: var(--white);
   overflow: hidden;
+  transition: max-width 0.15s ease-in-out;
 
   & > .sidebar__logo {
     flex: none;
@@ -73,8 +81,15 @@
 }
 
 @media (width <= 1000px) {
+  #main-logo {
+    background-image: url('/small_logo.svg');
+  }
   .sidebar {
     max-width: 55px;
+
+    &:hover {
+      max-width: 200px;
+    }
   }
   .sidebar__navs > ul {
     padding-right: 0 !important;

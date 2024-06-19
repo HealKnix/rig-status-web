@@ -2,9 +2,8 @@ import './Objects.scss';
 
 import { Link } from 'react-router-dom';
 
-import Button from '@/components/Button/Button';
+import ObjectCard from '@/components/ObjectCard/ObjectCard';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
-import SatelliteSVG from '@/components/SVGs/SatelliteSVG';
 
 export default function Objects() {
   return (
@@ -27,25 +26,42 @@ export default function Objects() {
         </div>
 
         <div className="cards__wrapper">
-          <div className="card-object">
-            <span className="object-id">1</span>
-            <span className="object-name">Объект_1</span>
-            <span className="object-location">58.64° 94.83°</span>
-            <div className="object-connection">
-              <SatelliteSVG color="var(--success-color)" />
-            </div>
-            <div className="object-drilling-progress">
-              <span>Работает</span>
-              <progress
-                className="progress-bar"
-                max={100}
-                defaultValue={0}
-                value={74}
-              ></progress>
-            </div>
-            <Button color="outlined">подробнее</Button>
-            <span className="object-status">норм</span>
-          </div>
+          <ObjectCard
+            id={1}
+            name="Объект_1"
+            location="59.02° 93.83°"
+            connection_speed={150}
+            drillingProgressValue={74}
+            drillingProgressStatus="Работает"
+            status="нормально"
+          />
+          <ObjectCard
+            id={2}
+            name="Объект_2"
+            location="58.95° 95.72°"
+            connection_speed={43}
+            drillingProgressValue={74}
+            drillingProgressStatus="Запуск..."
+            status="удовлетворительно"
+          />
+          <ObjectCard
+            id={3}
+            name="Объект_3"
+            location="58.64° 94.83°"
+            connection_speed={1}
+            drillingProgressValue={74}
+            drillingProgressStatus="Авария"
+            status="требуется ТО"
+          />
+          <ObjectCard
+            id={4}
+            name="Объект_4"
+            location="58.64° 94.83°"
+            connection_speed={0}
+            drillingProgressValue={74}
+            drillingProgressStatus="Отключено"
+            status="не в сети"
+          />
         </div>
       </div>
     </>
