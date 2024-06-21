@@ -67,6 +67,15 @@ const Modal: FC = () => {
           <span className="modal-description">Вы точно хотите выйти?</span>
           <div className="modal-buttons">
             <Button
+              variant="white"
+              onClick={() => {
+                modalStore.closeProfileModal();
+              }}
+            >
+              Нет
+            </Button>
+            <Button
+              variant="accent"
               onClick={() => {
                 modalStore.closeProfileModal();
                 authStore.setUser(null);
@@ -74,14 +83,6 @@ const Modal: FC = () => {
               }}
             >
               Да
-            </Button>
-            <Button
-              variant="black"
-              onClick={() => {
-                modalStore.closeProfileModal();
-              }}
-            >
-              Нет
             </Button>
           </div>
         </div>

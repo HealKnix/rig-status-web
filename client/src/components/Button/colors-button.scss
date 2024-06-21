@@ -28,6 +28,10 @@ button.white {
 
   background-color: var(--color);
   color: var(--color-outline);
+
+  &:hover {
+    background-color: var(--primary-light-color);
+  }
 }
 
 button.red {
