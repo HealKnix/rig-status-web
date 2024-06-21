@@ -59,7 +59,7 @@ export default function Login() {
             required
             movablePlaceholder
           />
-          <Button>Авторизоваться</Button>
+          <Button variant="outlined">Авторизоваться</Button>
         </form>
       </div>
     </>

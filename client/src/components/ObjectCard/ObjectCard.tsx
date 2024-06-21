@@ -69,7 +69,7 @@ export default function ObjectCard({
             maxValue={100}
           />
         </div>
-        <Button color="outlined">подробнее</Button>
+        <Button variant="outlined">подробнее</Button>
         <span className="object-status">{status}</span>
       </div>
     </>

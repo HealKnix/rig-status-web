@@ -54,7 +54,7 @@ const Modal: FC = () => {
           <div className="modal-header">
             <span className="modal-title">Выход</span>
             <Button
-              color="white"
+              variant="white"
               onClick={() => modalStore.closeProfileModal()}
             >
               <img src={CrossSVG} alt="cross" width={16} />
@@ -73,7 +73,7 @@ const Modal: FC = () => {
               Да
             </Button>
             <Button
-              color="black"
+              variant="black"
               onClick={() => {
                 modalStore.closeProfileModal();
               }}

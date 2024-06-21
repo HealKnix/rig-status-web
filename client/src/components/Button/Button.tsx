@@ -3,7 +3,7 @@ import './Button.scss';
 import { FC } from 'react';
 
 interface ButtonProps {
-  color?: 'accent' | 'light' | 'black' | 'red' | 'white' | 'outlined';
+  variant?: 'accent' | 'light' | 'black' | 'red' | 'white' | 'outlined';
   children?: string | JSX.Element | JSX.Element[];
   className?: string;
 
@@ -14,7 +14,7 @@ interface ButtonProps {
 }
 
 const Button: FC<ButtonProps> = ({
-  color = 'accent',
+  variant = 'accent',
   className,
   children,
   forwardRef,
@@ -24,7 +24,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={color + (className ? ` ${className}` : '')}
+      className={variant + (className ? ` ${className}` : '')}
       ref={forwardRef}
       onClick={onClick}
       onChange={onChange ?? (() => {})}

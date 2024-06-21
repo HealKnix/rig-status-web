@@ -51,4 +51,8 @@ button.outlined {
     color: var(--color);
     outline-color: var(--white);
   }
+
+  &:focus {
+    outline-offset: -5px;
+  }
 }
