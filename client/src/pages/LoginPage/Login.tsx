@@ -1,6 +1,6 @@
 import './Login.scss';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Button/Button';
@@ -12,9 +12,6 @@ export default function Login() {
   const { getUserByEmailAndPassword } = useFetchUsers();
   const authStore = useAuthStore();
   const navigate = useNavigate();
-
-  const refInputEmail = useRef<HTMLInputElement>(null);
-  const refInputPassword = useRef<HTMLInputElement>(null);
 
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
@@ -47,10 +44,9 @@ export default function Login() {
             title="Почта"
             type="email"
             value={inputEmail}
-            onChange={() => {
-              setInputEmail(refInputEmail.current?.value ?? '');
+            onChange={(e) => {
+              setInputEmail(e?.target.value ?? '');
             }}
-            forwardRef={refInputEmail}
             autoComplete="email webauthn"
             required
             movablePlaceholder
@@ -59,10 +55,9 @@ export default function Login() {
             title="Пароль"
             type="password"
             value={inputPassword}
-            onChange={() => {
-              setInputPassword(refInputPassword.current?.value ?? '');
+            onChange={(e) => {
+              setInputPassword(e?.target.value ?? '');
             }}
-            forwardRef={refInputPassword}
             autoComplete="current-password webauthn"
             required
             movablePlaceholder

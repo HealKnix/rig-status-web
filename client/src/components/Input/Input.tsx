@@ -13,7 +13,7 @@ interface ButtonProps {
   autoComplete?: HTMLInputAutoCompleteAttribute;
 
   forwardRef?: React.Ref<HTMLInputElement>;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange?: (e?: React.ChangeEvent<HTMLInputElement>) => void | undefined;
   onSubmit?: React.FormEventHandler<HTMLInputElement> | undefined;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
 }
@@ -66,7 +66,7 @@ const Input: FC<ButtonProps> = ({
           required={required}
           placeholder={movablePlaceholder ? '' : placeholder}
           ref={forwardRef}
-          onChange={onChange ?? (() => {})}
+          onChange={onChange}
           onSubmit={onSubmit}
           onKeyDown={onKeyDown}
         />
