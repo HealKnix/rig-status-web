@@ -1,6 +1,6 @@
 import './Input.scss';
 
-import { FC, HTMLInputAutoCompleteAttribute } from 'react';
+import { FC, HTMLInputAutoCompleteAttribute, useEffect, useState } from 'react';
 
 interface ButtonProps {
   id?: string;
@@ -32,6 +32,15 @@ const Input: FC<ButtonProps> = ({
   onSubmit,
   onKeyDown,
 }) => {
+  const [movableTitle, setMovableTitle] = useState(false);
+
+  useEffect(() => {
+    if (movablePlaceholder) {
+      if (value) setMovableTitle(true);
+      else setMovableTitle(false);
+    }
+  }, [value, movableTitle, movablePlaceholder]);
+
   return (
     <>
       <label htmlFor={id} className="input__wrapper">
@@ -39,7 +48,9 @@ const Input: FC<ButtonProps> = ({
           <span
             className={
               movablePlaceholder
-                ? 'input-title--movable-placeholder'
+                ? `input-title--movable-placeholder ${
+                    movableTitle ? 'input-title--movable' : ''
+                  }`
                 : 'input-title'
             }
           >

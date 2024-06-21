@@ -1,6 +1,6 @@
 import './Login.scss';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Button/Button';
@@ -13,8 +13,11 @@ export default function Login() {
   const authStore = useAuthStore();
   const navigate = useNavigate();
 
-  const inputEmail = useRef<HTMLInputElement>(null);
-  const inputPassword = useRef<HTMLInputElement>(null);
+  const refInputEmail = useRef<HTMLInputElement>(null);
+  const refInputPassword = useRef<HTMLInputElement>(null);
+
+  const [inputEmail, setInputEmail] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
 
   return (
     <>
@@ -24,14 +27,11 @@ export default function Login() {
           onSubmit={(e) => {
             e.preventDefault();
 
-            if (!inputEmail.current?.value || !inputPassword.current?.value) {
+            if (!inputEmail || !inputPassword) {
               return;
             }
 
-            const user = getUserByEmailAndPassword(
-              inputEmail.current.value,
-              inputPassword.current.value,
-            );
+            const user = getUserByEmailAndPassword(inputEmail, inputPassword);
 
             if (user) {
               localStorage.setItem('user', JSON.stringify(user));
@@ -46,7 +46,11 @@ export default function Login() {
           <Input
             title="Почта"
             type="email"
-            forwardRef={inputEmail}
+            value={inputEmail}
+            onChange={() => {
+              setInputEmail(refInputEmail.current?.value ?? '');
+            }}
+            forwardRef={refInputEmail}
             autoComplete="email webauthn"
             required
             movablePlaceholder
@@ -54,7 +58,11 @@ export default function Login() {
           <Input
             title="Пароль"
             type="password"
-            forwardRef={inputPassword}
+            value={inputPassword}
+            onChange={() => {
+              setInputPassword(refInputPassword.current?.value ?? '');
+            }}
+            forwardRef={refInputPassword}
             autoComplete="current-password webauthn"
             required
             movablePlaceholder
