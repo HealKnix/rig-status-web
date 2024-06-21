@@ -21,7 +21,7 @@
     height: 100%;
     background-image: url('../../assets/loading_divider.svg');
     background-position-x: -100%;
-    background-size: 20px 100%;
+    background-size: contain;
 
     animation: in_progress 20s linear infinite;
 
