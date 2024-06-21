@@ -6,6 +6,7 @@ interface ButtonProps {
   variant?: 'accent' | 'light' | 'black' | 'red' | 'white' | 'outlined';
   children?: string | JSX.Element | JSX.Element[];
   className?: string;
+  style?: React.CSSProperties;
 
   forwardRef?: React.Ref<HTMLButtonElement>;
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
@@ -17,6 +18,7 @@ const Button: FC<ButtonProps> = ({
   variant = 'accent',
   className,
   children,
+  style,
   forwardRef,
   onClick,
   onChange,
@@ -29,6 +31,7 @@ const Button: FC<ButtonProps> = ({
       onClick={onClick}
       onChange={onChange ?? (() => {})}
       onSubmit={onSubmit}
+      style={style}
     >
       {children}
     </button>

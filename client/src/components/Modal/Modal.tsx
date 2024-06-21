@@ -54,6 +54,9 @@ const Modal: FC = () => {
           <div className="modal-header">
             <span className="modal-title">Выход</span>
             <Button
+              style={{
+                width: 'fit-content',
+              }}
               variant="white"
               onClick={() => modalStore.closeProfileModal()}
             >
