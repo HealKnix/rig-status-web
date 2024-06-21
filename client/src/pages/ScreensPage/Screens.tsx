@@ -3,7 +3,13 @@ import './Screens.scss';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
 
 import RadialProgressBar from '@/components/RadialProgressBar/RadialProgressBar';

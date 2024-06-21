@@ -77,6 +77,10 @@ textarea:focus-visible {
   box-shadow: 0 0 0 1px var(--primary-color);
 }
 
+li {
+  list-style: none;
+}
+
 @media (width <= 540px) {
   *::-webkit-scrollbar {
     width: 2px;
