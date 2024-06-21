@@ -4,17 +4,19 @@ interface ProgressBarProps {
   color: string;
   value: number;
   maxValue: number;
+  loader?: boolean;
 }
 
 export default function ProgressBar({
   color,
   value,
   maxValue,
+  loader,
 }: ProgressBarProps) {
   return (
     <progress
       style={{ '--accent-color': color } as React.CSSProperties}
-      className="progress-bar"
+      className={`progress-bar${loader ? ' in-progress' : ''}`}
       value={value}
       max={maxValue}
       defaultValue={0}

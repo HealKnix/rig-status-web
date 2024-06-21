@@ -28,6 +28,9 @@
     color: var(--text-additional-color);
   }
   & > .object-drilling-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     width: 100%;
   }
   & > .object-status {

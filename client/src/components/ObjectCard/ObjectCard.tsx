@@ -64,6 +64,7 @@ export default function ObjectCard({
         <div className="object-drilling-progress">
           <span>{drillingProgressStatus}</span>
           <ProgressBar
+            loader={drillingProgressStatus === 'Работает'}
             value={drillingProgressValue}
             color={progressBarColor}
             maxValue={100}

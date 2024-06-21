@@ -2,16 +2,43 @@
   --accent-color: var(--success-color);
 
   appearance: none;
+
+  position: relative;
   display: block;
   width: 100%;
   height: 20px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1.5px var(--accent-color);
+
+  &.in-progress::after {
+    position: absolute;
+    display: block;
+    content: '';
+    left: 0;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    background-image: url('../../assets/loading_divider.svg');
+    background-position-x: -100%;
+    background-size: 20px 100%;
+
+    animation: in_progress 35s linear infinite;
+
+    @keyframes in_progress {
+      from {
+        background-position-x: -100%;
+      }
+      to {
+        background-position-x: 100%;
+      }
+    }
+  }
 }
 
 .progress-bar::-webkit-progress-bar {
   border-radius: 6px;
-  border: 1.5px solid var(--accent-color);
   background-color: var(--white);
-  overflow: hidden;
 }
 
 .progress-bar::-webkit-progress-value {
