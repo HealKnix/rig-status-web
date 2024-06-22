@@ -5,8 +5,7 @@ from .views import (
     SensorViewSet,
     SensorDataViewSet,
     DrillingStatusViewSet,
-    RigViewSet,
-    RigSensorViewSet
+    RigViewSet
 )
 
 router = DefaultRouter()
@@ -15,7 +14,6 @@ router.register(r'sensors', SensorViewSet)
 router.register(r'sensor-data', SensorDataViewSet)
 router.register(r'drilling-statuses', DrillingStatusViewSet)
 router.register(r'rigs', RigViewSet)
-router.register(r'rig-sensors', RigSensorViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

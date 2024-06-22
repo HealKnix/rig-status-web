@@ -4,8 +4,7 @@ from .models import (
     Sensor,
     SensorData,
     DrillingStatus,
-    Rig,
-    RigSensor
+    Rig
 )
 
 
@@ -36,10 +35,4 @@ class DrillingStatusSerializer(serializers.ModelSerializer):
 class RigSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rig
-        fields = '__all__'
-
-
-class RigSensorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RigSensor
         fields = '__all__'
