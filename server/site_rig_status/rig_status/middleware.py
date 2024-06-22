@@ -4,9 +4,7 @@ from django.utils.deprecation import MiddlewareMixin
 
 class CheckAuthorizationMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        print(request.path)
-
-        # Пропускаем проверку для страницы админки
+        # Пропускаем проверку для страницы админки и документации
         if (
             '/' == request.path or
             '/admin/' in request.path or

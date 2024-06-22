@@ -2,8 +2,10 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from drf_spectacular.utils import extend_schema, extend_schema_view
+from rest_framework.response import Response
+
 from .models import TechStatus, Sensor, SensorData, DrillingStatus, Rig, RigSensor
 from .serializers import (
     TechStatusSerializer,
@@ -65,6 +67,26 @@ class SensorDataViewSet(viewsets.ModelViewSet):
 class DrillingStatusViewSet(viewsets.ModelViewSet):
     queryset = DrillingStatus.objects.all()
     serializer_class = DrillingStatusSerializer
+
+    # Кастомный JSON / Чтобы не забыть =)
+    def list(self, request, *args, **kwargs):
+        query_filter = self.request.query_params.get("filter")
+
+        if query_filter is not None:
+            return Response(
+                [
+                    {
+                        "data": self.get_serializer(self.queryset, many=True).data
+                    },
+                    {
+                        "status": status.HTTP_200_OK
+                    }
+                ],
+                status=status.HTTP_200_OK
+            )
+
+        query_data = self.get_serializer(self.queryset, many=True)
+        return Response(query_data.data, status=status.HTTP_200_OK)
 
 
 @extend_schema_view(
