@@ -4,13 +4,30 @@ from rest_framework.response import Response
 
 from .docs import TechStatusDocumentation, SensorDocumentation, SensorDataDocumentation, DrillingStatusDocumentation, \
     RigDocumentation
-from .models import TechStatus, Sensor, SensorData, DrillingStatus, Rig
+
+from .models import (
+    TechStatus,
+    Sensor,
+    SensorData,
+    DrillingStatus,
+    Rig, DrillingFluidSystem, SensorStatus, DrillingMotor, RobotStatus, Robot, HoistingSystem, Defectoscope,
+    HydraulicPowerTong
+)
+
 from .serializers import (
     TechStatusSerializer,
     SensorSerializer,
     SensorDataSerializer,
     DrillingStatusSerializer,
     RigSerializer,
+    DrillingFluidSystemSerializer,
+    SensorStatusSerializer,
+    DrillingMotorSerializer,
+    RobotStatusSerializer,
+    RobotSerializer,
+    HoistingSystemSerializer,
+    DefectoscopeSerializer,
+    HydraulicPowerTongSerializer
 )
 
 
@@ -62,3 +79,51 @@ class DrillingStatusViewSet(viewsets.ModelViewSet):
 class RigViewSet(viewsets.ModelViewSet):
     queryset = Rig.objects.all()
     serializer_class = RigSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class DrillingFluidSystemViewSet(viewsets.ModelViewSet):
+    queryset = DrillingFluidSystem.objects.all()
+    serializer_class = DrillingFluidSystemSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class SensorStatusViewSet(viewsets.ModelViewSet):
+    queryset = SensorStatus.objects.all()
+    serializer_class = SensorStatusSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class DrillingMotorViewSet(viewsets.ModelViewSet):
+    queryset = DrillingMotor.objects.all()
+    serializer_class = DrillingMotorSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class RobotStatusViewSet(viewsets.ModelViewSet):
+    queryset = RobotStatus.objects.all()
+    serializer_class = RobotStatusSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class RobotViewSet(viewsets.ModelViewSet):
+    queryset = Robot.objects.all()
+    serializer_class = RobotSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class HoistingSystemViewSet(viewsets.ModelViewSet):
+    queryset = HoistingSystem.objects.all()
+    serializer_class = HoistingSystemSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class DefectoscopeViewSet(viewsets.ModelViewSet):
+    queryset = Defectoscope.objects.all()
+    serializer_class = DefectoscopeSerializer
+
+
+# @extend_schema_view(**RigDocumentation())
+class HydraulicPowerTongViewSet(viewsets.ModelViewSet):
+    queryset = HydraulicPowerTong.objects.all()
+    serializer_class = HydraulicPowerTongSerializer
