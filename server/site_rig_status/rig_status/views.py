@@ -2,6 +2,9 @@ from rest_framework import viewsets, status
 from drf_spectacular.utils import extend_schema_view
 from rest_framework.response import Response
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
 from .docs import TechStatusDocumentation, SensorDocumentation, SensorDataDocumentation, DrillingStatusDocumentation, \
     RigDocumentation
 
@@ -30,6 +33,15 @@ from .serializers import (
     HydraulicPowerTongSerializer
 )
 
+# Отправка уведомления о новом пользователе
+# channel_layer = get_channel_layer()
+# async_to_sync(channel_layer.group_send)(
+#     "notifications",
+#     {
+#         "type": "send_notification",
+#         "message": f"New user created: 123123"
+#     }
+# )
 
 @extend_schema_view(**TechStatusDocumentation())
 class TechStatusViewSet(viewsets.ModelViewSet):

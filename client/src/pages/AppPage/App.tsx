@@ -7,6 +7,7 @@ import Main from '@/components/layouts/Main/Main';
 import Sidebar from '@/components/layouts/Sidebar/Sidebar';
 import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
+import Console from '../ConsolePage/Console';
 import Login from '../LoginPage/Login';
 import Objects from '../ObjectsPage/Objects';
 import Screens from '../ScreensPage/Screens';
@@ -23,7 +24,7 @@ export default function App() {
         <Main>
           <Routes>
             <Route path="*" element={<Navigate to="/console" replace />} />
-            <Route path="/console" />
+            <Route path="/console" element={<Console />} />
             <Route path="/screens" element={<Screens />} />
             <Route path="/signals" />
             <Route path="/objects" element={<Objects />} />
