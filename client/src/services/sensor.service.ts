@@ -3,22 +3,24 @@ import axios from 'axios';
 import { Sensor } from '@/models/Sensor';
 
 class SensorDataService {
-  URL = 'http://localhost:8000/api/sensors';
-
   async get() {
-    const { data } = await axios.get<Sensor[]>(this.URL, {
+    const { data } = await axios.get<Sensor[]>('/api/sensors', {
       withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     return data;
   }
 
   async getByRigId(id: number) {
-    const { data } = await axios.get<Sensor[]>(this.URL + '/?rig_id=' + id, {
+    const { data } = await axios.get<Sensor[]>('/api/sensors/?rig_id=' + id, {
       withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-
-    console.log(this.URL + '/?rig_id=' + id);
 
     return data;
   }

@@ -58,7 +58,7 @@ export default function RadialProgressBar({
         style={{
           color: `${color ?? 'var(--primary-color)'}`,
         }}
-      >{`${value}${postfix ? postfix : ''}`}</span>
+      >{`${value} ${postfix ? postfix : ''}`}</span>
     </div>
   );
 }

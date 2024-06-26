@@ -22,7 +22,7 @@ export default function ObjectStatistic() {
 
   const { data } = useQuery({
     queryKey: ['sensor list'],
-    queryFn: () => sensorDataService.get(),
+    queryFn: () => sensorDataService.getByRigId(Number(id)),
   });
 
   const [mockData, setMockData] = useState([
