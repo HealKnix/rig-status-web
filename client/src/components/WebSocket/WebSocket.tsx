@@ -6,12 +6,15 @@ const WebSocketComponent: React.FC = () => {
 
   useEffect(() => {
     const rws = new ReconnectingWebSocket(
-      'ws://localhost:8000/ws/notifications/',
+      'ws://localhost:8000/ws/sensor_data/',
     );
 
     rws.onmessage = (event: MessageEvent) => {
       const data = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, data.message]);
+
+      console.log(data);
+
+      setMessages((prevMessages) => [...prevMessages, data.data]);
     };
 
     return () => {
@@ -24,7 +27,7 @@ const WebSocketComponent: React.FC = () => {
       <h1>Notifications:</h1>
       <ul>
         {messages.map((msg, index) => (
-          <li key={index}>{msg}</li>
+          <li key={index}>{JSON.stringify(msg)}</li>
         ))}
       </ul>
     </div>

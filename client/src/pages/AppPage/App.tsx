@@ -10,6 +10,7 @@ import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 import Console from '../ConsolePage/Console';
 import Login from '../LoginPage/Login';
 import Objects from '../ObjectsPage/Objects';
+import ObjectStatistic from '../ObjectsPage/ObjectStatisticPage/ObjectStatistic';
 import Screens from '../ScreensPage/Screens';
 import SignUp from '../SignUpPage/SignUp';
 
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/screens" element={<Screens />} />
             <Route path="/signals" />
             <Route path="/objects" element={<Objects />} />
+            <Route path="/objects/:id" element={<ObjectStatistic />} />
           </Routes>
         </Main>
       </div>

@@ -14,8 +14,10 @@
     "eslint:fix": "eslint **/*.{tsx,ts,js} --fix"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.48.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.14.2",
+    "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "pretier": "^0.0.1",
     "react": "^18.2.0",

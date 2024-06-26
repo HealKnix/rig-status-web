@@ -1,5 +1,7 @@
 import './ObjectCard.scss';
 
+import { useNavigate } from 'react-router-dom';
+
 import Button from '../Button/Button';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import SatelliteSVG from '../SVGs/SatelliteSVG';
@@ -23,6 +25,7 @@ export default function ObjectCard({
   drillingProgressStatus,
   status,
 }: ObjectCardProps) {
+  const navigate = useNavigate();
   let statusColor = 'var(--text-additional-color)';
 
   if (status === 'нормально') {
@@ -70,7 +73,14 @@ export default function ObjectCard({
             maxValue={100}
           />
         </div>
-        <Button variant="outlined">подробнее</Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            navigate(`${id}`);
+          }}
+        >
+          подробнее
+        </Button>
         <span className="object-status">{status}</span>
       </div>
     </>

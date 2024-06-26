@@ -1,7 +1,7 @@
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from rest_framework import viewsets, status
 from drf_spectacular.utils import extend_schema_view
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from .docs import (
@@ -11,7 +11,6 @@ from .docs import (
     DrillingStatusDocumentation,
     RigDocumentation
 )
-
 from .models import (
     TechStatus,
     Sensor,
@@ -27,7 +26,6 @@ from .models import (
     Defectoscope,
     HydraulicPowerTong
 )
-
 from .serializers import (
     TechStatusSerializer,
     SensorSerializer,
@@ -66,11 +64,41 @@ class SensorViewSet(viewsets.ModelViewSet):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
 
+    def list(self, request, *args, **kwargs):
+        query_rig_id = self.request.query_params.get("rig_id")
+
+        if query_rig_id is not None:
+            filtered_queryset = Sensor.objects.filter(rig_id=query_rig_id)
+            return Response(
+                self.get_serializer(filtered_queryset, many=True).data,
+                status=status.HTTP_200_OK
+            )
+
+        query_data = self.get_serializer(self.queryset, many=True).data
+        return Response(query_data, status=status.HTTP_200_OK)
+
 
 @extend_schema_view(**SensorDataDocumentation())
 class SensorDataViewSet(viewsets.ModelViewSet):
     queryset = SensorData.objects.all()
     serializer_class = SensorDataSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "sensor_data",
+            {
+                "type": "send_sensor_data",
+                "data": serializer.data,
+            }
+        )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 @extend_schema_view(**DrillingStatusDocumentation())
@@ -95,8 +123,8 @@ class DrillingStatusViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_200_OK
             )
 
-        query_data = self.get_serializer(self.queryset, many=True)
-        return Response(query_data.data, status=status.HTTP_200_OK)
+        query_data = self.get_serializer(self.queryset, many=True).data
+        return Response(query_data, status=status.HTTP_200_OK)
 
 
 @extend_schema_view(**RigDocumentation())

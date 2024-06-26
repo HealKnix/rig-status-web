@@ -24,15 +24,6 @@ class TechStatusDocumentation:
             ),
             'create': extend_schema(
                 tags=[tag],
-                parameters=[
-                    OpenApiParameter(
-                        name='id',
-                        description='Идентификатор технического состояния',
-                        required=True,
-                        type=int,
-                        location=OpenApiParameter.PATH,
-                    )
-                ],
                 description="Создать новое техническое состояние"
             ),
             'update': extend_schema(
@@ -83,6 +74,15 @@ class SensorDocumentation:
         return {
             'list': extend_schema(
                 tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='rig_id',
+                        description='Идентификатор буровой установки',
+                        required=False,
+                        type=int,
+                        location=OpenApiParameter.QUERY,
+                    )
+                ],
                 description="Получить список всех датчиков"
             ),
             'retrieve': extend_schema(
@@ -94,21 +94,19 @@ class SensorDocumentation:
                         required=True,
                         type=int,
                         location=OpenApiParameter.PATH,
+                    ),
+                    OpenApiParameter(
+                        name='rig_id',
+                        description='Идентификатор буровой установки',
+                        required=False,
+                        type=int,
+                        location=OpenApiParameter.QUERY,
                     )
                 ],
                 description="Получить конкретный датчик по ID"
             ),
             'create': extend_schema(
                 tags=[tag],
-                parameters=[
-                    OpenApiParameter(
-                        name='id',
-                        description='Идентификатор датчика',
-                        required=True,
-                        type=int,
-                        location=OpenApiParameter.PATH,
-                    )
-                ],
                 description="Создать новый датчик"
             ),
             'update': extend_schema(
@@ -176,15 +174,6 @@ class SensorDataDocumentation:
             ),
             'create': extend_schema(
                 tags=[tag],
-                parameters=[
-                    OpenApiParameter(
-                        name='id',
-                        description='Идентификатор данных датчика',
-                        required=True,
-                        type=int,
-                        location=OpenApiParameter.PATH,
-                    )
-                ],
                 description="Создать новые данные датчика"
             ),
             'update': extend_schema(
@@ -261,15 +250,6 @@ class DrillingStatusDocumentation:
             ),
             'create': extend_schema(
                 tags=[tag],
-                parameters=[
-                    OpenApiParameter(
-                        name='id',
-                        description='Идентификатор данной буровой установки.',
-                        required=True,
-                        type=int,
-                        location=OpenApiParameter.PATH,
-                    )
-                ],
                 description="Создать новое состояние бурения"
             ),
             'update': extend_schema(
