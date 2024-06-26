@@ -1,19 +1,30 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from rest_framework import viewsets, status
 from drf_spectacular.utils import extend_schema_view
 from rest_framework.response import Response
 
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
-
-from .docs import TechStatusDocumentation, SensorDocumentation, SensorDataDocumentation, DrillingStatusDocumentation, \
+from .docs import (
+    TechStatusDocumentation,
+    SensorDocumentation,
+    SensorDataDocumentation,
+    DrillingStatusDocumentation,
     RigDocumentation
+)
 
 from .models import (
     TechStatus,
     Sensor,
     SensorData,
     DrillingStatus,
-    Rig, DrillingFluidSystem, SensorStatus, DrillingMotor, RobotStatus, Robot, HoistingSystem, Defectoscope,
+    Rig,
+    DrillingFluidSystem,
+    SensorStatus,
+    DrillingMotor,
+    RobotStatus,
+    Robot,
+    HoistingSystem,
+    Defectoscope,
     HydraulicPowerTong
 )
 
@@ -33,13 +44,14 @@ from .serializers import (
     HydraulicPowerTongSerializer
 )
 
+
 # Отправка уведомления о новом пользователе
 # channel_layer = get_channel_layer()
 # async_to_sync(channel_layer.group_send)(
 #     "notifications",
 #     {
 #         "type": "send_notification",
-#         "message": f"New user created: 123123"
+#         "message": "New user created",
 #     }
 # )
 
