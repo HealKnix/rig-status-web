@@ -25,3 +25,26 @@ class SensorDataConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             'data': event['data']
         }))
+
+
+class RigConsumer(WebsocketConsumer):
+    def connect(self):
+        async_to_sync(self.channel_layer.group_add)(
+            "rig",
+            self.channel_name
+        )
+        self.accept()
+
+    def disconnect(self, close_code):
+        async_to_sync(self.channel_layer.group_discard)(
+            "rig",
+            self.channel_name
+        )
+
+    def receive(self, text_data):
+        pass
+
+    def send_rig(self, event):
+        self.send(text_data=json.dumps({
+            'data': event['data']
+        }))

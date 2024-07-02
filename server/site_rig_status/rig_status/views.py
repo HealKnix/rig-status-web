@@ -199,6 +199,33 @@ class RigViewSet(viewsets.ModelViewSet):
     queryset = Rig.objects.all()
     serializer_class = RigSerializer
 
+    def list(self, request, *args, **kwargs):
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "rig",
+            {
+                "type": "send_rig",
+                "data": self.get_serializer(self.get_queryset(), many=True).data,
+            }
+        )
+        return Response(self.get_serializer(self.queryset, many=True).data, status=status.HTTP_200_OK)
+
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+
+        data = self.update(request, *args, **kwargs)
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "rig",
+            {
+                "type": "send_rig",
+                "data": self.get_serializer(self.get_queryset(), many=True).data,
+            }
+        )
+
+        return data
+
 
 # @extend_schema_view(**RigDocumentation())
 class DrillingFluidSystemViewSet(viewsets.ModelViewSet):
