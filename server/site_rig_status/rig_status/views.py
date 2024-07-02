@@ -1,8 +1,12 @@
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.contrib.auth import authenticate, login, logout
+from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema_view
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .docs import (
     TechStatusDocumentation,
@@ -24,9 +28,10 @@ from .models import (
     Robot,
     HoistingSystem,
     Defectoscope,
-    HydraulicPowerTong
+    HydraulicPowerTong, User
 )
 from .serializers import (
+    LoginSerializer,
     TechStatusSerializer,
     SensorSerializer,
     SensorDataSerializer,
@@ -39,7 +44,7 @@ from .serializers import (
     RobotSerializer,
     HoistingSystemSerializer,
     DefectoscopeSerializer,
-    HydraulicPowerTongSerializer
+    HydraulicPowerTongSerializer,
 )
 
 
@@ -52,6 +57,68 @@ from .serializers import (
 #         "message": "New user created",
 #     }
 # )
+
+class LoginViewSet(APIView):
+    queryset = User.objects.all()
+    serializer_class = LoginSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            csrftoken = get_token(request)
+            sessionid = request.session.session_key
+            response = Response(
+                {
+                    'sessionid': sessionid,
+                    'csrftoken': csrftoken,
+                    'user': {
+                        'id': user.id,
+                        'username': user.username,
+                        'first_name': user.first_name,
+                        'last_name': user.last_name,
+                        'middle_name': user.middle_name,
+                        'email': user.email,
+                    }
+                },
+                status=status.HTTP_200_OK
+            )
+            print(response.data)
+            response.set_cookie('sessionid', sessionid)
+            response.set_cookie('csrftoken', csrftoken)
+            return response
+        else:
+            return Response(
+                {
+                    'error': 'Invalid credentials'
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class LogoutViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        response = Response(
+            {
+                'detail': 'Successfully logged out'
+            },
+            status=status.HTTP_200_OK
+        )
+        response.delete_cookie('sessionid')
+        response.delete_cookie('csrftoken')
+        return response
+
 
 @extend_schema_view(**TechStatusDocumentation())
 class TechStatusViewSet(viewsets.ModelViewSet):

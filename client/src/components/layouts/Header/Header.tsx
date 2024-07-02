@@ -20,9 +20,8 @@ export default function Header() {
           <div className="user-image"></div>
           <div className="user-text">
             <div className="user-text-short-name">
-              {`${authStore.user?.lastName} ${authStore.user?.firstName?.[0]}.  ${authStore.user?.middleName?.[0]}.`}
+              {`${authStore.user?.last_name} ${authStore.user?.first_name?.[0]}.  ${authStore.user?.middle_name?.[0]}.`}
             </div>
-            <div className="user-text-role">{authStore.user?.role}</div>
           </div>
         </div>
         <ChevronSVG />

@@ -15,7 +15,7 @@ class SensorDataService {
   }
 
   async getByRigId(id: number) {
-    const { data } = await axios.get<Sensor[]>('/api/sensors/?rig_id=' + id, {
+    const { data } = await axios.get<Sensor[]>(`/api/sensors/?rig_id=${id}`, {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',

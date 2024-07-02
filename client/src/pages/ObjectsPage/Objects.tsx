@@ -5,8 +5,15 @@ import { Link } from 'react-router-dom';
 import ObjectCard from '@/components/ObjectCard/ObjectCard';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
 import { rigList } from '@/models/mock/rig';
+import { rigService } from '@/services/rig.service';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Objects() {
+  const { data } = useQuery({
+    queryKey: ['rig list'],
+    queryFn: () => rigService.get(),
+  });
+
   return (
     <>
       <div className="objects__wrapper">
@@ -15,19 +22,12 @@ export default function Objects() {
             <ChevronSVG />
           </Link>
           <div className="bento-object-selector">
-            <label htmlFor="object-select">
-              <span>Фильтрация по</span>
-              <select name="objects" id="object-select">
-                <option value="0">Углубка ствола</option>
-                <option value="1">Объект_1</option>
-                <option value="2">Объект_2</option>
-              </select>
-            </label>
+            <span>Буровые установки</span>
           </div>
         </div>
 
         <div className="cards__wrapper">
-          {rigList.map((rig) => (
+          {data?.map((rig) => (
             <ObjectCard {...rig} key={rig.id} />
           ))}
         </div>

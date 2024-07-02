@@ -1,12 +1,16 @@
 import './Modal.scss';
 
+import Cookie from 'cookies-ts';
 import { FC, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import CrossSVG from '@/assets/cross.svg';
 import Button from '@/components/Button/Button';
+import { userService } from '@/services/user.service';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useModalStore } from '@/store/useModalStore';
+
+const cookies = new Cookie();
 
 const Modal: FC = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -77,9 +81,12 @@ const Modal: FC = () => {
             <Button
               variant="accent"
               onClick={() => {
+                userService.logout();
                 modalStore.closeProfileModal();
                 authStore.setUser(null);
                 localStorage.removeItem('user');
+                cookies.remove('csrftoken');
+                cookies.remove('sessionid');
               }}
             >
               Да

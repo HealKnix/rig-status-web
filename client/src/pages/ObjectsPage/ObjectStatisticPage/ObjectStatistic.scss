@@ -27,9 +27,25 @@
   gap: 25px;
   width: 100%;
 
-  & > .bento__content {
+  & > .bento-content {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+
+    & > button {
+      display: flex;
+      justify-content: start;
+      text-align: left;
+      gap: 15px;
+    }
+  }
+
+  &.bento--accent {
+    background-color: var(--primary-color);
+
+    & > * {
+      color: var(--white);
+    }
   }
 }
 
@@ -59,6 +75,9 @@
 
 .bento-object-selector {
   width: 100%;
+
+  font-size: 18px;
+  font-weight: bold;
 
   & > select {
     border: none;

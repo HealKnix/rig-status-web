@@ -12,7 +12,7 @@ import App from './pages/AppPage/App.tsx';
 
 const queryClient = new QueryClient();
 
-axios.defaults.baseURL = 'http://localhost:8001';
+axios.defaults.baseURL = 'http://localhost:8000';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

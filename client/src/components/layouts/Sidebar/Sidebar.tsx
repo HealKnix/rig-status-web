@@ -26,7 +26,7 @@ export default function Sidebar() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/screens">
+            <NavLink to="/machine-vision">
               <span>
                 <ScreensSVG />
                 Экраны

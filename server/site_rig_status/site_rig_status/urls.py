@@ -16,26 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
     SpectacularRedocView
 )
 
+from rig_status.views import LoginViewSet, LogoutViewSet
+
 urlpatterns = [
     path('',
          SpectacularSwaggerView.as_view(url_name='schema'),
          name='swagger-ui'
     ),
-
     path('admin/', admin.site.urls),
-
-    path('api/', include('rig_status.urls')),
-
+    path('login/', LoginViewSet.as_view(), name='login'),
+    path('logout/', LogoutViewSet.as_view(), name='logout'),
+    path('api/', include('rig_status.urls'), name='api'),
     # Yaml openapi
     path('api/openapi/', SpectacularAPIView.as_view(), name='schema'),
-
     # Optional UI:
     path(
         'api/docs/',
