@@ -16,7 +16,6 @@ export default function ObjectCard({
   well_depth,
   bottom_hole_drilling,
   connection_speed,
-  tech_date,
   drilling_status_id,
   tech_status_id,
 }: Rig) {

@@ -5,12 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
-import { useFetchUsers } from '@/hooks/api/useFetchUsers';
 import { userService } from '@/services/user.service';
 import { useAuthStore } from '@/store/useAuthStore';
 
 export default function Login() {
-  const { getUserByEmailAndPassword } = useFetchUsers();
   const authStore = useAuthStore();
   const navigate = useNavigate();
 

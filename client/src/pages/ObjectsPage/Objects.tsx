@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import ObjectCard from '@/components/ObjectCard/ObjectCard';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
-import { rigList } from '@/models/mock/rig';
 import { rigService } from '@/services/rig.service';
 import { useQuery } from '@tanstack/react-query';
 

@@ -20,7 +20,7 @@ export const useFetchUsers = () => {
 
   const getUserByEmailAndPassword = (email: string, password: string) => {
     return users.find(
-      (user) => user.email === email && user.password === password,
+      (user) => user.email === email && user?.password === password,
     );
   };
 

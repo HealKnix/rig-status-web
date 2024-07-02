@@ -3,8 +3,17 @@ import './ObjectStatistic.scss';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-    Area, AreaChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip,
-    XAxis, YAxis
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
 
 import OpenFile from '@/assets/open_file.svg';
@@ -174,7 +183,7 @@ export default function ObjectStatistic() {
                   paddingAngle={5}
                   dataKey="value"
                 >
-                  {data.map((entry, index) => (
+                  {data.map((_, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
