@@ -205,10 +205,10 @@ class RigViewSet(viewsets.ModelViewSet):
             "rig",
             {
                 "type": "send_rig",
-                "data": self.get_serializer(self.get_queryset(), many=True).data,
+                "data": self.get_serializer(self.get_queryset().order_by('id'), many=True).data,
             }
         )
-        return Response(self.get_serializer(self.queryset, many=True).data, status=status.HTTP_200_OK)
+        return Response(self.get_serializer(self.queryset.order_by('id'), many=True).data, status=status.HTTP_200_OK)
 
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True

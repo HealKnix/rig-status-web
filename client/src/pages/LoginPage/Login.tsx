@@ -12,7 +12,7 @@ export default function Login() {
   const authStore = useAuthStore();
   const navigate = useNavigate();
 
-  const [inputEmail, setInputEmail] = useState('');
+  const [inputLogin, setInputLogin] = useState('');
   const [inputPassword, setInputPassword] = useState('');
 
   return (
@@ -23,31 +23,32 @@ export default function Login() {
           onSubmit={async (e) => {
             e.preventDefault();
 
-            if (!inputEmail || !inputPassword) {
+            if (!inputLogin || !inputPassword) {
               return;
             }
 
-            const loginData = await userService.login(
-              inputEmail,
-              inputPassword,
-            );
+            try {
+              const loginData = await userService.login(
+                inputLogin,
+                inputPassword,
+              );
 
-            if (loginData.user) {
-              authStore.setUser(loginData.user);
-              navigate('/console');
-            } else {
-              alert('Такого пользователя не существует');
+              if (loginData?.user) {
+                authStore.setUser(loginData?.user);
+                navigate('/objects');
+              }
+            } catch {
+              alert('Такого пользователя не существует!');
             }
           }}
         >
           <h1>Вход</h1>
           <Input
-            title="Почта"
-            value={inputEmail}
+            title="Логин"
+            value={inputLogin}
             onChange={(e) => {
-              setInputEmail(e?.target.value ?? '');
+              setInputLogin(e?.target.value ?? '');
             }}
-            autoComplete="email webauthn"
             required
             movablePlaceholder
           />

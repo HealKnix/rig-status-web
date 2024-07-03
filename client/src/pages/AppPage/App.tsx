@@ -7,7 +7,6 @@ import Main from '@/components/layouts/Main/Main';
 import Sidebar from '@/components/layouts/Sidebar/Sidebar';
 import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
-import Console from '../ConsolePage/Console';
 import Login from '../LoginPage/Login';
 import MachineVision from '../MachineVisionPage/MachineVision';
 import Objects from '../ObjectsPage/Objects';
@@ -24,10 +23,8 @@ export default function App() {
         <Header />
         <Main>
           <Routes>
-            <Route path="*" element={<Navigate to="/console" replace />} />
-            <Route path="/console" element={<Console />} />
+            <Route path="*" element={<Navigate to="/objects" replace />} />
             <Route path="/machine-vision" element={<MachineVision />} />
-            <Route path="/signals" />
             <Route path="/objects" element={<Objects />} />
             <Route path="/objects/:id" element={<ObjectStatistic />} />
           </Routes>

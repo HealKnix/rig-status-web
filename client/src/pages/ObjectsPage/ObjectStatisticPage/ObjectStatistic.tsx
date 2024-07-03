@@ -254,14 +254,13 @@ export default function ObjectStatistic() {
                   color: 'var(--text-additional-color)',
                 }}
               >
-                {sensor.name}
+                {sensor.name} ({sensor.unit})
               </h2>
               <hr />
               <div className="bento-content">
                 <RadialProgressBar
                   maxValue={60}
                   value={sensor.id === 1 ? mockData[mockData.length - 1].y : 50}
-                  postfix={sensor.unit}
                   boundaries={[
                     { color: 'var(--error-color)', value: 60 },
                     { color: 'var(--warning-color)', value: 50 },

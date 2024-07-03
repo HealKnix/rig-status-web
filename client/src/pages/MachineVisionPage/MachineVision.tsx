@@ -91,7 +91,7 @@ export default function MachineVision() {
                 width: '100%',
               }}
             >
-              Error
+              <span className="error-table">Error</span>
             </div>
           </div>
 
@@ -109,7 +109,7 @@ export default function MachineVision() {
                 width: '100%',
               }}
             >
-              Error
+              <span className="error-table">Error</span>
             </div>
           </div>
 
@@ -127,7 +127,7 @@ export default function MachineVision() {
                 width: '100%',
               }}
             >
-              Error
+              <span className="error-table">Error</span>
             </div>
           </div>
         </div>

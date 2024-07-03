@@ -5,6 +5,13 @@
   flex-direction: column;
 }
 
+.error-table {
+  color: var(--white);
+  padding: 15px;
+  background-color: var(--error-color);
+  border-radius: 8px;
+}
+
 .machine-vision__wrapper > .row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
