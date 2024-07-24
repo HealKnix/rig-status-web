@@ -46,8 +46,8 @@ export default function RadialProgressBar({
         ),
         conic-gradient(
           ${color ?? 'var(--primary-color)'} calc(${value} * ${
-          100 / maxValue
-        }%),
+            100 / maxValue
+          }%),
           var(--border-color) 0
         )`,
       }}

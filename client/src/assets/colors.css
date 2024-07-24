@@ -1,18 +1,18 @@
 :root {
-  --primary-color: #3A7CFF;
+  --primary-color: #3a7cff;
   --primary-light-color: color-mix(
     in srgb,
     var(--primary-color) 10%,
     transparent 100%
   );
-  --background-color: #F2F2F3;
-  --border-color: #E2E4E9;
-  --error-color: #FF4D55;
-  --warning-color: #FFB200;
-  --success-color: #00C472;
+  --background-color: #f2f2f3;
+  --border-color: #e2e4e9;
+  --error-color: #ff4d55;
+  --warning-color: #ffb200;
+  --success-color: #00c472;
 
-  --text-color: #1B2539;
-  --text-additional-color: #6C7483;
+  --text-color: #1b2539;
+  --text-additional-color: #6c7483;
 
   --white: #fff;
   --black: #000;

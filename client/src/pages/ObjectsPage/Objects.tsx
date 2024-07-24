@@ -26,9 +26,7 @@ export default function Objects() {
         </div>
 
         <div className="cards__wrapper">
-          {data?.map((rig) => (
-            <ObjectCard {...rig} key={rig.id} />
-          ))}
+          {data?.map((rig) => <ObjectCard {...rig} key={rig.id} />)}
         </div>
       </div>
     </>

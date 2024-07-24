@@ -21,7 +21,9 @@ progress {
   & > .radial-progress-bar__text {
     max-width: 125px;
     color: var(--color);
-    font-family: DM Sans, Geometria;
+    font-family:
+      DM Sans,
+      Geometria;
     font-size: 56px;
     font-weight: bold;
     text-wrap: wrap;
