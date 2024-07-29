@@ -2,12 +2,16 @@ import './Input.scss';
 
 import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 
-interface ButtonProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   movable_placeholder: boolean | undefined;
   forward_ref?: React.Ref<HTMLInputElement>;
 }
 
-const Input: FC<ButtonProps> = ({ movable_placeholder, ...props }) => {
+const Input: FC<InputProps> = ({
+  movable_placeholder,
+  forward_ref,
+  ...props
+}) => {
   const [movableTitle, setMovableTitle] = useState(false);
 
   useEffect(() => {
@@ -36,7 +40,7 @@ const Input: FC<ButtonProps> = ({ movable_placeholder, ...props }) => {
         <input
           className="input"
           placeholder={movable_placeholder ? '' : props.placeholder}
-          ref={props.forward_ref}
+          ref={forward_ref}
           {...props}
         />
       </label>
