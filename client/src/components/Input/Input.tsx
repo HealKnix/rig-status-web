@@ -1,74 +1,43 @@
 import './Input.scss';
 
-import { FC, HTMLInputAutoCompleteAttribute, useEffect, useState } from 'react';
+import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 
-interface ButtonProps {
-  id?: string;
-  title?: string;
-  placeholder?: string;
-  type?: 'text' | 'email' | 'password' | 'button' | 'submit' | 'reset';
-  required?: boolean;
-  value?: string | number;
-  movablePlaceholder?: boolean;
-  autoComplete?: HTMLInputAutoCompleteAttribute;
-
-  forwardRef?: React.Ref<HTMLInputElement>;
-  onChange?: (e?: React.ChangeEvent<HTMLInputElement>) => void | undefined;
-  onSubmit?: React.FormEventHandler<HTMLInputElement> | undefined;
-  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+interface ButtonProps extends InputHTMLAttributes<HTMLInputElement> {
+  movable_placeholder: boolean | undefined;
+  forward_ref?: React.Ref<HTMLInputElement>;
 }
 
-const Input: FC<ButtonProps> = ({
-  id,
-  placeholder,
-  title,
-  type,
-  required,
-  value,
-  movablePlaceholder,
-  autoComplete,
-  forwardRef,
-  onChange,
-  onSubmit,
-  onKeyDown,
-}) => {
+const Input: FC<ButtonProps> = ({ movable_placeholder, ...props }) => {
   const [movableTitle, setMovableTitle] = useState(false);
 
   useEffect(() => {
-    if (movablePlaceholder) {
-      if (value) setMovableTitle(true);
+    if (movable_placeholder) {
+      if (props.value) setMovableTitle(true);
       else setMovableTitle(false);
     }
-  }, [value, movableTitle, movablePlaceholder]);
+  }, [props.value, movableTitle, movable_placeholder]);
 
   return (
     <>
-      <label htmlFor={id} className="input__wrapper">
-        {title && (
+      <label htmlFor={props.id} className="input__wrapper">
+        {props.title && (
           <span
             className={
-              movablePlaceholder
+              movable_placeholder
                 ? `input-title--movable-placeholder ${
                     movableTitle ? 'input-title--movable' : ''
                   }`
                 : 'input-title'
             }
           >
-            {title}
+            {props.title}
           </span>
         )}
         <input
-          id={id}
           className="input"
-          autoComplete={autoComplete}
-          type={type}
-          value={value}
-          required={required}
-          placeholder={movablePlaceholder ? '' : placeholder}
-          ref={forwardRef}
-          onChange={onChange}
-          onSubmit={onSubmit}
-          onKeyDown={onKeyDown}
+          placeholder={movable_placeholder ? '' : props.placeholder}
+          ref={props.forward_ref}
+          {...props}
         />
       </label>
     </>

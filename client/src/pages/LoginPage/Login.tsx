@@ -50,7 +50,7 @@ export default function Login() {
               setInputLogin(e?.target.value ?? '');
             }}
             required
-            movablePlaceholder
+            movable_placeholder
           />
           <Input
             title="Пароль"
@@ -61,7 +61,7 @@ export default function Login() {
             }}
             autoComplete="current-password webauthn"
             required
-            movablePlaceholder
+            movable_placeholder
           />
           <Button variant="outlined">Авторизоваться</Button>
         </form>
