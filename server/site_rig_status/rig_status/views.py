@@ -4,51 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema_view
 from rest_framework import viewsets, status, permissions
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .docs import (
-    TechStatusDocumentation,
-    SensorDocumentation,
-    SensorDataDocumentation,
-    DrillingStatusDocumentation,
-    RigDocumentation
-)
-from .models import (
-    TechStatus,
-    Sensor,
-    SensorData,
-    DrillingStatus,
-    Rig,
-    DrillingFluidSystem,
-    SensorStatus,
-    DrillingMotor,
-    RobotStatus,
-    Robot,
-    HoistingSystem,
-    Defectoscope,
-    HydraulicPowerTong, User
-)
-from .serializers import (
-    LoginSerializer,
-    TechStatusSerializer,
-    SensorSerializer,
-    SensorDataSerializer,
-    DrillingStatusSerializer,
-    RigSerializer,
-    DrillingFluidSystemSerializer,
-    SensorStatusSerializer,
-    DrillingMotorSerializer,
-    RobotStatusSerializer,
-    RobotSerializer,
-    HoistingSystemSerializer,
-    DefectoscopeSerializer,
-    HydraulicPowerTongSerializer,
-)
+import docs
+import models
+import serializers
 
 
-# Отправка уведомления о новом пользователе
+# Отправка уведомления о новом пользователе по Websocket
 # channel_layer = get_channel_layer()
 # async_to_sync(channel_layer.group_send)(
 #     "notifications",
@@ -58,13 +22,14 @@ from .serializers import (
 #     }
 # )
 
+
 class LoginViewSet(APIView):
-    queryset = User.objects.all()
-    serializer_class = LoginSerializer
+    queryset = models.User.objects.all()
+    serializer_class = serializers.LoginSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = LoginSerializer(data=request.data)
+        serializer = serializers.LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         username = serializer.validated_data['username']
@@ -91,9 +56,10 @@ class LoginViewSet(APIView):
                 },
                 status=status.HTTP_200_OK
             )
-            print(response.data)
+
             response.set_cookie('sessionid', sessionid)
             response.set_cookie('csrftoken', csrftoken)
+
             return response
         else:
             return Response(
@@ -105,7 +71,8 @@ class LoginViewSet(APIView):
 
 
 class LogoutViewSet(APIView):
-    permission_classes = [IsAuthenticated]
+    queryset = models.User.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         logout(request)
@@ -120,22 +87,22 @@ class LogoutViewSet(APIView):
         return response
 
 
-@extend_schema_view(**TechStatusDocumentation())
+@extend_schema_view(**docs.TechStatusDocumentation())
 class TechStatusViewSet(viewsets.ModelViewSet):
-    queryset = TechStatus.objects.all()
-    serializer_class = TechStatusSerializer
+    queryset = models.TechStatus.objects.all()
+    serializer_class = serializers.TechStatusSerializer
 
 
-@extend_schema_view(**SensorDocumentation())
+@extend_schema_view(**docs.SensorDocumentation())
 class SensorViewSet(viewsets.ModelViewSet):
-    queryset = Sensor.objects.all()
-    serializer_class = SensorSerializer
+    queryset = models.Sensor.objects.all()
+    serializer_class = serializers.SensorSerializer
 
     def list(self, request, *args, **kwargs):
         query_rig_id = self.request.query_params.get("rig_id")
 
         if query_rig_id is not None:
-            filtered_queryset = Sensor.objects.filter(rig_id=query_rig_id)
+            filtered_queryset = models.Sensor.objects.filter(rig_id=query_rig_id)
             return Response(
                 self.get_serializer(filtered_queryset, many=True).data,
                 status=status.HTTP_200_OK
@@ -145,10 +112,10 @@ class SensorViewSet(viewsets.ModelViewSet):
         return Response(query_data, status=status.HTTP_200_OK)
 
 
-@extend_schema_view(**SensorDataDocumentation())
+@extend_schema_view(**docs.SensorDataDocumentation())
 class SensorDataViewSet(viewsets.ModelViewSet):
-    queryset = SensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    queryset = models.SensorData.objects.all()
+    serializer_class = serializers.SensorDataSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -168,10 +135,10 @@ class SensorDataViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-@extend_schema_view(**DrillingStatusDocumentation())
+@extend_schema_view(**docs.DrillingStatusDocumentation())
 class DrillingStatusViewSet(viewsets.ModelViewSet):
-    queryset = DrillingStatus.objects.all()
-    serializer_class = DrillingStatusSerializer
+    queryset = models.DrillingStatus.objects.all()
+    serializer_class = serializers.DrillingStatusSerializer
 
     # Кастомный JSON / Чтобы не забыть =)
     def list(self, request, *args, **kwargs):
@@ -194,10 +161,10 @@ class DrillingStatusViewSet(viewsets.ModelViewSet):
         return Response(query_data, status=status.HTTP_200_OK)
 
 
-@extend_schema_view(**RigDocumentation())
+@extend_schema_view(**docs.RigDocumentation())
 class RigViewSet(viewsets.ModelViewSet):
-    queryset = Rig.objects.all()
-    serializer_class = RigSerializer
+    queryset = models.Rig.objects.all()
+    serializer_class = serializers.RigSerializer
 
     def list(self, request, *args, **kwargs):
         channel_layer = get_channel_layer()
@@ -229,47 +196,47 @@ class RigViewSet(viewsets.ModelViewSet):
 
 # @extend_schema_view(**RigDocumentation())
 class DrillingFluidSystemViewSet(viewsets.ModelViewSet):
-    queryset = DrillingFluidSystem.objects.all()
-    serializer_class = DrillingFluidSystemSerializer
+    queryset = models.DrillingFluidSystem.objects.all()
+    serializer_class = serializers.DrillingFluidSystemSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class SensorStatusViewSet(viewsets.ModelViewSet):
-    queryset = SensorStatus.objects.all()
-    serializer_class = SensorStatusSerializer
+    queryset = models.SensorStatus.objects.all()
+    serializer_class = serializers.SensorStatusSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class DrillingMotorViewSet(viewsets.ModelViewSet):
-    queryset = DrillingMotor.objects.all()
-    serializer_class = DrillingMotorSerializer
+    queryset = models.DrillingMotor.objects.all()
+    serializer_class = serializers.DrillingMotorSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class RobotStatusViewSet(viewsets.ModelViewSet):
-    queryset = RobotStatus.objects.all()
-    serializer_class = RobotStatusSerializer
+    queryset = models.RobotStatus.objects.all()
+    serializer_class = serializers.RobotStatusSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class RobotViewSet(viewsets.ModelViewSet):
-    queryset = Robot.objects.all()
-    serializer_class = RobotSerializer
+    queryset = models.Robot.objects.all()
+    serializer_class = serializers.RobotSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class HoistingSystemViewSet(viewsets.ModelViewSet):
-    queryset = HoistingSystem.objects.all()
-    serializer_class = HoistingSystemSerializer
+    queryset = models.HoistingSystem.objects.all()
+    serializer_class = serializers.HoistingSystemSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class DefectoscopeViewSet(viewsets.ModelViewSet):
-    queryset = Defectoscope.objects.all()
-    serializer_class = DefectoscopeSerializer
+    queryset = models.Defectoscope.objects.all()
+    serializer_class = serializers.DefectoscopeSerializer
 
 
 # @extend_schema_view(**RigDocumentation())
 class HydraulicPowerTongViewSet(viewsets.ModelViewSet):
-    queryset = HydraulicPowerTong.objects.all()
-    serializer_class = HydraulicPowerTongSerializer
+    queryset = models.HydraulicPowerTong.objects.all()
+    serializer_class = serializers.HydraulicPowerTongSerializer
