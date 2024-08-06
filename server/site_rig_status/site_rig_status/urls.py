@@ -22,19 +22,23 @@ from drf_spectacular.views import (
     SpectacularRedocView
 )
 
-from rig_status.views import LoginViewSet, LogoutViewSet
+from rig_status.views import LoginViewSet, LogoutViewSet, AuthenticatedAPIView
 
 urlpatterns = [
     path('',
          SpectacularSwaggerView.as_view(url_name='schema'),
          name='swagger-ui'
-    ),
+         ),
     path('admin/', admin.site.urls),
+    path('auth-login/', AuthenticatedAPIView.as_view(), name='auth-login'),
     path('login/', LoginViewSet.as_view(), name='login'),
     path('logout/', LogoutViewSet.as_view(), name='logout'),
     path('api/', include('rig_status.urls'), name='api'),
+    # path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
+
     # Yaml openapi
     path('api/openapi/', SpectacularAPIView.as_view(), name='schema'),
+
     # Optional UI:
     path(
         'api/docs/',

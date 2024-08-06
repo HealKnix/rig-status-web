@@ -1,18 +1,57 @@
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.sessions.models import Session
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema_view
-from rest_framework import viewsets, status, permissions
+from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-import docs
-import models
-import serializers
+from .docs import (
+    TechStatusDocumentation,
+    SensorDocumentation,
+    SensorDataDocumentation,
+    DrillingStatusDocumentation,
+    RigDocumentation
+)
+from .models import (
+    TechStatus,
+    Sensor,
+    SensorData,
+    DrillingStatus,
+    Rig,
+    DrillingFluidSystem,
+    SensorStatus,
+    DrillingMotor,
+    RobotStatus,
+    Robot,
+    HoistingSystem,
+    Defectoscope,
+    HydraulicPowerTong,
+    User
+)
+from .serializers import (
+    LoginSerializer,
+    TechStatusSerializer,
+    SensorSerializer,
+    SensorDataSerializer,
+    DrillingStatusSerializer,
+    RigSerializer,
+    DrillingFluidSystemSerializer,
+    SensorStatusSerializer,
+    DrillingMotorSerializer,
+    RobotStatusSerializer,
+    RobotSerializer,
+    HoistingSystemSerializer,
+    DefectoscopeSerializer,
+    HydraulicPowerTongSerializer,
+    LogoutSerializer,
+)
 
 
-# Отправка уведомления о новом пользователе по Websocket
+# Отправка уведомления о новом пользователе
 # channel_layer = get_channel_layer()
 # async_to_sync(channel_layer.group_send)(
 #     "notifications",
@@ -22,20 +61,44 @@ import serializers
 #     }
 # )
 
-
-class LoginViewSet(APIView):
-    queryset = models.User.objects.all()
-    serializer_class = serializers.LoginSerializer
-    permission_classes = [permissions.AllowAny]
+class AuthenticatedAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        serializer = serializers.LoginSerializer(data=request.data)
+        try:
+            sessionid = request.session.session_key
+            session = Session.objects.get(session_key=sessionid)
+            session_data = session.get_decoded()
+
+            print(session_data)
+
+            user_id = session_data.get('_auth_user_id')
+            user = User.objects.get(id=user_id)
+
+            return Response({
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'middle_name': user.middle_name,
+                'email': user.email,
+            }, status=status.HTTP_200_OK)
+        except (Session.DoesNotExist, User.DoesNotExist):
+            return None
+
+
+class LoginViewSet(APIView):
+    queryset = User.objects.all()
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        username = serializer.validated_data['username']
+        email = serializer.validated_data['email']
         password = serializer.validated_data['password']
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
@@ -71,8 +134,9 @@ class LoginViewSet(APIView):
 
 
 class LogoutViewSet(APIView):
-    queryset = models.User.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = LogoutSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         logout(request)
@@ -82,40 +146,45 @@ class LogoutViewSet(APIView):
             },
             status=status.HTTP_200_OK
         )
+
         response.delete_cookie('sessionid')
         response.delete_cookie('csrftoken')
+
         return response
 
 
-@extend_schema_view(**docs.TechStatusDocumentation())
+@extend_schema_view(**TechStatusDocumentation())
 class TechStatusViewSet(viewsets.ModelViewSet):
-    queryset = models.TechStatus.objects.all()
-    serializer_class = serializers.TechStatusSerializer
+    queryset = TechStatus.objects.all()
+    serializer_class = TechStatusSerializer
+    permission_classes = [IsAuthenticated]
 
 
-@extend_schema_view(**docs.SensorDocumentation())
+@extend_schema_view(**SensorDocumentation())
 class SensorViewSet(viewsets.ModelViewSet):
-    queryset = models.Sensor.objects.all()
-    serializer_class = serializers.SensorSerializer
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         query_rig_id = self.request.query_params.get("rig_id")
 
         if query_rig_id is not None:
-            filtered_queryset = models.Sensor.objects.filter(rig_id=query_rig_id)
+            filtered_queryset = Sensor.objects.filter(rig_id=query_rig_id)
             return Response(
                 self.get_serializer(filtered_queryset, many=True).data,
                 status=status.HTTP_200_OK
             )
 
-        query_data = self.get_serializer(self.queryset, many=True).data
+        query_data = self.get_serializer(self.get_queryset(), many=True).data
         return Response(query_data, status=status.HTTP_200_OK)
 
 
-@extend_schema_view(**docs.SensorDataDocumentation())
+@extend_schema_view(**SensorDataDocumentation())
 class SensorDataViewSet(viewsets.ModelViewSet):
-    queryset = models.SensorData.objects.all()
-    serializer_class = serializers.SensorDataSerializer
+    queryset = SensorData.objects.all()
+    serializer_class = SensorDataSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -135,10 +204,11 @@ class SensorDataViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-@extend_schema_view(**docs.DrillingStatusDocumentation())
+@extend_schema_view(**DrillingStatusDocumentation())
 class DrillingStatusViewSet(viewsets.ModelViewSet):
-    queryset = models.DrillingStatus.objects.all()
-    serializer_class = serializers.DrillingStatusSerializer
+    queryset = DrillingStatus.objects.all()
+    serializer_class = DrillingStatusSerializer
+    permission_classes = [IsAuthenticated]
 
     # Кастомный JSON / Чтобы не забыть =)
     def list(self, request, *args, **kwargs):
@@ -157,14 +227,15 @@ class DrillingStatusViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_200_OK
             )
 
-        query_data = self.get_serializer(self.queryset, many=True).data
+        query_data = self.get_serializer(self.get_queryset(), many=True).data
         return Response(query_data, status=status.HTTP_200_OK)
 
 
-@extend_schema_view(**docs.RigDocumentation())
+@extend_schema_view(**RigDocumentation())
 class RigViewSet(viewsets.ModelViewSet):
-    queryset = models.Rig.objects.all()
-    serializer_class = serializers.RigSerializer
+    queryset = Rig.objects.all()
+    serializer_class = RigSerializer
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         channel_layer = get_channel_layer()
@@ -196,47 +267,55 @@ class RigViewSet(viewsets.ModelViewSet):
 
 # @extend_schema_view(**RigDocumentation())
 class DrillingFluidSystemViewSet(viewsets.ModelViewSet):
-    queryset = models.DrillingFluidSystem.objects.all()
-    serializer_class = serializers.DrillingFluidSystemSerializer
+    queryset = DrillingFluidSystem.objects.all()
+    serializer_class = DrillingFluidSystemSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class SensorStatusViewSet(viewsets.ModelViewSet):
-    queryset = models.SensorStatus.objects.all()
-    serializer_class = serializers.SensorStatusSerializer
+    queryset = SensorStatus.objects.all()
+    serializer_class = SensorStatusSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class DrillingMotorViewSet(viewsets.ModelViewSet):
-    queryset = models.DrillingMotor.objects.all()
-    serializer_class = serializers.DrillingMotorSerializer
+    queryset = DrillingMotor.objects.all()
+    serializer_class = DrillingMotorSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class RobotStatusViewSet(viewsets.ModelViewSet):
-    queryset = models.RobotStatus.objects.all()
-    serializer_class = serializers.RobotStatusSerializer
+    queryset = RobotStatus.objects.all()
+    serializer_class = RobotStatusSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class RobotViewSet(viewsets.ModelViewSet):
-    queryset = models.Robot.objects.all()
-    serializer_class = serializers.RobotSerializer
+    queryset = Robot.objects.all()
+    serializer_class = RobotSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class HoistingSystemViewSet(viewsets.ModelViewSet):
-    queryset = models.HoistingSystem.objects.all()
-    serializer_class = serializers.HoistingSystemSerializer
+    queryset = HoistingSystem.objects.all()
+    serializer_class = HoistingSystemSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class DefectoscopeViewSet(viewsets.ModelViewSet):
-    queryset = models.Defectoscope.objects.all()
-    serializer_class = serializers.DefectoscopeSerializer
+    queryset = Defectoscope.objects.all()
+    serializer_class = DefectoscopeSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # @extend_schema_view(**RigDocumentation())
 class HydraulicPowerTongViewSet(viewsets.ModelViewSet):
-    queryset = models.HydraulicPowerTong.objects.all()
-    serializer_class = serializers.HydraulicPowerTongSerializer
+    queryset = HydraulicPowerTong.objects.all()
+    serializer_class = HydraulicPowerTongSerializer
+    permission_classes = [IsAuthenticated]
