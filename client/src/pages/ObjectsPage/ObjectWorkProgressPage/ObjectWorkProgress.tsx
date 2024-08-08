@@ -1,4 +1,4 @@
-import './ObjectStatistic.scss';
+import './ObjectWorkProgress.scss';
 
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -22,6 +22,7 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
 import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
+import { useObjectIdStore } from '@/store/useObjectIdStore';
 import { useQuery } from '@tanstack/react-query';
 
 import { api } from '../../../api/index';
@@ -34,8 +35,17 @@ const data = [
 ];
 const COLORS = ['#3D00B8', '#DA7700', '#3A7CFF', '#00C472'];
 
-export default function ObjectStatistic() {
+export default function ObjectWorkProgress() {
   const { id } = useParams();
+  const objectIdStore = useObjectIdStore();
+
+  useEffect(() => {
+    objectIdStore.setId(Number(id));
+
+    return () => {
+      objectIdStore.setId(null);
+    };
+  }, [id]);
 
   const { data: rig, isFetching } = useQuery({
     queryKey: ['rig retrieve'],
@@ -78,9 +88,9 @@ export default function ObjectStatistic() {
   if (isFetching) return <span>Загрузка...</span>;
 
   return (
-    <div className="object-statistic__wrapper">
-      <div className="object-statistic__header row">
-        <Link to="/objects" className="bento_back_btn">
+    <div className="object-work-progress__wrapper">
+      <div className="object-work-progress__header">
+        <Link to="/objects" className="object-work-progress__bento_back_btn">
           <ChevronSVG />
         </Link>
         <div className="bento-object-selector">{rig?.name}</div>
@@ -88,7 +98,7 @@ export default function ObjectStatistic() {
 
       <div className="row">
         <div
-          className="bento  bento--accent"
+          className="bento bento--accent"
           style={{
             height: 'fit-content',
             maxWidth: '100%',

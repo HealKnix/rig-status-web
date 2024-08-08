@@ -1,52 +1,27 @@
 header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 0 25px;
   background-color: var(--white);
   border-left: 2px solid var(--background-color);
 
-  & > .header__user {
-    cursor: pointer;
+  & > .header__object-name {
     display: flex;
     align-items: center;
+    gap: 10px;
+    color: var(--primary-color);
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  & > .header__well-pad {
+    font-weight: bold;
+  }
+
+  & > .header__object-data {
+    display: flex;
     gap: 25px;
-    height: 100%;
-    border-left: 2px solid var(--border-color);
-    padding: 0 25px;
-
-    & > .user__wrapper {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      & > .user-image {
-        width: 50px;
-        height: 50px;
-        background-image: url('/unknown-user.png');
-        background-position: center;
-        background-size: cover;
-      }
-
-      & > .user-text > .user-text-short-name {
-        font-weight: 500;
-      }
-
-      & > .user-text > .user-text-role {
-        color: var(--text-additional-color);
-      }
-    }
-
-    & > svg {
-      rotate: 90deg;
-
-      & > path {
-        stroke: var(--text-additional-color);
-      }
-    }
-
-    &:hover {
-      background-color: var(--primary-light-color);
-    }
   }
 }

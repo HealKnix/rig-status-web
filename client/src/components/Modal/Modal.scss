@@ -3,13 +3,13 @@ dialog {
 
   position: fixed;
   display: flex;
+  justify-content: center;
   align-items: center;
   pointer-events: none;
   opacity: 0;
 
   width: 100%;
   height: 100%;
-  max-width: 550px;
   padding: 24px;
   background-color: transparent;
   overflow: visible;
@@ -28,7 +28,7 @@ dialog {
 
   &::backdrop {
     cursor: pointer;
-    background-color: #0006;
+    background-color: color-mix(in srgb, var(--text-color) 35%, transparent 0%);
 
     animation: backdrop-show 0.2s ease-in-out;
     @keyframes backdrop-show {
@@ -43,6 +43,7 @@ dialog {
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 550px;
     max-height: 100%;
     border: 1px solid var(--border-color);
     background-color: var(--white);
@@ -62,14 +63,15 @@ dialog {
       align-items: center;
 
       & > .modal-title {
+        color: var(--primary-color);
         font-size: 36px;
         font-weight: 600;
-        font-family: Geometria;
       }
     }
 
     & > .modal-description {
       font-size: 18px;
+      font-weight: 400;
     }
 
     & > hr {
@@ -81,7 +83,7 @@ dialog {
       justify-content: end;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 16px;
+      margin-top: 15px;
 
       & > button {
         width: 100%;

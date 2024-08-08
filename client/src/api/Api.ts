@@ -69,7 +69,9 @@ export class Api implements ApiType {
     return data;
   }
 
-  async getById<T>(apiName: ApiNames, id: number) {
+  async getById<T>(apiName: ApiNames, id: number | null) {
+    if (!id) return null;
+
     const { data } = await axios.get<T>(`/api/${apiName}/${id}/`, {
       withCredentials: true,
     });
@@ -88,8 +90,10 @@ export class Api implements ApiType {
     return data;
   }
 
-  async update<T>(apiName: ApiNames, dataBody: T) {
-    const { data } = await axios.patch<T>(`/api/${apiName}/`, dataBody, {
+  async update<T>(apiName: ApiNames, dataBody: T, id: number | null) {
+    if (!id) return null;
+
+    const { data } = await axios.patch<T>(`/api/${apiName}/${id}`, dataBody, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),
@@ -99,8 +103,10 @@ export class Api implements ApiType {
     return data;
   }
 
-  async delete<T>(apiName: ApiNames) {
-    const { data } = await axios.delete<T>(`/api/${apiName}/`, {
+  async delete<T>(apiName: ApiNames, id: number | null) {
+    if (!id) return null;
+
+    const { data } = await axios.delete<T>(`/api/${apiName}/${id}`, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),

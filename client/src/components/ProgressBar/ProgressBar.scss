@@ -20,17 +20,17 @@
     width: 100%;
     height: 100%;
     background-image: url('../../assets/loading_divider.svg');
-    background-position-x: -100%;
+    background-position: 0 100%;
     background-size: contain;
 
-    animation: in_progress 30s linear infinite;
+    animation: in_progress 1.5s linear infinite;
 
     @keyframes in_progress {
-      from {
-        background-position-x: -100%;
+      0% {
+        background-position: -45px 0;
       }
-      to {
-        background-position-x: 100%;
+      100% {
+        background-position: 0 0;
       }
     }
   }

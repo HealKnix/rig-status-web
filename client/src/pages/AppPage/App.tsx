@@ -8,9 +8,11 @@ import Sidebar from '@/components/layouts/Sidebar/Sidebar';
 import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
 import Login from '../LoginPage/Login';
-import MachineVision from '../MachineVisionPage/MachineVision';
+import ObjectRobot from '../ObjectsPage/ObjectRobotPage/ObjectRobot';
 import Objects from '../ObjectsPage/Objects';
-import ObjectStatistic from '../ObjectsPage/ObjectStatisticPage/ObjectStatistic';
+import ObjectScreens from '../ObjectsPage/ObjectScreensPage/ObjectScreens';
+import ObjectWorkplace from '../ObjectsPage/ObjectWorkplacePage/ObjectWorkplace';
+import ObjectWorkProgress from '../ObjectsPage/ObjectWorkProgressPage/ObjectWorkProgress';
 import SignUp from '../SignUpPage/SignUp';
 
 export default function App() {
@@ -24,9 +26,21 @@ export default function App() {
         <Main>
           <Routes>
             <Route path="*" element={<Navigate to="/objects" replace />} />
-            <Route path="/machine-vision" element={<MachineVision />} />
             <Route path="/objects" element={<Objects />} />
-            <Route path="/objects/:id" element={<ObjectStatistic />} />
+            <Route
+              path="/objects/:id"
+              element={<Navigate to="workplace" replace />}
+            />
+            <Route
+              path="/objects/:id/workplace"
+              element={<ObjectWorkplace />}
+            />
+            <Route path="/objects/:id/screens" element={<ObjectScreens />} />
+            <Route path="/objects/:id/robot" element={<ObjectRobot />} />
+            <Route
+              path="/objects/:id/work-progress"
+              element={<ObjectWorkProgress />}
+            />
           </Routes>
         </Main>
       </div>
@@ -38,6 +52,7 @@ export default function App() {
       <Routes>
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </div>

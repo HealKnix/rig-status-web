@@ -1,7 +1,7 @@
 export default function RigSVG() {
   return (
     <svg
-      width="24"
+      width="25"
       height="36"
       viewBox="0 0 17 36"
       fill="none"

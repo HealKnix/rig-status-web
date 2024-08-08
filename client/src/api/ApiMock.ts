@@ -95,7 +95,7 @@ export class ApiMock implements ApiType {
     return data;
   }
 
-  async getById<T>(apiName: ApiNames, id: number) {
+  async getById<T>(apiName: ApiNames, id: number | null) {
     const userId = userList.findIndex((user) => {
       return (
         user.sessionid == cookies.get('sessionid') &&
@@ -103,7 +103,7 @@ export class ApiMock implements ApiType {
       );
     });
 
-    if (!userList[userId]) return await delayRes(null, DELAY);
+    if (!userList[userId] || !id) return await delayRes(null, DELAY);
 
     let data: T | null;
 

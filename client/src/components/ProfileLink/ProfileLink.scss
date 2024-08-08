@@ -1,0 +1,62 @@
+.profile-link {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 25px;
+  height: 75px;
+  padding: 0 15px;
+  border-top: 2px solid var(--background-color);
+
+  & > .profile-link__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    & > .profile-image {
+      width: 50px;
+      height: 50px;
+      background-image: url('/unknown-user.png');
+      background-position: center;
+      background-size: cover;
+    }
+
+    & > .profile-text > .profile-text__short-name {
+      font-weight: 500;
+    }
+
+    & > .profile-text > .profile-text-role {
+      color: var(--text-additional-color);
+    }
+  }
+
+  & > svg {
+    width: 15px;
+
+    & > path {
+      stroke: var(--text-additional-color);
+    }
+  }
+
+  &:hover {
+    background-color: var(--primary-light-color);
+  }
+}
+
+@media (width <= 1000px) {
+  .profile-link {
+    justify-content: center;
+    padding: 0;
+
+    & > svg {
+      display: none;
+    }
+  }
+
+  .profile-link__wrapper {
+    & > .profile-text {
+      display: none;
+    }
+  }
+}

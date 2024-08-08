@@ -19,8 +19,12 @@ export interface ApiType {
   logout?: () => Promise<void>;
   auth?: (email: string, password: string) => Promise<User | null>;
   get?: <T>(apiName: ApiNames) => Promise<T[]>;
-  getById?: <T>(apiName: ApiNames, id: number) => Promise<T | null>;
+  getById?: <T>(apiName: ApiNames, id: number | null) => Promise<T | null>;
   post?: <T>(apiName: ApiNames, dataBody: T) => Promise<T>;
-  update?: <T>(apiName: ApiNames, dataBody: T) => Promise<T>;
-  delete?: <T>(apiName: ApiNames) => Promise<T>;
+  update?: <T>(
+    apiName: ApiNames,
+    dataBody: T,
+    id: number | null,
+  ) => Promise<T | null>;
+  delete?: <T>(apiName: ApiNames, id: number | null) => Promise<T | null>;
 }

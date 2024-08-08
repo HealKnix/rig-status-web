@@ -45,38 +45,36 @@ export default function ObjectCard({
   }
 
   return (
-    <>
-      <div
-        className="card-object"
-        style={{
-          borderBottom: `3px solid ${statusColor}`,
+    <div
+      className="card-object"
+      style={{
+        borderBottom: `3px solid ${statusColor}`,
+      }}
+    >
+      <span className="object-id">{id}</span>
+      <span className="object-name">{name}</span>
+      <span className="object-location">{location}</span>
+      <div className="object-connection">
+        <SatelliteSVG connection_speed={connection_speed} />
+      </div>
+      <div className="object-drilling-progress">
+        <span>{DrillingStatus[drilling_status_id]}</span>
+        <ProgressBar
+          loader={drilling_status_id === 1}
+          value={(bottom_hole_drilling / well_depth) * 100}
+          color={progressBarColor}
+          maxValue={100}
+        />
+      </div>
+      <Button
+        variant="outlined"
+        onClick={() => {
+          navigate(`${id}/workplace`);
         }}
       >
-        <span className="object-id">{id}</span>
-        <span className="object-name">{name}</span>
-        <span className="object-location">{location}</span>
-        <div className="object-connection">
-          <SatelliteSVG connection_speed={connection_speed} />
-        </div>
-        <div className="object-drilling-progress">
-          <span>{DrillingStatus[drilling_status_id]}</span>
-          <ProgressBar
-            loader={drilling_status_id === 1}
-            value={(bottom_hole_drilling / well_depth) * 100}
-            color={progressBarColor}
-            maxValue={100}
-          />
-        </div>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            navigate(`${id}`);
-          }}
-        >
-          подробнее
-        </Button>
-        <span className="object-status">{status}</span>
-      </div>
-    </>
+        подробнее
+      </Button>
+      <span className="object-status">{status}</span>
+    </div>
   );
 }

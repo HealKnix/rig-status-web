@@ -1,40 +1,89 @@
 import './Sidebar.scss';
 
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
+import ProfileLink from '@/components/ProfileLink/ProfileLink';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
+import ConsoleSVG from '@/components/SVGs/ConsoleSVG';
+import LineChartSVG from '@/components/SVGs/LineChartSVG';
 import RigSVG from '@/components/SVGs/RigSVG';
+import RobotSVG from '@/components/SVGs/RobotSVG';
 import ScreensSVG from '@/components/SVGs/ScreensSVG';
+import { useObjectIdStore } from '@/store/useObjectIdStore';
 
 export default function Sidebar() {
+  const location = useLocation();
+  const objectIdStore = useObjectIdStore();
+
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
         <div id="main-logo"></div>
       </div>
+
       <div className="sidebar__navs">
         <ul>
           <li>
-            <NavLink to="/machine-vision">
-              <span>
-                <ScreensSVG />
-                Машинное зрение
-              </span>
-              <ChevronSVG />
-            </NavLink>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <NavLink to="/objects">
+            <Link
+              to="/objects"
+              className={location.pathname === '/objects' ? 'active' : ''}
+            >
               <span>
                 <RigSVG />
-                Объекты
+                <span>Объекты</span>
               </span>
               <ChevronSVG />
-            </NavLink>
+            </Link>
           </li>
         </ul>
+
+        {objectIdStore.idIsNotNull() && (
+          <ul>
+            <li>
+              <NavLink to={`/objects/${objectIdStore.id}/workplace`}>
+                <span>
+                  <ConsoleSVG />
+                  <span>Рабочее место</span>
+                </span>
+                <ChevronSVG />
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={`/objects/${objectIdStore.id}/screens`}>
+                <span>
+                  <ScreensSVG />
+                  <span>Экраны</span>
+                </span>
+                <ChevronSVG />
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={`/objects/${objectIdStore.id}/robot`}>
+                <span>
+                  <RobotSVG />
+                  <span>Робот</span>
+                </span>
+                <ChevronSVG />
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={`/objects/${objectIdStore.id}/work-progress`}>
+                <span>
+                  <LineChartSVG />
+                  <span>Прогресс работ</span>
+                </span>
+                <ChevronSVG />
+              </NavLink>
+            </li>
+          </ul>
+        )}
+      </div>
+
+      <div className="sidebar__bottom">
+        <ProfileLink />
       </div>
     </div>
   );
