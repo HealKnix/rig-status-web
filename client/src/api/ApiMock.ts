@@ -19,6 +19,10 @@ async function delayRes<T>(data: T, delay: number): Promise<T> {
 }
 
 export class ApiMock implements ApiType {
+  constructor() {
+    console.log('mock api');
+  }
+
   async login(email: string, password: string) {
     const userId = userList.findIndex((user) => {
       return user.email === email && user.password === password;

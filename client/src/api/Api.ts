@@ -8,6 +8,10 @@ import { ApiNames, ApiType } from './ApiType';
 const cookies = new Cookies();
 
 export class Api implements ApiType {
+  constructor() {
+    console.log('production api');
+  }
+
   async login(email: string, password: string) {
     const { data } = await axios.post<{
       sessionid: string;
@@ -41,6 +45,8 @@ export class Api implements ApiType {
   }
 
   async auth() {
+    if (!cookies.get('sessionid')) return null;
+
     const { data } = await axios.post<User>(
       '/auth-login/',
       {},

@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
-
 import { api } from '@/api';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useQuery } from '@tanstack/react-query';
 
 export const useInitializeAuth = () => {
   const authStore = useAuthStore();
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true);
-    api.auth().then((res) => {
-      authStore.setUser(res);
-      setLoading(false);
-    });
-  }, []);
+  const { isFetching } = useQuery({
+    queryKey: ['api auth'],
+    queryFn: () =>
+      api.auth().then((res) => {
+        authStore.setUser(res);
+        return res;
+      }),
+  });
 
-  return { isAuthenticated: authStore.isAuth(), loading };
+  return { isAuthenticated: authStore.isAuth(), loading: isFetching };
 };

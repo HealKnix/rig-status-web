@@ -76,10 +76,10 @@ const Modal: FC = () => {
           </Button>
           <Button
             variant="accent"
-            onClick={() => {
+            onClick={async () => {
               modalStore.closeProfileModal();
               authStore.setUser(null);
-              api.logout();
+              await api.logout();
             }}
           >
             Да
