@@ -7,7 +7,7 @@ import { useObjectIdStore } from '@/store/useObjectIdStore';
 
 interface ObjectWorkplaceProps {}
 
-const ObjectWorkplace: FC<ObjectWorkplaceProps> = (props) => {
+const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
 

@@ -11,7 +11,7 @@ import { useObjectIdStore } from '@/store/useObjectIdStore';
 
 interface ObjectScreensProps {}
 
-const ObjectScreens: FC<ObjectScreensProps> = (props) => {
+const ObjectScreens: FC<ObjectScreensProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
 

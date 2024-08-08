@@ -7,7 +7,7 @@ import { useObjectIdStore } from '@/store/useObjectIdStore';
 
 interface ObjectRobotProps {}
 
-const ObjectRobot: FC<ObjectRobotProps> = (props) => {
+const ObjectRobot: FC<ObjectRobotProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
 

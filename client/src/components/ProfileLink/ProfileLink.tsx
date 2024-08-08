@@ -9,7 +9,7 @@ import ChevronSVG from '../SVGs/ChevronSVG';
 
 interface ProfileLinkProps {}
 
-const ProfileLink: FC<ProfileLinkProps> = (props) => {
+const ProfileLink: FC<ProfileLinkProps> = () => {
   const authStore = useAuthStore();
   const modalStore = useModalStore();
 
