@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { api } from '@/api';
 import { useAuthStore } from '@/store/useAuthStore';
 
 export const useInitializeAuth = () => {
@@ -7,15 +8,11 @@ export const useInitializeAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-
-    if (storedUser) {
-      authStore.setUser(JSON.parse(storedUser));
-    } else {
-      authStore.setUser(null);
-    }
-
-    setLoading(false);
+    setLoading(true);
+    api.auth().then((res) => {
+      authStore.setUser(res);
+      setLoading(false);
+    });
   }, []);
 
   return { isAuthenticated: authStore.isAuth(), loading };

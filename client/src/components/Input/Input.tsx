@@ -22,29 +22,27 @@ const Input: FC<InputProps> = ({
   }, [props.value, movableTitle, movable_placeholder]);
 
   return (
-    <>
-      <label htmlFor={props.id} className="input__wrapper">
-        {props.title && (
-          <span
-            className={
-              movable_placeholder
-                ? `input-title--movable-placeholder ${
-                    movableTitle ? 'input-title--movable' : ''
-                  }`
-                : 'input-title'
-            }
-          >
-            {props.title}
-          </span>
-        )}
-        <input
-          className="input"
-          placeholder={movable_placeholder ? '' : props.placeholder}
-          ref={forward_ref}
-          {...props}
-        />
-      </label>
-    </>
+    <label htmlFor={props.id} className="input__wrapper">
+      {props.title && (
+        <span
+          className={
+            movable_placeholder
+              ? `input-title--movable-placeholder ${
+                  movableTitle && 'input-title--movable'
+                }`
+              : 'input-title'
+          }
+        >
+          {props.title}
+        </span>
+      )}
+      <input
+        className="input"
+        placeholder={movable_placeholder ? '' : props.placeholder}
+        ref={forward_ref}
+        {...props}
+      />
+    </label>
   );
 };
 
