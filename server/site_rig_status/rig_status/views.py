@@ -70,8 +70,6 @@ class AuthenticatedAPIView(APIView):
             session = Session.objects.get(session_key=sessionid)
             session_data = session.get_decoded()
 
-            print(session_data)
-
             user_id = session_data.get('_auth_user_id')
             user = User.objects.get(id=user_id)
 
