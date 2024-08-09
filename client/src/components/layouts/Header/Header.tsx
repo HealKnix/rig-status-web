@@ -71,13 +71,15 @@ export default function Header() {
           </b>
         </span>
         <span className="object-data__current-date">
-          Время:{' '}
+          Дата:{' '}
           <b>
-            {(time?.getDay() ?? 0) < 10 ? `0${time?.getDay()}` : time?.getDay()}
+            {(time?.getDate() ?? 0) < 10
+              ? `0${time?.getDate()}`
+              : time?.getDate()}
             .
             {(time?.getMonth() ?? 0) < 10
-              ? `0${time?.getMonth()}`
-              : time?.getMonth()}
+              ? `0${(time?.getMonth() ?? 0) + 1}`
+              : (time?.getMonth() ?? 0) + 1}
             .{time?.getFullYear()}
           </b>
         </span>
