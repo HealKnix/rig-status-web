@@ -3,16 +3,25 @@ import './ObjectWorkplace.scss';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { api } from '@/api';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 import Switch from '@/components/Switch/Switch';
+import { DrillingStatus } from '@/models/DrillingStatus';
+import { Rig } from '@/models/Rig';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
+import { useQuery } from '@tanstack/react-query';
 
 interface ObjectWorkplaceProps {}
 
 const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
+
+  const { data: rig, isFetching } = useQuery({
+    queryKey: ['workplace rig id'],
+    queryFn: () => api.getById<Rig>('rigs', Number(id)),
+  });
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
@@ -21,6 +30,8 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       objectIdStore.setId(null);
     };
   }, [id]);
+
+  if (isFetching) return <span>Загрузка...</span>;
 
   return (
     <div className="object-workplace__wrapper">
@@ -36,13 +47,20 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             textAlign: 'center',
           }}
         >
-          <h2 style={{ color: 'var(--primary-color)' }}>1762 м</h2>
-          <h4>осталось 761 м</h4>
+          <h2 style={{ color: 'var(--primary-color)' }}>
+            {rig?.bottom_hole_drilling} м
+          </h2>
+          <h4>
+            осталось{' '}
+            {Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м
+          </h4>
         </span>
         <h2>Горная порода</h2>
         <h2 style={{ color: 'var(--primary-color)' }}>Песчаник</h2>
         <h2>Текущий процесс</h2>
-        <h2 style={{ color: 'var(--primary-color)' }}>Бурение</h2>
+        <h2 style={{ color: 'var(--primary-color)' }}>
+          {DrillingStatus[rig?.drilling_status_id ?? 0]}
+        </h2>
       </div>
 
       <div className="object-workplace__block">

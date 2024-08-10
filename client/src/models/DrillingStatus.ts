@@ -7,7 +7,7 @@ export enum DrillingStatusId {
 }
 
 export const DrillingStatus: { [key in DrillingStatusId]: string } = {
-  [DrillingStatusId.ERROR]: 'Ошибка',
+  [DrillingStatusId.ERROR]: '...',
   [DrillingStatusId.WORKING]: 'Работает',
   [DrillingStatusId.STARTING]: 'Запуск...',
   [DrillingStatusId.ABNORMAL]: 'Авария',
