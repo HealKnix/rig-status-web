@@ -8,6 +8,7 @@ import Sidebar from '@/components/layouts/Sidebar/Sidebar';
 import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
 import Login from '../LoginPage/Login';
+import ObjectLayout from '../ObjectsPage/ObjectLayoutPage/ObjectLayout';
 import ObjectRobot from '../ObjectsPage/ObjectRobotPage/ObjectRobot';
 import Objects from '../ObjectsPage/Objects';
 import ObjectScreens from '../ObjectsPage/ObjectScreensPage/ObjectScreens';
@@ -27,20 +28,12 @@ export default function App() {
           <Routes>
             <Route path="*" element={<Navigate to="/objects" replace />} />
             <Route path="/objects" element={<Objects />} />
-            <Route
-              path="/objects/:id"
-              element={<Navigate to="workplace" replace />}
-            />
-            <Route
-              path="/objects/:id/workplace"
-              element={<ObjectWorkplace />}
-            />
-            <Route path="/objects/:id/screens" element={<ObjectScreens />} />
-            <Route path="/objects/:id/robot" element={<ObjectRobot />} />
-            <Route
-              path="/objects/:id/work-progress"
-              element={<ObjectWorkProgress />}
-            />
+            <Route path="/objects/:id" element={<ObjectLayout />}>
+              <Route path="workplace" element={<ObjectWorkplace />} />
+              <Route path="screens" element={<ObjectScreens />} />
+              <Route path="robot" element={<ObjectRobot />} />
+              <Route path="work-progress" element={<ObjectWorkProgress />} />
+            </Route>
           </Routes>
         </Main>
       </div>

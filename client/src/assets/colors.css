@@ -5,8 +5,16 @@
     var(--primary-color) 10%,
     transparent 100%
   );
+  --secondary-color: #ff7c3a;
+  --secondary-light-color: color-mix(
+    in srgb,
+    var(--secondary-color) 10%,
+    transparent 100%
+  );
+
   --background-color: #f2f2f3;
-  --border-color: #e2e4e9;
+  --border-color: #dbe1ed;
+
   --error-color: #ff4d55;
   --warning-color: #ffb200;
   --success-color: #00c472;

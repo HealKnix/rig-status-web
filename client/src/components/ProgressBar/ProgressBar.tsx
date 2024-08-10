@@ -12,7 +12,7 @@ export default function ProgressBar({
   value,
   maxValue,
   loader,
-}: ProgressBarProps) {
+}: Readonly<ProgressBarProps>) {
   return (
     <progress
       style={{ '--accent-color': color } as React.CSSProperties}

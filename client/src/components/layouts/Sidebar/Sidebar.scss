@@ -30,9 +30,12 @@
     width: 100%;
 
     & > ul {
+      display: flex;
+      flex-direction: column;
       border-top: 2px solid var(--background-color);
       padding: 25px 0;
       padding-right: 15px;
+      gap: 2px;
 
       & > li > a {
         display: flex;

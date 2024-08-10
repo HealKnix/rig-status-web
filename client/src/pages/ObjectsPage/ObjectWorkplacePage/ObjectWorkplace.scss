@@ -1,0 +1,97 @@
+.object-workplace__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(475px, 1fr));
+  grid-auto-flow: row dense;
+  gap: 15px;
+  width: 100%;
+  overflow-y: auto;
+
+  & > .object-workplace__block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 6px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    background-color: var(--white);
+    transition: 0.15s ease-in-out;
+
+    // &:has(
+    //     > .object-workplace__block__title > input[type='checkbox']:checked
+    //   )::after {
+    //   pointer-events: none;
+    //   position: absolute;
+    //   content: '';
+    //   inset: 0px;
+    //   padding: 1px;
+    //   border-radius: inherit;
+    //   background: linear-gradient(
+    //     to right,
+    //     var(--success-color),
+    //     var(--success-color)
+    //   );
+    //   mask:
+    //     linear-gradient(var(--white) 0 0) content-box,
+    //     linear-gradient(var(--white) 0 0);
+    //   -webkit-mask:
+    //     linear-gradient(var(--white) 0 0) content-box,
+    //     linear-gradient(var(--white) 0 0);
+    //   mask-composite: exclude;
+    //   -webkit-mask-composite: xor;
+    // }
+
+    &:has(> .object-workplace__block__title > input[type='checkbox']:checked),
+    &:has(
+        > .object-workplace__block__title > div > input[type='checkbox']:checked
+      ) {
+      box-shadow: inset 0 0 0 1px var(--success-color);
+    }
+
+    & > .object-workplace__block__title {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+
+      & > .link,
+      & > div > .link {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: 0.15s ease-in-out;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+    }
+
+    & > .object-workplace__block__content {
+      & > .object-workplace__block__content__table {
+        display: grid;
+        gap: 15px;
+
+        & > .object-workplace__block__content__table__row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          padding: 2px 5px;
+
+          & > .object-workplace__block__content__table__column > span {
+            font-weight: 500;
+          }
+
+          &:not(:last-child) {
+            border-bottom: 1px solid var(--background-color);
+          }
+
+          & > *:last-child {
+            text-align: right;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

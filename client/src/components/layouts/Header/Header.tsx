@@ -7,6 +7,7 @@ import SatelliteSVG from '@/components/SVGs/SatelliteSVG';
 import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
+import { addLeadingZero } from '@/utils/addLeadingZero';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Header() {
@@ -21,11 +22,31 @@ export default function Header() {
     queryFn: () => api.getById<Rig>('rigs', objectIdStore.id),
   });
 
-  const [time, setTime] = useState<Date | null>(new Date());
+  const [time, setTime] = useState<{
+    year: string;
+    month: string;
+    day: string;
+    hour: string;
+    minute: string;
+  }>({
+    year: new Date().getFullYear().toString(),
+    month: addLeadingZero(new Date().getMonth()),
+    day: addLeadingZero(new Date().getDate()),
+    hour: addLeadingZero(new Date().getHours()),
+    minute: addLeadingZero(new Date().getMinutes()),
+  });
 
   useEffect(() => {
     const timeId = setInterval(() => {
-      setTime(new Date());
+      const time = new Date();
+
+      setTime({
+        year: time.getFullYear().toString(),
+        month: addLeadingZero(time.getMonth()),
+        day: addLeadingZero(time.getDate()),
+        hour: addLeadingZero(time.getHours()),
+        minute: addLeadingZero(time.getMinutes()),
+      });
     }, 1000);
 
     return () => {
@@ -61,26 +82,13 @@ export default function Header() {
         <span className="object-data__current-time">
           Время:{' '}
           <b>
-            {(time?.getHours() ?? 0) < 10
-              ? `0${time?.getHours()}`
-              : time?.getHours()}
-            :
-            {(time?.getMinutes() ?? 0) < 10
-              ? `0${time?.getMinutes()}`
-              : time?.getMinutes()}
+            {time?.hour}:{time?.minute}
           </b>
         </span>
         <span className="object-data__current-date">
           Дата:{' '}
           <b>
-            {(time?.getDate() ?? 0) < 10
-              ? `0${time?.getDate()}`
-              : time?.getDate()}
-            .
-            {(time?.getMonth() ?? 0) < 10
-              ? `0${(time?.getMonth() ?? 0) + 1}`
-              : (time?.getMonth() ?? 0) + 1}
-            .{time?.getFullYear()}
+            {time?.day}.{time?.month}.{time?.year}
           </b>
         </span>
         {objectIdStore.idIsNotNull() && (

@@ -22,19 +22,17 @@ const TextArea: FC<ButtonProps> = ({
   forwardRef,
 }) => {
   return (
-    <>
-      <label htmlFor={id} className="input--text-area__wrapper">
-        {title}
-        <textarea
-          id={id}
-          className="input--text-area"
-          value={value}
-          ref={forwardRef}
-          onChange={onChange ?? (() => {})}
-          onKeyDown={onKeyDown}
-        />
-      </label>
-    </>
+    <label htmlFor={id} className="custom-textarea__wrapper">
+      {title}
+      <textarea
+        id={id}
+        className="custom-textarea"
+        value={value}
+        ref={forwardRef}
+        onChange={onChange ?? (() => {})}
+        onKeyDown={onKeyDown}
+      />
+    </label>
   );
 };
 

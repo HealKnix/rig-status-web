@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
+import { TechStatus } from '@/models/TechStatus';
 
 import Button from '../Button/Button';
 import ProgressBar from '../ProgressBar/ProgressBar';
@@ -18,7 +19,7 @@ export default function ObjectCard({
   connection_speed,
   drilling_status_id,
   tech_status_id,
-}: Rig) {
+}: Readonly<Rig>) {
   const navigate = useNavigate();
   let statusColor = 'var(--text-additional-color)';
 
@@ -74,7 +75,7 @@ export default function ObjectCard({
       >
         подробнее
       </Button>
-      <span className="object-status">{status}</span>
+      <span className="object-status">{TechStatus[tech_status_id]}</span>
     </div>
   );
 }

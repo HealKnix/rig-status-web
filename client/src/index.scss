@@ -51,9 +51,8 @@ hr {
   border: 1px solid #e6e6e6;
 }
 
-input:not([type='radio']),
+input,
 textarea {
-  width: 100%;
   outline: none;
   background-color: var(--white);
   color: var(--text-color);
@@ -64,14 +63,12 @@ textarea {
   transition: all 0.15s ease-in-out;
 }
 
-input:not([type='radio'])::placeholder,
+input::placeholder,
 textarea::placeholder {
   color: var(--text-additional-color);
 }
 
-input:not([type='radio']):focus,
-input:not([type='radio']):focus-visible,
-textarea:focus,
+input:focus-visible,
 textarea:focus-visible {
   border: 1px solid var(--primary-color);
   box-shadow: 0 0 0 1px var(--primary-color);
