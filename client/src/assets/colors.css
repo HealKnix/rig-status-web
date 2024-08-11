@@ -11,6 +11,12 @@
     var(--secondary-color) 10%,
     transparent 100%
   );
+  --thirdly-color: #823aff;
+  --thirdly-light-color: color-mix(
+    in srgb,
+    var(--thirdly-color) 10%,
+    transparent 100%
+  );
 
   --background-color: #f2f2f3;
   --border-color: #dbe1ed;

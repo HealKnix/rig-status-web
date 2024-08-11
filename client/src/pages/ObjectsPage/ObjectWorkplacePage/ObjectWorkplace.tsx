@@ -733,7 +733,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  20 кПа
+                  40 кПа
                 </span>
                 <ProgressBar
                   color="var(--primary-color)"
@@ -760,21 +760,17 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 >
                   20 кПа
                 </span>
-                <ProgressBar
-                  color="var(--primary-color)"
-                  value={40}
-                  maxValue={100}
-                />
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Давление в <span>правом</span> рабочем конутре
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                20 кПа
+                <div
+                  style={{
+                    rotate: '180deg',
+                  }}
+                >
+                  <ProgressBar
+                    color="var(--primary-color)"
+                    value={20}
+                    maxValue={100}
+                  />
+                </div>
               </div>
             </div>
 
@@ -792,7 +788,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   }}
                 >
                   <ProgressBar
-                    color="var(--secondary-color)"
+                    color="var(--thirdly-color)"
                     value={40}
                     maxValue={100}
                   />
