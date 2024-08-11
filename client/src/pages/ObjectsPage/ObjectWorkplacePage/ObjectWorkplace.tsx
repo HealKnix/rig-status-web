@@ -1,10 +1,13 @@
 import './ObjectWorkplace.scss';
 
+import EChartsReact from 'echarts-for-react';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { api } from '@/api';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import DrillSVG from '@/components/SVGs/DrillSVG';
+import LloSVG from '@/components/SVGs/LloSVG';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 import Switch from '@/components/Switch/Switch';
 import { DrillingStatus } from '@/models/DrillingStatus';
@@ -30,6 +33,195 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       objectIdStore.setId(null);
     };
   }, [id]);
+
+  const options1: echarts.EChartsOption = {
+    series: [
+      {
+        type: 'gauge',
+        itemStyle: {
+          color: '#3a7cff',
+        },
+        radius: 48,
+        progress: {
+          show: true,
+          width: 8,
+        },
+        axisLine: {
+          lineStyle: {
+            width: 8,
+          },
+        },
+        pointer: {
+          show: true,
+          width: 2,
+        },
+        axisTick: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        anchor: {
+          show: true,
+          showAbove: true,
+          size: 2,
+          itemStyle: {
+            borderColor: '#3a7cff',
+            borderWidth: 4,
+          },
+        },
+        title: {
+          show: false,
+        },
+        detail: {
+          valueAnimation: true,
+          fontSize: 16,
+          lineHeight: 20,
+          fontFamily: 'Geometria',
+          offsetCenter: [0, 30],
+          fontWeight: 'bolder',
+          formatter: '{value}\nм³/ч',
+          color: '#1b2539',
+        },
+        min: 0,
+        max: 100,
+        data: [
+          {
+            value: 10,
+          },
+        ],
+      },
+    ],
+  };
+
+  const options2: echarts.EChartsOption = {
+    series: [
+      {
+        type: 'gauge',
+        itemStyle: {
+          color: '#ff7c3a',
+        },
+        radius: 48,
+        progress: {
+          show: true,
+          width: 8,
+        },
+        axisLine: {
+          lineStyle: {
+            width: 8,
+          },
+        },
+        pointer: {
+          show: true,
+          width: 2,
+        },
+        axisTick: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        anchor: {
+          show: true,
+          showAbove: true,
+          size: 2,
+          itemStyle: {
+            borderColor: '#ff7c3a',
+            borderWidth: 4,
+          },
+        },
+        title: {
+          show: false,
+        },
+        detail: {
+          valueAnimation: true,
+          fontSize: 16,
+          lineHeight: 20,
+          fontFamily: 'Geometria',
+          offsetCenter: [0, 30],
+          fontWeight: 'bolder',
+          formatter: '{value}\nм³/ч',
+          color: '#1b2539',
+        },
+        min: 0,
+        max: 100,
+        data: [
+          {
+            value: 10,
+          },
+        ],
+      },
+    ],
+  };
+
+  const options3: echarts.EChartsOption = {
+    series: [
+      {
+        type: 'gauge',
+        itemStyle: {
+          color: '#3a7cff',
+        },
+        radius: 48,
+        progress: {
+          show: true,
+          width: 8,
+        },
+        axisLine: {
+          lineStyle: {
+            width: 8,
+          },
+        },
+        pointer: {
+          show: true,
+          width: 2,
+        },
+        axisTick: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        anchor: {
+          show: true,
+          showAbove: true,
+          size: 2,
+          itemStyle: {
+            borderColor: '#3a7cff',
+            borderWidth: 4,
+          },
+        },
+        title: {
+          show: false,
+        },
+        detail: {
+          valueAnimation: true,
+          fontSize: 16,
+          lineHeight: 20,
+          fontFamily: 'Geometria',
+          offsetCenter: [0, 30],
+          fontWeight: 'bolder',
+          formatter: '{value}\nоб/мин',
+          color: '#1b2539',
+        },
+        min: 0,
+        max: 200,
+        data: [
+          {
+            value: 129,
+          },
+        ],
+      },
+    ],
+  };
 
   if (isFetching) return <span>Загрузка...</span>;
 
@@ -100,6 +292,36 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
               <div className="object-workplace__block__content__table__column">
                 10 кг
+              </div>
+            </div>
+
+            <div className="object-workplace__block__content__table__row--with-graphs">
+              <div className="object-workplace__block__content__table__column">
+                <div className="table__column__statistic-name">
+                  <DrillSVG />
+                  Скорость бурения
+                </div>
+                <div className="table__column__statistic-name">
+                  <LloSVG />
+                  Скорость СПО
+                </div>
+              </div>
+
+              <div className="object-workplace__block__content__table__column">
+                <EChartsReact
+                  option={options1}
+                  style={{
+                    width: '96px',
+                    height: '96px',
+                  }}
+                />
+                <EChartsReact
+                  option={options2}
+                  style={{
+                    width: '96px',
+                    height: '96px',
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -330,13 +552,19 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <div className="object-workplace__block__content__table__row">
+            <div className="object-workplace__block__content__table__row--with-graph">
               <div className="object-workplace__block__content__table__column">
                 Частота вращения вала
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                129 об/мин
+                <EChartsReact
+                  option={options3}
+                  style={{
+                    width: '96px',
+                    height: '96px',
+                  }}
+                />
               </div>
             </div>
 
@@ -376,7 +604,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       <div className="object-workplace__block">
         <div className="object-workplace__block__title">
           <h2 className="link">
-            Параметры БР <ShareSVG />
+            Система БР <ShareSVG />
           </h2>
           <Switch />
         </div>
@@ -433,13 +661,19 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <div className="object-workplace__block__content__table__row">
+            <div className="object-workplace__block__content__table__row--with-graph">
               <div className="object-workplace__block__content__table__column">
                 Водоотдача
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 м³/сек
+                <EChartsReact
+                  option={options1}
+                  style={{
+                    width: '96px',
+                    height: '96px',
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -476,13 +710,61 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <div className="object-workplace__block__content__table__row">
+            <div
+              className="object-workplace__block__content__table__row--with-graph"
+              style={{
+                paddingBottom: 10,
+              }}
+            >
               <div className="object-workplace__block__content__table__column">
-                Давление в <span>левом</span> рабочем конутре
+                <div>
+                  Давление в{' '}
+                  <span
+                    style={{
+                      fontWeight: 500,
+                    }}
+                  >
+                    левом
+                  </span>{' '}
+                  рабочем конутре
+                </div>
+                <span
+                  style={{
+                    fontWeight: 500,
+                  }}
+                >
+                  20 кПа
+                </span>
+                <ProgressBar
+                  color="var(--primary-color)"
+                  value={40}
+                  maxValue={100}
+                />
               </div>
-
               <div className="object-workplace__block__content__table__column">
-                20 кПа
+                <div>
+                  Давление в{' '}
+                  <span
+                    style={{
+                      fontWeight: 500,
+                    }}
+                  >
+                    правом
+                  </span>{' '}
+                  рабочем конутре
+                </div>
+                <span
+                  style={{
+                    fontWeight: 500,
+                  }}
+                >
+                  20 кПа
+                </span>
+                <ProgressBar
+                  color="var(--primary-color)"
+                  value={40}
+                  maxValue={100}
+                />
               </div>
             </div>
 

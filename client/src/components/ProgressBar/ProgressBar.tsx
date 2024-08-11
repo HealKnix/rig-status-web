@@ -11,7 +11,7 @@ export default function ProgressBar({
   color,
   value,
   maxValue,
-  loader,
+  loader = false,
 }: Readonly<ProgressBarProps>) {
   return (
     <progress
