@@ -439,11 +439,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Расход на входе</span>
-            <ProgressBar
-              color="var(--primary-color)"
-              value={40}
-              maxValue={100}
-            />
+            <ProgressBar color="var(--primary-color)" value={40} max={100} />
             <span
               style={{
                 textAlign: 'right',
@@ -463,11 +459,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Поток на выходе</span>
-            <ProgressBar
-              color="var(--primary-color)"
-              value={20}
-              maxValue={100}
-            />
+            <ProgressBar color="var(--primary-color)" value={20} max={100} />
             <span
               style={{
                 textAlign: 'right',
@@ -487,11 +479,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Давление манифольда</span>
-            <ProgressBar
-              color="var(--primary-color)"
-              value={55}
-              maxValue={100}
-            />
+            <ProgressBar color="var(--primary-color)" value={55} max={100} />
             <span
               style={{
                 textAlign: 'right',
@@ -511,11 +499,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Перепад давления</span>
-            <ProgressBar
-              color="var(--primary-color)"
-              value={35}
-              maxValue={100}
-            />
+            <ProgressBar color="var(--primary-color)" value={35} max={100} />
             <span
               style={{
                 textAlign: 'right',
@@ -726,7 +710,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   >
                     левом
                   </span>{' '}
-                  рабочем конутре
+                  рабочем контуре
                 </div>
                 <span
                   style={{
@@ -738,7 +722,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 <ProgressBar
                   color="var(--primary-color)"
                   value={40}
-                  maxValue={100}
+                  max={100}
                 />
               </div>
               <div className="object-workplace__block__content__table__column">
@@ -751,7 +735,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   >
                     правом
                   </span>{' '}
-                  рабочем конутре
+                  рабочем контуре
                 </div>
                 <span
                   style={{
@@ -768,7 +752,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   <ProgressBar
                     color="var(--primary-color)"
                     value={20}
-                    maxValue={100}
+                    max={100}
                   />
                 </div>
               </div>
@@ -790,7 +774,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   <ProgressBar
                     color="var(--thirdly-color)"
                     value={40}
-                    maxValue={100}
+                    max={100}
                   />
                   <span>20 кПа</span>
                 </div>
@@ -875,7 +859,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
             <div className="object-workplace__block__content__table__row">
               <div className="object-workplace__block__content__table__column">
-                Частота врещения
+                Частота вращения
               </div>
 
               <div className="object-workplace__block__content__table__column">

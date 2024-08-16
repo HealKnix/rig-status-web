@@ -115,7 +115,7 @@ export default function ObjectWorkProgress() {
                 100
               }
               color={progressBarColor}
-              maxValue={100}
+              max={100}
             />
           </div>
         </div>

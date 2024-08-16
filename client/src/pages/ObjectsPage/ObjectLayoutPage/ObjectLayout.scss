@@ -8,7 +8,6 @@
 .object-header {
   display: flex;
   gap: 15px;
-  min-height: 50px;
 
   & > * {
     display: flex;
@@ -21,17 +20,21 @@
   & > .object-header__content {
     justify-content: space-between;
     width: 100%;
+    gap: 5px;
+    overflow-x: auto;
 
     & > hr {
-      width: 1px;
-      height: 100%;
+      width: 0px;
+      border: 1px solid #33333311;
+      height: 75%;
     }
 
     & > * {
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
 
       & > * {
         display: flex;
@@ -51,6 +54,10 @@
     & > *:last-child {
       width: 100%;
       max-width: 450px;
+    }
+
+    @media (width <= 1400px) {
+      flex-direction: column;
     }
   }
 }

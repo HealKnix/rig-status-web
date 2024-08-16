@@ -58,7 +58,23 @@ export default function Login() {
           required
           movable_placeholder
         />
-        <Button variant="outlined">Авторизоваться</Button>
+
+        {import.meta.env.VITE_API_MOCK === 'true' && (
+          <Button
+            type="button"
+            variant="black"
+            onClick={async () => {
+              const loginData = await api.login('www.test@gmail.com', 'test');
+              authStore.setUser(loginData?.user ?? null);
+            }}
+          >
+            Войти под тестовым пользователем
+          </Button>
+        )}
+
+        <Button variant="outlined" type="submit">
+          Авторизоваться
+        </Button>
       </form>
     </div>
   );

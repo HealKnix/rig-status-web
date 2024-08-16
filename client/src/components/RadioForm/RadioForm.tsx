@@ -24,31 +24,29 @@ const RadioForm: FC<RadioFormProps> = ({
   onChange,
 }) => {
   return (
-    <>
-      <div className="input-radio-form__wrapper">
-        <span className="input-radio-form-title">{title}</span>
-        <div className="input-radio__wrapper">
-          {values.map((v, index) => (
-            <label
-              htmlFor={`${idName}-${index}`}
-              key={index}
-              className="label-input-radio"
-            >
-              <span>{v.name}</span>
-              <input
-                type="radio"
-                className="input-radio"
-                id={`${idName}-${index}`}
-                value={v.value}
-                tabIndex={v.value === value ? 0 : -1}
-                checked={v.value === value}
-                onChange={onChange ?? (() => {})}
-              />
-            </label>
-          ))}
-        </div>
+    <div className="input-radio-form__wrapper">
+      <span className="input-radio-form-title">{title}</span>
+      <div className="input-radio__wrapper">
+        {values.map((v, index) => (
+          <label
+            htmlFor={`${idName}-${index}`}
+            key={index}
+            className="label-input-radio"
+          >
+            <span>{v.name}</span>
+            <input
+              type="radio"
+              className="input-radio"
+              id={`${idName}-${index}`}
+              value={v.value}
+              tabIndex={v.value === value ? 0 : -1}
+              checked={v.value === value}
+              onChange={onChange ?? (() => {})}
+            />
+          </label>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

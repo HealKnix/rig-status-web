@@ -64,7 +64,7 @@ export default function ObjectCard({
           loader={drilling_status_id === 1}
           value={(bottom_hole_drilling / well_depth) * 100}
           color={progressBarColor}
-          maxValue={100}
+          max={100}
         />
       </div>
       <Button

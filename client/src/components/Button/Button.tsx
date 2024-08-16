@@ -1,39 +1,18 @@
 import './Button.scss';
 
-import { FC } from 'react';
+import { ButtonHTMLAttributes, FC } from 'react';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'accent' | 'light' | 'black' | 'red' | 'white' | 'outlined';
-  children?: string | JSX.Element | JSX.Element[];
-  className?: string;
-  style?: React.CSSProperties;
-
-  forwardRef?: React.Ref<HTMLButtonElement>;
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  onChange?: React.ChangeEventHandler<HTMLButtonElement> | undefined;
-  onSubmit?: React.FormEventHandler<HTMLButtonElement> | undefined;
 }
 
-const Button: FC<ButtonProps> = ({
-  variant = 'accent',
-  className,
-  children,
-  style,
-  forwardRef,
-  onClick,
-  onChange,
-  onSubmit,
-}) => {
+const Button: FC<ButtonProps> = ({ variant = 'accent', ...props }) => {
   return (
     <button
-      className={variant + (className ? ` ${className}` : '')}
-      ref={forwardRef}
-      onClick={onClick}
-      onChange={onChange ?? (() => {})}
-      onSubmit={onSubmit}
-      style={style}
+      className={variant + (props.className ? ` ${props.className}` : '')}
+      {...props}
     >
-      {children}
+      {props.children}
     </button>
   );
 };

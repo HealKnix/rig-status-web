@@ -36,6 +36,11 @@
   }
 }
 
+.progress-bar::-moz-progress-bar {
+  border-radius: 6px;
+  background-color: var(--accent-color);
+}
+
 .progress-bar::-webkit-progress-bar {
   border-radius: 6px;
   background-color: var(--white);

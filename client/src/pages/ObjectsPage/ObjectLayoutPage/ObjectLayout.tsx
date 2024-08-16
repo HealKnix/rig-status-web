@@ -62,10 +62,18 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
 
           <div className="object-header__content">
             <div>
-              <span>
+              <span
+                style={{
+                  textWrap: 'nowrap',
+                }}
+              >
                 Дата начала <b>03.06.2024</b>
               </span>
-              <span>
+              <span
+                style={{
+                  textWrap: 'nowrap',
+                }}
+              >
                 Дата окончания <b>03.06.2024</b>
               </span>
             </div>
@@ -106,7 +114,10 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
                   100
                 }
                 color={progressBarColor}
-                maxValue={100}
+                max={100}
+                style={{
+                  flex: '1',
+                }}
               />
             </div>
           </div>
