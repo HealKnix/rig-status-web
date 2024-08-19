@@ -6,7 +6,7 @@ import {
   Outlet,
   useLocation,
   useNavigate,
-  useParams,
+  useParams
 } from 'react-router-dom';
 
 import { api } from '@/api';
@@ -23,7 +23,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
   const { id } = useParams();
 
   const { data: rig, isFetching } = useQuery({
-    queryKey: ['workplace rig id'],
+    queryKey: ['object get by id'],
     queryFn: () => api.getById<Rig>('rigs', Number(id)),
   });
 
@@ -45,86 +45,85 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
     progressBarColor = 'var(--text-additional-color)';
   }
 
+  if (isFetching) return <span>Загрузка...</span>;
+
   return (
     <div className="object-layout__wrapper">
-      {!isFetching && (
-        <div className="object-header">
-          <Link to="/console" className="object-header__btn-back">
-            <ChevronSVG />
+      <div className="object-header">
+        <Link to="/console" className="object-header__btn-back">
+          <ChevronSVG />
+          <span
+            style={{
+              color: 'var(--white)',
+            }}
+          >
+            Объекты
+          </span>
+        </Link>
+
+        <div className="object-header__content">
+          <div>
             <span
               style={{
-                color: 'var(--white)',
+                textWrap: 'nowrap',
               }}
             >
-              Объекты
+              Дата начала <b>03.06.2024</b>
             </span>
-          </Link>
+            <span
+              style={{
+                textWrap: 'nowrap',
+              }}
+            >
+              Дата окончания <b>03.06.2024</b>
+            </span>
+          </div>
 
-          <div className="object-header__content">
-            <div>
-              <span
+          <hr />
+
+          <div>
+            <span>
+              Тип скважины: <b>ГС</b>
+            </span>
+            <span>
+              № скважины: <b>XXXX</b>
+            </span>
+          </div>
+
+          <hr />
+
+          <div>
+            <span>
+              Прогресс:{' '}
+              <b
                 style={{
-                  textWrap: 'nowrap',
+                  fontSize: '20px',
                 }}
               >
-                Дата начала <b>03.06.2024</b>
-              </span>
-              <span
-                style={{
-                  textWrap: 'nowrap',
-                }}
-              >
-                Дата окончания <b>03.06.2024</b>
-              </span>
-            </div>
-
-            <hr />
-
-            <div>
-              <span>
-                Тип скважины: <b>ГС</b>
-              </span>
-              <span>
-                № скважины: <b>XXXX</b>
-              </span>
-            </div>
-
-            <hr />
-
-            <div>
-              <span>
-                Прогресс:{' '}
-                <b
-                  style={{
-                    fontSize: '20px',
-                  }}
-                >
-                  {(
-                    ((rig?.bottom_hole_drilling ?? 0) /
-                      (rig?.well_depth ?? 1)) *
-                    100
-                  ).toFixed(1)}
-                  %
-                </b>
-              </span>
-              <ProgressBar
-                loader={rig?.drilling_status_id === 1}
-                value={
+                {(
                   ((rig?.bottom_hole_drilling ?? 0) / (rig?.well_depth ?? 1)) *
                   100
-                }
-                color={progressBarColor}
-                max={100}
-                style={{
-                  flex: '1',
-                }}
-              />
-            </div>
+                ).toFixed(1)}
+                %
+              </b>
+            </span>
+            <ProgressBar
+              loader={rig?.drilling_status_id === 1}
+              value={
+                ((rig?.bottom_hole_drilling ?? 0) / (rig?.well_depth ?? 1)) *
+                100
+              }
+              color={progressBarColor}
+              max={100}
+              style={{
+                flex: '1',
+              }}
+            />
           </div>
         </div>
-      )}
+      </div>
 
-      <Outlet />
+      <Outlet context={{ rig }} />
     </div>
   );
 };

@@ -1,0 +1,34 @@
+.object-work-progress__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  & > .object-work-progress__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    & > .object-work-progress__block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 385px;
+      min-height: 400px;
+      gap: 15px;
+      border-radius: 6px;
+      padding: 25px;
+      border: 1px solid var(--border-color);
+      background-color: var(--white);
+      transition: 0.15s ease-in-out;
+
+      @media (width <= 1410px) {
+        flex: 1 !important;
+      }
+
+      & > h2 {
+        text-align: center;
+      }
+    }
+  }
+}

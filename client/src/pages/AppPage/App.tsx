@@ -9,11 +9,11 @@ import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
 import Login from '../LoginPage/Login';
 import ObjectLayout from '../ObjectsPage/ObjectLayoutPage/ObjectLayout';
-import ObjectRobot from '../ObjectsPage/ObjectRobotPage/ObjectRobot';
+import ObjectRobot from '../ObjectsPage/ObjectLayoutPage/ObjectRobotPage/ObjectRobot';
+import ObjectScreens from '../ObjectsPage/ObjectLayoutPage/ObjectScreensPage/ObjectScreens';
+import ObjectWorkplace from '../ObjectsPage/ObjectLayoutPage/ObjectWorkplacePage/ObjectWorkplace';
+import ObjectWorkProgress from '../ObjectsPage/ObjectLayoutPage/ObjectWorkProgressPage/ObjectWorkProgress';
 import Objects from '../ObjectsPage/Objects';
-import ObjectScreens from '../ObjectsPage/ObjectScreensPage/ObjectScreens';
-import ObjectWorkplace from '../ObjectsPage/ObjectWorkplacePage/ObjectWorkplace';
-import ObjectWorkProgress from '../ObjectsPage/ObjectWorkProgressPage/ObjectWorkProgress';
 import SignUp from '../SignUpPage/SignUp';
 
 export default function App() {

@@ -2,9 +2,8 @@ import './ObjectWorkplace.scss';
 
 import EChartsReact from 'echarts-for-react';
 import { FC, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
-import { api } from '@/api';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import DrillSVG from '@/components/SVGs/DrillSVG';
 import LloSVG from '@/components/SVGs/LloSVG';
@@ -13,7 +12,6 @@ import Switch from '@/components/Switch/Switch';
 import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
-import { useQuery } from '@tanstack/react-query';
 
 interface ObjectWorkplaceProps {}
 
@@ -21,10 +19,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
 
-  const { data: rig, isFetching } = useQuery({
-    queryKey: ['workplace rig id'],
-    queryFn: () => api.getById<Rig>('rigs', Number(id)),
-  });
+  const { rig } = useOutletContext<{ rig: Rig }>();
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
@@ -223,14 +218,14 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
     ],
   };
 
-  if (isFetching) return <span>Загрузка...</span>;
-
   return (
     <div className="object-workplace__wrapper">
       <div
         className="object-workplace__block"
         style={{
+          justifyContent: 'center',
           alignItems: 'center',
+          border: '2px dashed var(--primary-color)',
         }}
       >
         <h2>Текущая глубина</h2>
