@@ -1,103 +1,63 @@
 .object-screens__wrapper {
+  position: relative;
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
-  flex-direction: column;
-}
+  overflow-y: auto;
 
-.error-table {
-  color: var(--white);
-  padding: 15px;
-  background-color: var(--error-color);
-  border-radius: 8px;
-}
-
-.object-screens__header {
-  display: flex;
-  gap: 15px;
-  height: 50px;
-
-  & > * {
-    display: flex;
-    align-items: center;
+  &:has(> .object-screens__block.full-screen) {
+    visibility: hidden;
     height: 100%;
-    padding: 0 25px;
-    background-color: var(--white);
-    border-radius: 8px;
   }
-}
 
-.object-screens__wrapper > .row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-
-  & > * {
-    padding: 25px;
-    border-radius: 8px;
-    background-color: var(--white);
-  }
-}
-
-.object-screens__wrapper > .row > .bento {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-
-  & > .bento__content {
+  & > .object-screens__block {
+    flex: 1;
     display: flex;
-    justify-content: center;
-  }
+    flex-direction: column;
+    min-width: 385px;
+    min-height: 400px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--white);
+    overflow: hidden;
 
-  & > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 48px;
-    font-weight: bold;
-  }
-
-  & > div > img {
-    width: 100%;
-  }
-}
-
-.object-screens__bento_back_btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--primary-color);
-  transition: 0.15s ease-in-out;
-
-  &:hover {
-    background-color: color-mix(
-      in srgb,
-      var(--primary-color) 100%,
-      var(--white) 15%
-    );
-  }
-
-  &:active {
-    scale: 0.95;
-  }
-
-  & > svg {
-    rotate: 180deg;
-    width: 20px;
-    height: 15px;
-
-    & > path {
-      stroke: var(--white);
+    &:not(.full-screen):hover {
+      cursor: pointer;
+      & > div > img {
+        scale: 1.05;
+      }
     }
-  }
-}
 
-.bento-object-selector {
-  width: 100%;
+    & > div {
+      overflow: hidden;
 
-  & > select {
-    border: none;
-    font-size: 20px;
+      & > h2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      &:has(> img) {
+        height: 100%;
+
+        & > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: 0.15s ease-in-out;
+          -webkit-user-drag: none;
+        }
+      }
+    }
+
+    &.full-screen {
+      position: absolute;
+      visibility: visible;
+      inset: 0;
+
+      & > div:has(> img) > img {
+        object-fit: contain;
+      }
+    }
   }
 }

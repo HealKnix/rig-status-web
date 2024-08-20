@@ -1,12 +1,13 @@
 import './ObjectScreens.scss';
 
-import { FC, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
+import CrossSVG from '@/assets/cross.svg';
 import Image1 from '@/assets/mock-images/img_1.png';
 import Image2 from '@/assets/mock-images/img_2.png';
 import Image3 from '@/assets/mock-images/img_3.png';
-import ChevronSVG from '@/components/SVGs/ChevronSVG';
+import Button from '@/components/Button/Button';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
 
 interface ObjectScreensProps {}
@@ -14,6 +15,9 @@ interface ObjectScreensProps {}
 const ObjectScreens: FC<ObjectScreensProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
+
+  const [currentScreenTarget, setCurrentScreenTarget] =
+    useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
@@ -23,126 +27,106 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
     };
   }, [id]);
 
+  const handleClickMaximizeScreen = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    const target = e.currentTarget as HTMLDivElement;
+
+    if (!currentScreenTarget) {
+      setCurrentScreenTarget(() => {
+        if (!target.classList.contains('full-screen')) {
+          target.classList.add('full-screen');
+        }
+        return target;
+      });
+    }
+  };
+
+  const handleClickMinimizeScreen = () => {
+    setCurrentScreenTarget((pv) => {
+      pv?.classList.remove('full-screen');
+      return null;
+    });
+  };
+
   return (
     <div className="object-screens__wrapper">
-      <div className="object-screens__header">
-        <Link to="/console" className="object-screens__bento_back_btn">
-          <ChevronSVG />
-        </Link>
-        <div className="bento-object-selector">
-          <span>Экраны</span>
+      <div
+        className="object-screens__block"
+        onClick={handleClickMaximizeScreen}
+      >
+        <div style={{ padding: '15px', flex: 'none' }}>
+          <h2>
+            Буровая вид спереди
+            {currentScreenTarget && (
+              <Button
+                style={{
+                  width: 'fit-content',
+                }}
+                variant="white"
+                onClick={handleClickMinimizeScreen}
+              >
+                <img src={CrossSVG} alt="cross" width={16} />
+              </Button>
+            )}
+          </h2>
+        </div>
+        <div
+          style={{
+            overflow: 'hidden',
+          }}
+        >
+          <img src={Image1} alt="" />
         </div>
       </div>
 
-      <div className="row">
-        <div className="bento">
-          <h2
-            style={{
-              color: 'var(--text-additional-color)',
-            }}
-          >
-            Экран 1
+      <div
+        className="object-screens__block"
+        onClick={handleClickMaximizeScreen}
+      >
+        <div style={{ padding: '15px', flex: 'none' }}>
+          <h2>
+            Центр управления
+            {currentScreenTarget && (
+              <Button
+                style={{
+                  width: 'fit-content',
+                }}
+                variant="white"
+                onClick={handleClickMinimizeScreen}
+              >
+                <img src={CrossSVG} alt="cross" width={16} />
+              </Button>
+            )}
           </h2>
-          <hr />
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <img src={Image1} width={'fit-content'} />
-          </div>
         </div>
-
-        <div className="bento">
-          <h2
-            style={{
-              color: 'var(--text-additional-color)',
-            }}
-          >
-            Экран 2
-          </h2>
-          <hr />
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <img src={Image2} width={'fit-content'} />
-          </div>
-        </div>
-
-        <div className="bento">
-          <h2
-            style={{
-              color: 'var(--text-additional-color)',
-            }}
-          >
-            Экран 3
-          </h2>
-          <hr />
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <img src={Image3} width={'fit-content'} />
-          </div>
+        <div>
+          <img src={Image2} alt="" />
         </div>
       </div>
 
-      <div className="row">
-        <div className="bento">
-          <h2
-            style={{
-              color: 'var(--text-additional-color)',
-            }}
-          >
-            Экран 4
+      <div
+        className="object-screens__block"
+        onClick={handleClickMaximizeScreen}
+      >
+        <div style={{ padding: '15px', flex: 'none' }}>
+          <h2>
+            Буровая вид спереди
+            {currentScreenTarget && (
+              <Button
+                style={{
+                  width: 'fit-content',
+                }}
+                variant="white"
+                onClick={handleClickMinimizeScreen}
+              >
+                <img src={CrossSVG} alt="cross" width={16} />
+              </Button>
+            )}
           </h2>
-          <hr />
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <span className="error-table">Ошибка</span>
-          </div>
         </div>
-
-        <div className="bento">
-          <h2
-            style={{
-              color: 'var(--text-additional-color)',
-            }}
-          >
-            Экран 5
-          </h2>
-          <hr />
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <span className="error-table">Ошибка</span>
-          </div>
-        </div>
-
-        <div className="bento">
-          <h2
-            style={{
-              color: 'var(--text-additional-color)',
-            }}
-          >
-            Экран 6
-          </h2>
-          <hr />
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <span className="error-table">Ошибка</span>
-          </div>
+        <div>
+          <img src={Image3} alt="" />
         </div>
       </div>
     </div>

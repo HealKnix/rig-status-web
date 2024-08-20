@@ -30,7 +30,7 @@ export default function Header() {
     minute: string;
   }>({
     year: new Date().getFullYear().toString(),
-    month: addLeadingZero(new Date().getMonth()),
+    month: addLeadingZero(new Date().getMonth() + 1),
     day: addLeadingZero(new Date().getDate()),
     hour: addLeadingZero(new Date().getHours()),
     minute: addLeadingZero(new Date().getMinutes()),
@@ -42,7 +42,7 @@ export default function Header() {
 
       setTime({
         year: time.getFullYear().toString(),
-        month: addLeadingZero(time.getMonth()),
+        month: addLeadingZero(time.getMonth() + 1),
         day: addLeadingZero(time.getDate()),
         hour: addLeadingZero(time.getHours()),
         minute: addLeadingZero(time.getMinutes()),
