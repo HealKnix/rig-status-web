@@ -18,7 +18,7 @@ export default function Header() {
     refetch,
     isFetched,
   } = useQuery({
-    queryKey: ['rig by id'],
+    queryKey: ['rig by id', objectIdStore.id],
     queryFn: () => api.getById<Rig>('rigs', objectIdStore.id),
   });
 
