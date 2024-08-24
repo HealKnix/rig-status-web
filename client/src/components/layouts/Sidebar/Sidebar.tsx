@@ -18,7 +18,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
-        <div id="main-logo"></div>
+        <NavLink id="main-logo" to={'/'}></NavLink>
       </div>
 
       <div className="sidebar__navs">

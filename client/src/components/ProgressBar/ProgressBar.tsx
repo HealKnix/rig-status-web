@@ -14,8 +14,8 @@ export default function ProgressBar({
 }: Readonly<ProgressBarProps>) {
   return (
     <progress
-      style={{ '--accent-color': color } as React.CSSProperties}
-      className={`progress-bar${loader ? ' in-progress' : ''}`}
+      style={{ '--accentColor': color } as React.CSSProperties}
+      className={`progress-bar ${loader ? 'in-progress' : ''}`}
       defaultValue={0}
       {...props}
     />

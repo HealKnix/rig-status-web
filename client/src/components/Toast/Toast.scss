@@ -1,0 +1,109 @@
+.toast__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  width: 100%;
+  max-width: 350px;
+  max-height: 100%;
+  right: 0;
+  padding: 10px;
+  overflow: hidden auto;
+  z-index: 9999;
+
+  & > .toast {
+    --toastDuration: 0.15s;
+    --toastProgressDuration: 5s;
+    --accentColor: var(--text-additional-color);
+
+    &.success {
+      --accentColor: var(--success-color);
+    }
+    &.warning {
+      --accentColor: var(--warning-color);
+    }
+    &.error {
+      --accentColor: var(--error-color);
+    }
+    &.info {
+      --accentColor: var(--primary-color);
+    }
+
+    cursor: pointer;
+    user-select: none;
+    flex: none;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    height: fit-content;
+    border-radius: 12px;
+    background-color: var(--white);
+    padding: 15px;
+    box-shadow: 0 4px 10px 0
+      color-mix(in srgb, var(--accentColor) 25%, transparent 0%);
+    overflow: hidden;
+
+    animation: toastAdd var(--toastDuration) ease-in-out both;
+    @keyframes toastAdd {
+      from {
+        translate: 100%;
+      }
+      to {
+        translate: 0;
+      }
+    }
+
+    & > .toast-right {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      & > .toast-type-title {
+        color: var(--accentColor);
+        font-weight: bold;
+      }
+
+      & > .toast-description {
+        font-size: 14px;
+      }
+    }
+
+    &:has(> .toast-progress.end) {
+      animation: toastDel var(--toastDuration) ease-in-out both;
+      @keyframes toastDel {
+        from {
+          translate: 0;
+        }
+        to {
+          translate: 125% -15px;
+          height: 0;
+          padding: 0;
+        }
+      }
+    }
+
+    &:hover > .toast-progress {
+      animation-play-state: paused;
+    }
+
+    & > .toast-progress {
+      position: absolute;
+      display: block;
+      content: '';
+      width: 100%;
+      height: 3px;
+      bottom: 0;
+      background-color: var(--accentColor);
+
+      animation: toastProgress var(--toastProgressDuration) linear forwards;
+      @keyframes toastProgress {
+        from {
+          width: 100%;
+        }
+        to {
+          width: 0;
+        }
+      }
+    }
+  }
+}

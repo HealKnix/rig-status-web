@@ -6,7 +6,7 @@ import {
   Outlet,
   useLocation,
   useNavigate,
-  useParams
+  useParams,
 } from 'react-router-dom';
 
 import { api } from '@/api';
@@ -31,7 +31,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
     if (location.key === 'default') {
       navigate('workplace');
     }
-  }, []);
+  }, [location.key, navigate]);
 
   let progressBarColor = 'var(--text-additional-color)';
 
