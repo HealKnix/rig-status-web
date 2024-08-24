@@ -7,9 +7,11 @@ import { api } from '@/api';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useToastStore } from '@/store/useToastStore';
 
 export default function Login() {
   const authStore = useAuthStore();
+  const toastStore = useToastStore();
   const navigate = useNavigate();
 
   const [inputEmail, setInputEmail] = useState('');
@@ -30,9 +32,10 @@ export default function Login() {
 
           if (loginData) {
             authStore.setUser(loginData.user);
+            toastStore.addToast('success', 'Вы вошли в систему');
             navigate('/');
           } else {
-            alert('Такого пользователя не существует!');
+            toastStore.addToast('error', 'Такого пользователя не существует');
           }
         }}
       >
@@ -66,6 +69,7 @@ export default function Login() {
             onClick={async () => {
               const loginData = await api.login('www.test@gmail.com', 'test');
               authStore.setUser(loginData?.user ?? null);
+              toastStore.addToast('success', 'Вы вошли в систему');
             }}
           >
             Войти под тестовым пользователем

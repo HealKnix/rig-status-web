@@ -3,7 +3,7 @@ import './ProgressBar.scss';
 import { ProgressHTMLAttributes } from 'react';
 
 interface ProgressBarProps extends ProgressHTMLAttributes<HTMLProgressElement> {
-  color: string;
+  color?: string;
   loader?: boolean;
 }
 
@@ -14,8 +14,8 @@ export default function ProgressBar({
 }: Readonly<ProgressBarProps>) {
   return (
     <progress
-      style={{ '--accentColor': color } as React.CSSProperties}
       className={`progress-bar ${loader ? 'in-progress' : ''}`}
+      style={{ '--accentColor': color } as React.CSSProperties}
       defaultValue={0}
       {...props}
     />

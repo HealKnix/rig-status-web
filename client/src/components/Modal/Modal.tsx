@@ -46,7 +46,7 @@ const Modal: FC = () => {
       dialogRef.current?.removeEventListener('mouseup', clickHandler);
       dialogRef.current?.removeEventListener('keydown', keyDownHandler);
     };
-  }, [dialogRef, modalStore]);
+  }, []);
 
   return createPortal(
     <dialog id="dialog" ref={dialogRef} tabIndex={-1}>

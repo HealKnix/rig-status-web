@@ -9,6 +9,9 @@ import ErrorSVG from '../SVGs/ErrorSVG';
 import SuccessSVG from '../SVGs/SuccessSVG';
 import WarningSVG from '../SVGs/WarningSVG';
 
+const animationDuration = 150;
+const progressDuration = 5000;
+
 const Toast = () => {
   const toastStore = useToastStore();
 
@@ -17,13 +20,19 @@ const Toast = () => {
       {toastStore.toasts.map((toast) => (
         <div
           className={`toast ${toast.variant}`}
+          style={
+            {
+              '--toastDuration': `${animationDuration / 1000}s`,
+              '--toastProgressDuration': `${progressDuration / 1000}s`,
+            } as React.CSSProperties
+          }
           key={toast.id}
           onClick={(e) => {
             const toastProgressElement = e.currentTarget.children[2];
             toastProgressElement.classList.add('end');
             setTimeout(() => {
               toastStore.delToast(toast.id);
-            }, 150);
+            }, animationDuration);
           }}
         >
           <div className="toast-left">
@@ -47,7 +56,7 @@ const Toast = () => {
               e.currentTarget.classList.add('end');
               setTimeout(() => {
                 toastStore.delToast(toast.id);
-              }, 150);
+              }, animationDuration);
             }}
           ></div>
         </div>

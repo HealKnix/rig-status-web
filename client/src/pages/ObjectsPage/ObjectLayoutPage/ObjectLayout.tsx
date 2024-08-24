@@ -13,6 +13,7 @@ import { api } from '@/api';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
 import { Rig } from '@/models/Rig';
+import { useToastStore } from '@/store/useToastStore';
 import { useQuery } from '@tanstack/react-query';
 
 interface ObjectLayoutProps {}
@@ -21,9 +22,10 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
+  const toastStore = useToastStore();
 
   const { data: rig, isFetching } = useQuery({
-    queryKey: ['object get by id'],
+    queryKey: ['object get by id', id],
     queryFn: () => api.getById<Rig>('rigs', Number(id)),
   });
 
@@ -31,7 +33,15 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
     if (location.key === 'default') {
       navigate('workplace');
     }
-  }, [location.key, navigate]);
+  }, [location.key]);
+
+  useEffect(() => {
+    if (!rig) return;
+    toastStore.addToast(
+      'info',
+      `До конца бурения осталось ${Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м.`,
+    );
+  }, [rig?.id]);
 
   let progressBarColor = 'var(--text-additional-color)';
 
@@ -107,18 +117,17 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
                 %
               </b>
             </span>
-            <ProgressBar
-              loader={rig?.drilling_status_id === 1}
-              value={
-                ((rig?.bottom_hole_drilling ?? 0) / (rig?.well_depth ?? 1)) *
-                100
-              }
-              color={progressBarColor}
-              max={100}
-              style={{
-                flex: '1',
-              }}
-            />
+            <div style={{ flex: 1 }}>
+              <ProgressBar
+                loader={rig?.drilling_status_id === 1}
+                value={
+                  ((rig?.bottom_hole_drilling ?? 0) / (rig?.well_depth ?? 1)) *
+                  100
+                }
+                color={progressBarColor}
+                max={100}
+              />
+            </div>
           </div>
         </div>
       </div>
