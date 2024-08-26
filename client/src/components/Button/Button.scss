@@ -1,8 +1,8 @@
 @import url('./colors-button.scss');
 
-button {
-  --color: var(--primary-color);
-  --color-outline: var(--primary-light-color);
+.custom-btn {
+  --bgColor: var(--primary-color);
+  --colorOutline: var(--white);
 
   display: flex;
   justify-content: center;
@@ -15,25 +15,47 @@ button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.8em 1.2em;
-  background-color: var(--color);
+  background-color: var(--bgColor);
   color: var(--white);
   cursor: pointer;
-  transition: all 0.05s ease-in-out;
-}
+  transition: all 0.1s ease-in-out;
 
-button:hover {
-  background-color: color-mix(in srgb, var(--color) 100%, white 10%);
-}
+  &.outlined {
+    background-color: transparent;
+    border: 2px solid var(--bgColor);
+    color: var(--bgColor);
 
-button:active {
-  scale: 0.975;
-}
+    &:hover {
+      background-color: var(--bgColor);
+      color: var(--white);
+    }
 
-button:focus-visible {
-  outline: 2px solid var(--color-outline);
-  outline-offset: -4px;
-}
+    &:focus-visible {
+      outline-color: var(--bgColor);
+      outline-offset: -5px;
+    }
+  }
 
-button > * {
-  pointer-events: none;
+  &:hover {
+    background-color: color-mix(in srgb, var(--bgColor) 100%, white 10%);
+  }
+
+  &:active {
+    scale: 0.975;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--colorOutline);
+    outline-offset: -4px;
+  }
+
+  & > * {
+    pointer-events: none;
+  }
+
+  &:disabled {
+    cursor: auto;
+    --bgColor: var(--disabled-color);
+    --colorOutline: var(--white);
+  }
 }

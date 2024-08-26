@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '@/components/layouts/Header/Header';
 import Main from '@/components/layouts/Main/Main';
 import Sidebar from '@/components/layouts/Sidebar/Sidebar';
+import Loader from '@/components/Loader/Loader';
 import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
 import Login from '../LoginPage/Login';
@@ -52,7 +53,7 @@ export default function App() {
   );
 
   if (loading) {
-    return <span>Загрузка...</span>;
+    return <Loader />;
   }
 
   return isAuthenticated ? authorizedRoutes : unAuthorizedRoutes;

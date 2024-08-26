@@ -66,17 +66,23 @@ export default function Login() {
           <Button
             type="button"
             variant="black"
-            onClick={async () => {
+            onClick={async (e) => {
+              const btn = e.currentTarget as HTMLButtonElement;
+
+              btn.disabled = true;
+
               const loginData = await api.login('www.test@gmail.com', 'test');
               authStore.setUser(loginData?.user ?? null);
               toastStore.addToast('success', 'Вы вошли в систему');
+
+              btn.disabled = false;
             }}
           >
             Войти под тестовым пользователем
           </Button>
         )}
 
-        <Button variant="outlined" type="submit">
+        <Button outlined type="submit">
           Авторизоваться
         </Button>
       </form>

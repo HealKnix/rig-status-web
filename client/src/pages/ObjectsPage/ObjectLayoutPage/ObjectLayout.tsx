@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 
 import { api } from '@/api';
+import Loader from '@/components/Loader/Loader';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
 import { Rig } from '@/models/Rig';
@@ -55,7 +56,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
     progressBarColor = 'var(--text-additional-color)';
   }
 
-  if (isFetching) return <span>Загрузка...</span>;
+  if (isFetching) return <Loader />;
 
   return (
     <div className="object-layout__wrapper">

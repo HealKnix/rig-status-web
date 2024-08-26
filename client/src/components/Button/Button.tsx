@@ -3,13 +3,18 @@ import './Button.scss';
 import { ButtonHTMLAttributes, FC } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'accent' | 'light' | 'black' | 'red' | 'white' | 'outlined';
+  variant?: 'primary' | 'primary-light' | 'black' | 'red' | 'transparent';
+  outlined?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ variant = 'accent', ...props }) => {
+const Button: FC<ButtonProps> = ({
+  variant = 'primary',
+  outlined = false,
+  ...props
+}) => {
   return (
     <button
-      className={variant + (props.className ? ` ${props.className}` : '')}
+      className={`custom-btn ${outlined && 'outlined'} ${variant} ${props.className ? props.className : ''}`}
       {...props}
     >
       {props.children}

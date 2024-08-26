@@ -28,7 +28,7 @@ const LogoutModal: FC<LogoutModalProps> = () => {
               width: '40px',
               height: '40px',
             }}
-            variant="white"
+            variant="transparent"
             onClick={() => modalStore.closeLogoutModal()}
           >
             <CrossSVG />
@@ -39,7 +39,7 @@ const LogoutModal: FC<LogoutModalProps> = () => {
       <span className="modal-description">Вы точно хотите выйти?</span>
       <div className="modal-buttons">
         <Button
-          variant="white"
+          variant="transparent"
           onClick={() => {
             modalStore.closeLogoutModal();
           }}
@@ -47,7 +47,6 @@ const LogoutModal: FC<LogoutModalProps> = () => {
           Нет
         </Button>
         <Button
-          variant="accent"
           onClick={async () => {
             authStore.setUser(null);
             await api.logout();

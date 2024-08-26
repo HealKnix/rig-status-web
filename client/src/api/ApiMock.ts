@@ -8,7 +8,7 @@ import { ApiNames, ApiType } from './ApiType';
 
 const cookies = new Cookies();
 
-const DELAY = 300; // Задержка 300 мс
+const DELAY = 1500; // Задержка 1 секунда
 
 // Возвращает переданные данные с заданной задержкой
 async function delayRes<T>(data: T, delay: number): Promise<T> {
