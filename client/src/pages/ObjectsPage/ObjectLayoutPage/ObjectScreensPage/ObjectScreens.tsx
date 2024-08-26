@@ -63,7 +63,7 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
                 style={{
                   width: 'fit-content',
                 }}
-                variant="white"
+                variant="transparent"
                 onClick={handleClickMinimizeScreen}
               >
                 <img src={CrossSVG} alt="cross" width={16} />
@@ -92,7 +92,7 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
                 style={{
                   width: 'fit-content',
                 }}
-                variant="white"
+                variant="transparent"
                 onClick={handleClickMinimizeScreen}
               >
                 <img src={CrossSVG} alt="cross" width={16} />
@@ -117,7 +117,7 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
                 style={{
                   width: 'fit-content',
                 }}
-                variant="white"
+                variant="transparent"
                 onClick={handleClickMinimizeScreen}
               >
                 <img src={CrossSVG} alt="cross" width={16} />

@@ -68,7 +68,7 @@ export default function ObjectCard({
         />
       </div>
       <Button
-        variant="outlined"
+        outlined
         onClick={() => {
           navigate(`${id}/workplace`);
         }}

@@ -33,7 +33,7 @@ const Alert: FC<AlertProps> = () => {
           ultrices elit ac lorem facilisis semper.
         </span>
         <Button
-          variant="white"
+          variant="transparent"
           onClick={() => {
             alertStore.closeAlert();
           }}
