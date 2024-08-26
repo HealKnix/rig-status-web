@@ -1,0 +1,87 @@
+#dialog-alert {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  background-color: transparent;
+  overflow: visible;
+  border: none;
+  outline: none;
+  margin: auto;
+
+  transition: 0.2s ease-in-out;
+
+  z-index: 11000;
+
+  &[open] {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  &::backdrop {
+    cursor: pointer;
+    background-color: color-mix(
+      in srgb,
+      var(--error-color) 35%,
+      transparent 0%
+    );
+
+    animation: backdrop-show 0.2s ease-in-out;
+    @keyframes backdrop-show {
+      0% {
+        opacity: 0;
+      }
+    }
+  }
+
+  &:first-child {
+    scale: 0.9;
+    transform: translateY(-15%);
+  }
+
+  &[open]:first-child {
+    scale: 1.5;
+    transform: translateY(0);
+  }
+
+  & > .alert-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 310px;
+    background-color: var(--error-color);
+    padding: 15px;
+    border-radius: 12px;
+
+    & > * {
+      color: var(--white);
+    }
+
+    & > .alert-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    & > .alert-description {
+      text-align: center;
+    }
+
+    & > button {
+      color: var(--error-color);
+    }
+  }
+}

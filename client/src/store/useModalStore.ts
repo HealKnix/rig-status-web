@@ -1,13 +1,26 @@
 import { create } from 'zustand';
 
 interface ModalState {
-  profileModal: boolean;
-  openProfileModal: () => void;
-  closeProfileModal: () => void;
+  modal: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+
+  logoutModal: boolean;
+  openLogoutModal: () => void;
+  closeLogoutModal: () => void;
 }
 
 export const useModalStore = create<ModalState>()((set) => ({
-  profileModal: false,
-  openProfileModal: () => set({ profileModal: true }),
-  closeProfileModal: () => set({ profileModal: false }),
+  modal: false,
+  openModal: () => set({ modal: true }),
+  closeModal: () => set({ modal: false }),
+
+  logoutModal: false,
+  openLogoutModal: () => set({ logoutModal: true, modal: true }),
+  closeLogoutModal: () => {
+    setTimeout(() => {
+      set({ logoutModal: false });
+    }, 200);
+    set({ modal: false });
+  },
 }));

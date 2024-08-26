@@ -17,7 +17,7 @@ const ProfileLink: FC<ProfileLinkProps> = () => {
     <div
       className="profile-link"
       onClick={() => {
-        modalStore.openProfileModal();
+        modalStore.openLogoutModal();
       }}
     >
       <div className="profile-link__wrapper">

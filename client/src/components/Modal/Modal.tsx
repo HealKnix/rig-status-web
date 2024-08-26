@@ -3,89 +3,55 @@ import './Modal.scss';
 import { FC, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
-import { api } from '@/api';
-import CrossSVG from '@/assets/cross.svg';
-import Button from '@/components/Button/Button';
-import { useAuthStore } from '@/store/useAuthStore';
 import { useModalStore } from '@/store/useModalStore';
 
-const Modal: FC = () => {
+interface ModalProps {
+  children: React.ReactNode;
+}
+
+const Modal: FC<ModalProps> = ({ children }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const authStore = useAuthStore();
   const modalStore = useModalStore();
 
   useEffect(() => {
-    if (modalStore.profileModal) {
+    if (modalStore.modal) {
       dialogRef.current?.showModal();
     } else {
       dialogRef.current?.close();
     }
-  }, [modalStore.profileModal]);
+  }, [modalStore.modal]);
 
   useEffect(() => {
+    const modal = dialogRef.current;
+
     const clickHandler = (e: MouseEvent) => {
       const dialogHTML = e.target as HTMLDialogElement;
 
-      if (dialogHTML.id === 'dialog') {
+      if (dialogHTML.id === 'dialog-modal') {
         e.preventDefault();
-        modalStore.closeProfileModal();
+        modalStore.closeModal();
       }
     };
 
     const keyDownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        modalStore.closeProfileModal();
+        modalStore.closeModal();
       }
     };
 
-    dialogRef.current?.addEventListener('mouseup', clickHandler);
-    dialogRef.current?.addEventListener('keydown', keyDownHandler);
+    modal?.addEventListener('mouseup', clickHandler);
+    modal?.addEventListener('keydown', keyDownHandler);
 
     return () => {
-      dialogRef.current?.removeEventListener('mouseup', clickHandler);
-      dialogRef.current?.removeEventListener('keydown', keyDownHandler);
+      modal?.removeEventListener('mouseup', clickHandler);
+      modal?.removeEventListener('keydown', keyDownHandler);
     };
   }, []);
 
   return createPortal(
-    <dialog id="dialog" ref={dialogRef} tabIndex={-1}>
-      <div className="modal-content" tabIndex={-1}>
-        <div className="modal-header">
-          <span className="modal-title">Выход</span>
-          <Button
-            style={{
-              width: 'fit-content',
-            }}
-            variant="white"
-            onClick={() => modalStore.closeProfileModal()}
-          >
-            <img src={CrossSVG} alt="cross" width={16} />
-          </Button>
-        </div>
-        <hr />
-        <span className="modal-description">Вы точно хотите выйти?</span>
-        <div className="modal-buttons">
-          <Button
-            variant="white"
-            onClick={() => {
-              modalStore.closeProfileModal();
-            }}
-          >
-            Нет
-          </Button>
-          <Button
-            variant="accent"
-            onClick={async () => {
-              modalStore.closeProfileModal();
-              authStore.setUser(null);
-              await api.logout();
-            }}
-          >
-            Да
-          </Button>
-        </div>
-      </div>
+    <dialog id="dialog-modal" ref={dialogRef} tabIndex={-1}>
+      {children}
     </dialog>,
     document.getElementById('modal')!,
   );

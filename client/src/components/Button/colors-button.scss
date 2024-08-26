@@ -30,13 +30,21 @@ button.white {
   color: var(--color-outline);
 
   &:hover {
-    background-color: var(--primary-light-color);
+    background-color: color-mix(
+      in srgb,
+      var(--color) 100%,
+      var(--primary-color) 10%
+    );
   }
 }
 
 button.red {
   --color: var(--error-color);
-  --color-outline: color-mix(in srgb, var(--error-color) 10%, white 100%);
+  --color-outline: color-mix(
+    in srgb,
+    var(--error-color) 10%,
+    var(--text-color) 100%
+  );
 
   background-color: var(--color);
   color: var(--white);

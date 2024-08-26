@@ -19,7 +19,7 @@ export default function RadialProgressBar({
   boundaries,
   postfix,
   size,
-}: RadialProgressBarProps) {
+}: Readonly<RadialProgressBarProps>) {
   const [color, setColor] = useState('var(--primary-color)');
 
   useEffect(() => {
