@@ -8,7 +8,7 @@ import { ApiNames, ApiType } from './ApiType';
 
 const cookies = new Cookies();
 
-const DELAY = 1500; // Задержка 1 секунда
+const DELAY = 1000; // Задержка 1 секунда
 const DELAY_DIFF = 500;
 
 // Возвращает переданные данные с заданной задержкой
