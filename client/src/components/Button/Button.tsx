@@ -3,7 +3,13 @@ import './Button.scss';
 import { ButtonHTMLAttributes, FC } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'primary-light' | 'black' | 'red' | 'transparent';
+  variant?:
+    | 'primary'
+    | 'primary-light'
+    | 'black'
+    | 'red'
+    | 'green'
+    | 'transparent';
   outlined?: boolean;
 }
 

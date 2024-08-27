@@ -1,4 +1,6 @@
 .custom-checkbox {
+  --checked-color: var(--success-color);
+
   position: relative;
   cursor: pointer;
   appearance: none;
@@ -16,8 +18,8 @@
   transition: 0.15s ease-in-out;
 
   &:checked {
-    background-color: var(--success-color);
-    box-shadow: 0 0 0 1px var(--success-color);
+    background-color: var(--checked-color);
+    box-shadow: 0 0 0 1px var(--checked-color);
   }
 
   &:focus-visible {

@@ -1,0 +1,124 @@
+.object-robot__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  overflow-y: auto;
+
+  & > .object-robot__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    width: 100%;
+    border-radius: 6px;
+    background-color: var(--white);
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  & > .object-robot__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+
+    & > .object-robot__block {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-radius: 6px;
+      padding: 25px;
+      border: 1px solid var(--border-color);
+      background-color: var(--white);
+      transition: 0.15s ease-in-out;
+
+      & > .object-robot__btns {
+        display: flex;
+        gap: 15px;
+      }
+
+      & > .object-robot__block__content {
+        display: flex;
+        gap: 25px;
+
+        & > .object-robot__block__content__row {
+          align-items: center;
+        }
+
+        & > .object-robot__block__content__table {
+          display: grid;
+          gap: 15px;
+          width: 100%;
+          height: fit-content;
+
+          & > *:not(:last-child) {
+            border-bottom: 1px solid var(--background-color);
+          }
+
+          & > .object-robot__block__content__table__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+
+            & > .object-robot__block__content__table__column > span {
+              font-weight: 500;
+            }
+
+            & > *:last-child {
+              text-align: right;
+              font-weight: 500;
+            }
+          }
+
+          & > .object-robot__block__content__table__row--with-graph {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 5px;
+            gap: 50px;
+
+            & > * {
+              display: flex;
+              flex-direction: column;
+              gap: 15px;
+            }
+
+            & > *:last-child {
+              text-align: right;
+            }
+          }
+
+          & > .object-robot__block__content__table__row--with-graphs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 25px;
+
+            & > *:first-child {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+
+              & > * {
+                display: grid;
+                grid-auto-flow: column;
+                justify-content: left;
+                align-items: center;
+                gap: 10px;
+              }
+            }
+
+            & > *:last-child {
+              display: flex;
+              flex-direction: row;
+              gap: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
