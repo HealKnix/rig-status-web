@@ -13,12 +13,8 @@ import { useQuery } from '@tanstack/react-query';
 export default function Header() {
   const objectIdStore = useObjectIdStore();
 
-  const {
-    data: rigData,
-    refetch,
-    isFetched,
-  } = useQuery({
-    queryKey: ['rig by id', objectIdStore.id],
+  const { data: rigData } = useQuery({
+    queryKey: ['header rig by id', objectIdStore.id],
     queryFn: () => api.getById<Rig>('rigs', objectIdStore.id),
   });
 
@@ -53,10 +49,6 @@ export default function Header() {
       clearInterval(timeId);
     };
   }, []);
-
-  useEffect(() => {
-    refetch();
-  }, [objectIdStore.id, isFetched]);
 
   return (
     <header>

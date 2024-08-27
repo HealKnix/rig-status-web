@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 export const useInitializeAuth = () => {
   const authStore = useAuthStore();
 
-  const { isFetching } = useQuery({
+  const { isFetching, isFetched } = useQuery({
     queryKey: ['api auth'],
     queryFn: () =>
       api.auth().then((res) => {
@@ -14,5 +14,8 @@ export const useInitializeAuth = () => {
       }),
   });
 
-  return { isAuthenticated: authStore.isAuth(), loading: isFetching };
+  return {
+    isAuthenticated: authStore.isAuth(),
+    loading: isFetching && !isFetched,
+  };
 };

@@ -9,11 +9,12 @@ import { ApiNames, ApiType } from './ApiType';
 const cookies = new Cookies();
 
 const DELAY = 1500; // Задержка 1 секунда
+const DELAY_DIFF = 500;
 
 // Возвращает переданные данные с заданной задержкой
 async function delayRes<T>(data: T, delay: number): Promise<T> {
   await new Promise((res) => {
-    setTimeout(res, delay);
+    setTimeout(res, Math.random() * (delay + DELAY_DIFF) + delay - DELAY_DIFF);
   });
   return data;
 }

@@ -25,7 +25,11 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
   const { id } = useParams();
   const toastStore = useToastStore();
 
-  const { data: rig, isFetching } = useQuery({
+  const {
+    data: rig,
+    isFetching,
+    isFetched,
+  } = useQuery({
     queryKey: ['object get by id', id],
     queryFn: () => api.getById<Rig>('rigs', Number(id)),
   });
@@ -37,12 +41,12 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
   }, [location.key]);
 
   useEffect(() => {
-    if (!rig) return;
+    if (!isFetched) return;
     toastStore.addToast(
       'info',
       `До конца бурения осталось ${Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м.`,
     );
-  }, [rig?.id]);
+  }, [isFetched]);
 
   let progressBarColor = 'var(--text-additional-color)';
 
@@ -56,7 +60,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
     progressBarColor = 'var(--text-additional-color)';
   }
 
-  if (isFetching) return <Loader />;
+  if (isFetching && !isFetched) return <Loader />;
 
   return (
     <div className="object-layout__wrapper">
