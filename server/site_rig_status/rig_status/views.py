@@ -22,14 +22,9 @@ from .models import (
     SensorData,
     DrillingStatus,
     Rig,
-    DrillingFluidSystem,
     SensorStatus,
-    DrillingMotor,
     RobotStatus,
     Robot,
-    HoistingSystem,
-    Defectoscope,
-    HydraulicPowerTong,
     User
 )
 from .serializers import (
@@ -39,14 +34,9 @@ from .serializers import (
     SensorDataSerializer,
     DrillingStatusSerializer,
     RigSerializer,
-    DrillingFluidSystemSerializer,
     SensorStatusSerializer,
-    DrillingMotorSerializer,
     RobotStatusSerializer,
     RobotSerializer,
-    HoistingSystemSerializer,
-    DefectoscopeSerializer,
-    HydraulicPowerTongSerializer,
     LogoutSerializer,
 )
 
@@ -264,23 +254,9 @@ class RigViewSet(viewsets.ModelViewSet):
 
 
 # @extend_schema_view(**RigDocumentation())
-class DrillingFluidSystemViewSet(viewsets.ModelViewSet):
-    queryset = DrillingFluidSystem.objects.all()
-    serializer_class = DrillingFluidSystemSerializer
-    permission_classes = [IsAuthenticated]
-
-
-# @extend_schema_view(**RigDocumentation())
 class SensorStatusViewSet(viewsets.ModelViewSet):
     queryset = SensorStatus.objects.all()
     serializer_class = SensorStatusSerializer
-    permission_classes = [IsAuthenticated]
-
-
-# @extend_schema_view(**RigDocumentation())
-class DrillingMotorViewSet(viewsets.ModelViewSet):
-    queryset = DrillingMotor.objects.all()
-    serializer_class = DrillingMotorSerializer
     permission_classes = [IsAuthenticated]
 
 
@@ -295,25 +271,4 @@ class RobotStatusViewSet(viewsets.ModelViewSet):
 class RobotViewSet(viewsets.ModelViewSet):
     queryset = Robot.objects.all()
     serializer_class = RobotSerializer
-    permission_classes = [IsAuthenticated]
-
-
-# @extend_schema_view(**RigDocumentation())
-class HoistingSystemViewSet(viewsets.ModelViewSet):
-    queryset = HoistingSystem.objects.all()
-    serializer_class = HoistingSystemSerializer
-    permission_classes = [IsAuthenticated]
-
-
-# @extend_schema_view(**RigDocumentation())
-class DefectoscopeViewSet(viewsets.ModelViewSet):
-    queryset = Defectoscope.objects.all()
-    serializer_class = DefectoscopeSerializer
-    permission_classes = [IsAuthenticated]
-
-
-# @extend_schema_view(**RigDocumentation())
-class HydraulicPowerTongViewSet(viewsets.ModelViewSet):
-    queryset = HydraulicPowerTong.objects.all()
-    serializer_class = HydraulicPowerTongSerializer
     permission_classes = [IsAuthenticated]

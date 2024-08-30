@@ -8,12 +8,7 @@ from .models import (
     Rig,
     Robot,
     RobotStatus,
-    DrillingMotor,
     SensorStatus,
-    DrillingFluidSystem,
-    HoistingSystem,
-    Defectoscope,
-    HydraulicPowerTong,
 )
 
 
@@ -62,30 +57,6 @@ class RobotSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DrillingMotorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DrillingMotor
-        fields = '__all__'
-
-
-class DefectoscopeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Defectoscope
-        fields = '__all__'
-
-
-class HydraulicPowerTongSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = HydraulicPowerTong
-        fields = '__all__'
-
-
-class DrillingFluidSystemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DrillingFluidSystem
-        fields = '__all__'
-
-
 class RobotStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = RobotStatus
@@ -95,10 +66,4 @@ class RobotStatusSerializer(serializers.ModelSerializer):
 class SensorStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = SensorStatus
-        fields = '__all__'
-
-
-class HoistingSystemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = HoistingSystem
         fields = '__all__'
