@@ -1,4 +1,7 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiParameter
+)
 
 
 class TechStatusDocumentation:
@@ -68,6 +71,82 @@ class TechStatusDocumentation:
         }
 
 
+class SensorStatusDocumentation:
+    def __new__(cls):
+        tag = "Состояния датчика"
+        return {
+            'list': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='rig_id',
+                        description='Идентификатор состояния датчика',
+                        required=False,
+                        type=int,
+                        location=OpenApiParameter.QUERY,
+                    )
+                ],
+                description="Получить список всех состояний датчика"
+            ),
+            'retrieve': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор состояния датчика',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    ),
+                ],
+                description="Получить конкретное состояние датчика по ID"
+            ),
+            'create': extend_schema(
+                tags=[tag],
+                description="Создать новое состояние датчика"
+            ),
+            'update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор состояния датчика',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Обновить существующее состояние датчика"
+            ),
+            'partial_update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор состояния датчика',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Частично обновить существующее состояние датчика"
+            ),
+            'destroy': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор состояния датчика',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Удалить существующее состояние"
+            ),
+        }
+
+
 class SensorDocumentation:
     def __new__(cls):
         tag = "Датчики"
@@ -78,6 +157,13 @@ class SensorDocumentation:
                     OpenApiParameter(
                         name='rig_id',
                         description='Идентификатор буровой установки',
+                        required=False,
+                        type=int,
+                        location=OpenApiParameter.QUERY,
+                    ),
+                    OpenApiParameter(
+                        name='subsystem_id',
+                        description='Идентификатор подсистемы',
                         required=False,
                         type=int,
                         location=OpenApiParameter.QUERY,
@@ -95,13 +181,6 @@ class SensorDocumentation:
                         type=int,
                         location=OpenApiParameter.PATH,
                     ),
-                    OpenApiParameter(
-                        name='rig_id',
-                        description='Идентификатор буровой установки',
-                        required=False,
-                        type=int,
-                        location=OpenApiParameter.QUERY,
-                    )
                 ],
                 description="Получить конкретный датчик по ID"
             ),
@@ -357,5 +436,206 @@ class RigDocumentation:
                     )
                 ],
                 description="Удалить существующую буровую установку"
+            ),
+        }
+
+
+class RobotStatusDocumentation:
+    def __new__(cls):
+        tag = "Состояния робота"
+        return {
+            'list': extend_schema(
+                tags=[tag],
+                description="Получить список всех состояний робота"
+            ),
+            'retrieve': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор состояния робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Получить конкретное состояние робота по ID"
+            ),
+            'create': extend_schema(
+                tags=[tag],
+                description="Создать новое состояние робота"
+            ),
+            'update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данного состояния робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Обновить существующее состояние робота"
+            ),
+            'partial_update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данного состояния робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Частично обновить существующее состояние робота"
+            ),
+            'destroy': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данного состояния робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Удалить существующее состояние робота"
+            ),
+        }
+
+
+class RobotDocumentation:
+    def __new__(cls):
+        tag = "Робот"
+        return {
+            'list': extend_schema(
+                tags=[tag],
+                description="Получить список всех роботов"
+            ),
+            'retrieve': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Получить конкретного робота по ID"
+            ),
+            'create': extend_schema(
+                tags=[tag],
+                description="Создать нового робота"
+            ),
+            'update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данного робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Обновить существующего робота"
+            ),
+            'partial_update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данного робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Частично обновить существующего робота"
+            ),
+            'destroy': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данного робота',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Удалить существующего робота"
+            ),
+        }
+
+
+class SubsystemDocumentation:
+    def __new__(cls):
+        tag = "Подсистемы"
+        return {
+            'list': extend_schema(
+                tags=[tag],
+                description="Получить список всех подсистем"
+            ),
+            'retrieve': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор подсистемы',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Получить конкретной подсистемы по ID"
+            ),
+            'create': extend_schema(
+                tags=[tag],
+                description="Создать нового робота"
+            ),
+            'update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данной подсистемы',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Обновить существующую подсистему"
+            ),
+            'partial_update': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данной подсистемы',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Частично обновить существующую подсистем"
+            ),
+            'destroy': extend_schema(
+                tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='id',
+                        description='Идентификатор данной подсистемы',
+                        required=True,
+                        type=int,
+                        location=OpenApiParameter.PATH,
+                    )
+                ],
+                description="Удалить существующую подсистему"
             ),
         }

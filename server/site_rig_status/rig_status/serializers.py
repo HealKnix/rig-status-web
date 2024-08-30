@@ -9,6 +9,7 @@ from .models import (
     Robot,
     RobotStatus,
     SensorStatus,
+    Subsystem,
 )
 
 
@@ -66,4 +67,10 @@ class RobotStatusSerializer(serializers.ModelSerializer):
 class SensorStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = SensorStatus
+        fields = '__all__'
+
+
+class SubsystemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subsystem
         fields = '__all__'

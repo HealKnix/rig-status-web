@@ -1,31 +1,43 @@
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import (
+    authenticate,
+    login,
+    logout
+)
 from django.contrib.sessions.models import Session
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema_view
-from rest_framework import viewsets, status
+from rest_framework import (
+    viewsets,
+    status
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .docs import (
     TechStatusDocumentation,
+    DrillingStatusDocumentation,
+    RigDocumentation,
     SensorDocumentation,
     SensorDataDocumentation,
-    DrillingStatusDocumentation,
-    RigDocumentation
+    RobotStatusDocumentation,
+    RobotDocumentation,
+    SubsystemDocumentation,
+    SensorStatusDocumentation,
 )
 from .models import (
     TechStatus,
-    Sensor,
-    SensorData,
     DrillingStatus,
     Rig,
+    Subsystem,
     SensorStatus,
+    Sensor,
+    SensorData,
     RobotStatus,
     Robot,
-    User
+    User,
 )
 from .serializers import (
     LoginSerializer,
@@ -38,6 +50,7 @@ from .serializers import (
     RobotStatusSerializer,
     RobotSerializer,
     LogoutSerializer,
+    SubsystemSerializer,
 )
 
 
@@ -156,15 +169,17 @@ class SensorViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         query_rig_id = self.request.query_params.get("rig_id")
+        query_subsystem_id = self.request.query_params.get("subsystem_id")
+
+        filtered_queryset = self.get_queryset()
 
         if query_rig_id is not None:
-            filtered_queryset = Sensor.objects.filter(rig_id=query_rig_id)
-            return Response(
-                self.get_serializer(filtered_queryset, many=True).data,
-                status=status.HTTP_200_OK
-            )
+            filtered_queryset = filtered_queryset.filter(rig_id=query_rig_id)
 
-        query_data = self.get_serializer(self.get_queryset(), many=True).data
+        if query_subsystem_id is not None:
+            filtered_queryset = filtered_queryset.filter(subsystem_id=query_subsystem_id)
+
+        query_data = self.get_serializer(filtered_queryset, many=True).data
         return Response(query_data, status=status.HTTP_200_OK)
 
 
@@ -253,21 +268,28 @@ class RigViewSet(viewsets.ModelViewSet):
         return data
 
 
-# @extend_schema_view(**RigDocumentation())
+@extend_schema_view(**SubsystemDocumentation())
+class SubsystemViewSet(viewsets.ModelViewSet):
+    queryset = Subsystem.objects.all()
+    serializer_class = SubsystemSerializer
+    permission_classes = [IsAuthenticated]
+
+
+@extend_schema_view(**SensorStatusDocumentation())
 class SensorStatusViewSet(viewsets.ModelViewSet):
     queryset = SensorStatus.objects.all()
     serializer_class = SensorStatusSerializer
     permission_classes = [IsAuthenticated]
 
 
-# @extend_schema_view(**RigDocumentation())
+@extend_schema_view(**RobotStatusDocumentation())
 class RobotStatusViewSet(viewsets.ModelViewSet):
     queryset = RobotStatus.objects.all()
     serializer_class = RobotStatusSerializer
     permission_classes = [IsAuthenticated]
 
 
-# @extend_schema_view(**RigDocumentation())
+@extend_schema_view(**RobotDocumentation())
 class RobotViewSet(viewsets.ModelViewSet):
     queryset = Robot.objects.all()
     serializer_class = RobotSerializer
