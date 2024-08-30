@@ -43,7 +43,7 @@ async def generator_task():
 
 
 # Роут для генерации данных
-@app.get("/generate_data/")
+@app.post("/generate_data/")
 async def generate_data(background_tasks: BackgroundTasks):
     global toggle_generator_work
     toggle_generator_work = not toggle_generator_work
