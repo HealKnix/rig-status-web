@@ -19,4 +19,23 @@
 <path d="M99.5808 114.99V129.49H87.3208V115.16H97.1008C97.7908 115.16 98.0408 114.25 97.4508 113.9L68.0408 96.45C67.5908 96.19 67.6008 95.54 68.0508 95.28L89.9808 82.88C90.4308 82.63 90.4508 81.9901 90.0108 81.7201L67.9608 67.75C67.5308 67.47 67.5408 66.84 67.9808 66.59L84.3108 57.05L99.5608 115L99.5808 114.99Z" stroke="#3A7CFF" stroke-width="5" stroke-miterlimit="10"/>
 <path d="M67.0407 115.16H46.7507V129.49H67.0407V115.16Z" stroke="#3A7CFF" stroke-width="5" stroke-miterlimit="10"/>
 <path d="M87.3307 129.48V134.46L67.0407 141.25L46.7507 134.46V129.48H87.3307Z" stroke="#3A7CFF" stroke-width="5" stroke-miterlimit="10"/>
+
+<style>
+	@media (prefers-color-scheme: dark) {
+		#left-ear {
+			fill: white;
+			stroke: white;
+			stroke-width: 0;
+		}
+		#right-ear {
+			fill: white;
+			stroke: white;
+			stroke-width: 0;
+		}
+		path {
+			stroke: white;
+		}
+	}
+</style>
+
 </svg>
