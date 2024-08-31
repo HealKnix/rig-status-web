@@ -20,7 +20,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`custom-btn ${outlined && 'outlined'} ${variant} ${props.className ? props.className : ''}`}
+      className={`custom-btn ${outlined ? 'outlined' : ''} ${variant} ${props.className ? props.className : ''}`}
       {...props}
     >
       {props.children}

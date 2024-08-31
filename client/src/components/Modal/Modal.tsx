@@ -5,6 +5,8 @@ import { createPortal } from 'react-dom';
 
 import { useModalStore } from '@/store/useModalStore';
 
+import FocusTrap from '../FocusTrap/FocusTrap';
+
 interface ModalProps {
   children: React.ReactNode;
 }
@@ -50,9 +52,11 @@ const Modal: FC<ModalProps> = ({ children }) => {
   }, []);
 
   return createPortal(
-    <dialog id="dialog-modal" ref={dialogRef} tabIndex={-1}>
-      {children}
-    </dialog>,
+    <FocusTrap>
+      <dialog id="dialog-modal" ref={dialogRef} tabIndex={-1}>
+        {children}
+      </dialog>
+    </FocusTrap>,
     document.getElementById('modal')!,
   );
 };
