@@ -1,58 +1,50 @@
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from django.contrib.auth import (
-    authenticate,
-    login,
-    logout
-)
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
 from django.middleware.csrf import get_token
 from drf_spectacular.utils import extend_schema_view
-from rest_framework import (
-    viewsets,
-    status
-)
+from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .docs import (
-    TechStatusDocumentation,
     DrillingStatusDocumentation,
     RigDocumentation,
-    SensorDocumentation,
-    SensorDataDocumentation,
-    RobotStatusDocumentation,
     RobotDocumentation,
-    SubsystemDocumentation,
+    RobotStatusDocumentation,
+    SensorDataDocumentation,
+    SensorDocumentation,
     SensorStatusDocumentation,
+    SubsystemDocumentation,
+    TechStatusDocumentation,
 )
 from .models import (
-    TechStatus,
     DrillingStatus,
     Rig,
-    Subsystem,
-    SensorStatus,
+    Robot,
+    RobotStatus,
     Sensor,
     SensorData,
-    RobotStatus,
-    Robot,
+    SensorStatus,
+    Subsystem,
+    TechStatus,
     User,
 )
 from .serializers import (
-    LoginSerializer,
-    TechStatusSerializer,
-    SensorSerializer,
-    SensorDataSerializer,
     DrillingStatusSerializer,
-    RigSerializer,
-    SensorStatusSerializer,
-    RobotStatusSerializer,
-    RobotSerializer,
+    LoginSerializer,
     LogoutSerializer,
+    RigSerializer,
+    RobotSerializer,
+    RobotStatusSerializer,
+    SensorDataSerializer,
+    SensorSerializer,
+    SensorStatusSerializer,
     SubsystemSerializer,
+    TechStatusSerializer,
 )
-
 
 # Отправка уведомления о новом пользователе
 # channel_layer = get_channel_layer()
@@ -64,6 +56,7 @@ from .serializers import (
 #     }
 # )
 
+
 class AuthenticatedAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -73,17 +66,20 @@ class AuthenticatedAPIView(APIView):
             session = Session.objects.get(session_key=sessionid)
             session_data = session.get_decoded()
 
-            user_id = session_data.get('_auth_user_id')
+            user_id = session_data.get("_auth_user_id")
             user = User.objects.get(id=user_id)
 
-            return Response({
-                'id': user.id,
-                'username': user.username,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'middle_name': user.middle_name,
-                'email': user.email,
-            }, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "id": user.id,
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "patronymic": user.patronymic,
+                    "email": user.email,
+                },
+                status=status.HTTP_200_OK,
+            )
         except (Session.DoesNotExist, User.DoesNotExist):
             return None
 
@@ -96,8 +92,8 @@ class LoginViewSet(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        email = serializer.validated_data['email']
-        password = serializer.validated_data['password']
+        email = serializer.validated_data["email"]
+        password = serializer.validated_data["password"]
 
         user = authenticate(request, email=email, password=password)
 
@@ -107,30 +103,27 @@ class LoginViewSet(APIView):
             sessionid = request.session.session_key
             response = Response(
                 {
-                    'sessionid': sessionid,
-                    'csrftoken': csrftoken,
-                    'user': {
-                        'id': user.id,
-                        'username': user.username,
-                        'first_name': user.first_name,
-                        'last_name': user.last_name,
-                        'middle_name': user.middle_name,
-                        'email': user.email,
-                    }
+                    "sessionid": sessionid,
+                    "csrftoken": csrftoken,
+                    "user": {
+                        "id": user.id,
+                        "username": user.username,
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                        "patronymic": user.patronymic,
+                        "email": user.email,
+                    },
                 },
-                status=status.HTTP_200_OK
+                status=status.HTTP_200_OK,
             )
 
-            response.set_cookie('sessionid', sessionid)
-            response.set_cookie('csrftoken', csrftoken)
+            response.set_cookie("sessionid", sessionid)
+            response.set_cookie("csrftoken", csrftoken)
 
             return response
         else:
             return Response(
-                {
-                    'error': 'Invalid credentials'
-                },
-                status=status.HTTP_400_BAD_REQUEST
+                {"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST
             )
 
 
@@ -142,14 +135,11 @@ class LogoutViewSet(APIView):
     def post(self, request, *args, **kwargs):
         logout(request)
         response = Response(
-            {
-                'detail': 'Successfully logged out'
-            },
-            status=status.HTTP_200_OK
+            {"detail": "Successfully logged out"}, status=status.HTTP_200_OK
         )
 
-        response.delete_cookie('sessionid')
-        response.delete_cookie('csrftoken')
+        response.delete_cookie("sessionid")
+        response.delete_cookie("csrftoken")
 
         return response
 
@@ -177,7 +167,9 @@ class SensorViewSet(viewsets.ModelViewSet):
             filtered_queryset = filtered_queryset.filter(rig_id=query_rig_id)
 
         if query_subsystem_id is not None:
-            filtered_queryset = filtered_queryset.filter(subsystem_id=query_subsystem_id)
+            filtered_queryset = filtered_queryset.filter(
+                subsystem_id=query_subsystem_id
+            )
 
         query_data = self.get_serializer(filtered_queryset, many=True).data
         return Response(query_data, status=status.HTTP_200_OK)
@@ -201,10 +193,12 @@ class SensorDataViewSet(viewsets.ModelViewSet):
             {
                 "type": "send_sensor_data",
                 "data": serializer.data,
-            }
+            },
         )
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 @extend_schema_view(**DrillingStatusDocumentation())
@@ -220,14 +214,10 @@ class DrillingStatusViewSet(viewsets.ModelViewSet):
         if query_filter is not None:
             return Response(
                 [
-                    {
-                        "data": self.get_serializer(self.queryset, many=True).data
-                    },
-                    {
-                        "status": status.HTTP_200_OK
-                    }
+                    {"data": self.get_serializer(self.queryset, many=True).data},
+                    {"status": status.HTTP_200_OK},
                 ],
-                status=status.HTTP_200_OK
+                status=status.HTTP_200_OK,
             )
 
         query_data = self.get_serializer(self.get_queryset(), many=True).data
@@ -246,13 +236,18 @@ class RigViewSet(viewsets.ModelViewSet):
             "rig",
             {
                 "type": "send_rig",
-                "data": self.get_serializer(self.get_queryset().order_by('id'), many=True).data,
-            }
+                "data": self.get_serializer(
+                    self.get_queryset().order_by("id"), many=True
+                ).data,
+            },
         )
-        return Response(self.get_serializer(self.queryset.order_by('id'), many=True).data, status=status.HTTP_200_OK)
+        return Response(
+            self.get_serializer(self.queryset.order_by("id"), many=True).data,
+            status=status.HTTP_200_OK,
+        )
 
     def partial_update(self, request, *args, **kwargs):
-        kwargs['partial'] = True
+        kwargs["partial"] = True
 
         data = self.update(request, *args, **kwargs)
 
@@ -262,7 +257,7 @@ class RigViewSet(viewsets.ModelViewSet):
             {
                 "type": "send_rig",
                 "data": self.get_serializer(self.get_queryset(), many=True).data,
-            }
+            },
         )
 
         return data

@@ -4,6 +4,7 @@ import EChartsReact from 'echarts-for-react';
 import { FC, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 
+import SpinningDrill from '@/assets/spinning_drill.webm';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import DrillSVG from '@/components/SVGs/DrillSVG';
 import LloSVG from '@/components/SVGs/LloSVG';
@@ -237,6 +238,17 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           <h2 style={{ color: 'var(--primary-color)' }}>
             {rig?.bottom_hole_drilling} м
           </h2>
+          <video
+            src={SpinningDrill}
+            style={{
+              objectFit: 'cover',
+            }}
+            width={100}
+            height={100}
+            autoPlay
+            muted
+            loop
+          ></video>
           <h4>
             осталось{' '}
             {Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м

@@ -24,7 +24,7 @@ const ProfileLink: FC<ProfileLinkProps> = () => {
         <div className="profile-image"></div>
         <div className="profile-text">
           <div className="profile-text__short-name">
-            {`${authStore.user?.last_name} ${authStore.user?.first_name?.[0]}.  ${authStore.user?.middle_name?.[0]}.`}
+            {`${authStore.user?.last_name} ${authStore.user?.first_name?.[0]}.  ${authStore.user?.patronymic?.[0]}.`}
           </div>
         </div>
       </div>
