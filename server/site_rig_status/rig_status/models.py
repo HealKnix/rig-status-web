@@ -47,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('Логин'), max_length=150)
     first_name = models.CharField(_('Имя'), max_length=30)
     last_name = models.CharField(_('Фамилия'), max_length=30)
-    middle_name = models.CharField(_('Отчество'), max_length=30)
+    patronymic = models.CharField(_('Отчество'), max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -56,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'middle_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'patronymic']
 
     def __str__(self):
         return self.email
@@ -122,9 +122,9 @@ class Rig(models.Model):
         db_column="tech_status_id"
     )
     start_date = models.DateField(default=timezone.now)
-    end_date_fact = models.DateField()
+    end_date_fact = models.DateField(null=True)
     end_date_plan = models.DateField()
-    tech_date = models.DateField()
+    tech_date = models.DateField(null=True)
 
     class Meta:
         db_table = 'rig'
@@ -142,7 +142,7 @@ class Screen(models.Model):
         db_column='rig_id'
     )
     ipv4 = models.GenericIPAddressField()
-    ipv6 = models.GenericIPAddressField()
+    ipv6 = models.GenericIPAddressField(null=True)
     mac_address = models.GenericIPAddressField()
     online = models.BooleanField(default=False)
 
@@ -159,7 +159,7 @@ class Subsystem(models.Model):
         db_column="rig_id"
     )
     name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, null=True)
     active = models.BooleanField(default=False)
 
     class Meta:
@@ -200,9 +200,9 @@ class Sensor(models.Model):
         on_delete=models.CASCADE,
         db_column="subsystem_id"
     )
-    name = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255)
     data_type = models.CharField(max_length=255)
-    unit = models.CharField(max_length=255)
+    unit = models.CharField(max_length=255, null=True)
     status_id = models.ForeignKey(
         SensorStatus,
         on_delete=models.CASCADE,
