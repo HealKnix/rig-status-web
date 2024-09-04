@@ -78,10 +78,39 @@ class DrillingStatus(models.Model):
         verbose_name_plural = 'Drilling Statuses'
 
 
-class Rig(models.Model):
+class WellPad(models.Model):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    connection_speed = models.IntegerField(help_text='Скорость соединения (в Кб/с)')
+
+    class Meta:
+        db_table = 'well_pad'
+        verbose_name_plural = 'Well Pads'
+
+
+class WellType(models.Model):
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'well_type'
+        verbose_name_plural = 'Well Types'
+
+
+class Rig(models.Model):
+    name = models.CharField(max_length=255)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+    well_pad_id = models.ForeignKey(
+        WellPad,
+        on_delete=models.CASCADE,
+        db_column='well_pad_id'
+    )
+    well_type_id = models.ForeignKey(
+        WellType,
+        on_delete=models.CASCADE,
+        db_column='well_type_id'
+    )
+    well_number = models.FloatField()
+    well_depth = models.FloatField()
     drilling_status_id = models.ForeignKey(
         DrillingStatus,
         on_delete=models.CASCADE,
@@ -92,6 +121,9 @@ class Rig(models.Model):
         on_delete=models.CASCADE,
         db_column="tech_status_id"
     )
+    start_date = models.DateField(default=timezone.now)
+    end_date_fact = models.DateField()
+    end_date_plan = models.DateField()
     tech_date = models.DateField()
 
     class Meta:
@@ -102,6 +134,24 @@ class Rig(models.Model):
         return self.name
 
 
+class Screen(models.Model):
+    name = models.CharField(max_length=255)
+    rig_id = models.ForeignKey(
+        Rig,
+        on_delete=models.CASCADE,
+        db_column='rig_id'
+    )
+    ipv4 = models.GenericIPAddressField()
+    ipv6 = models.GenericIPAddressField()
+    mac_address = models.GenericIPAddressField()
+    online = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'screen'
+        verbose_name_plural = 'Screens'
+        indexes = [models.Index(fields=['mac_address'])]
+
+
 class Subsystem(models.Model):
     rig_id = models.ForeignKey(
         Rig,
@@ -110,7 +160,7 @@ class Subsystem(models.Model):
     )
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'subsystem'
@@ -129,6 +179,14 @@ class SensorStatus(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class SensorOutputType(models.Model):
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'sensor_output_type'
+        verbose_name_plural = 'Sensor Output Types'
 
 
 class Sensor(models.Model):
@@ -152,6 +210,11 @@ class Sensor(models.Model):
     )
     min_value = models.FloatField()
     max_value = models.FloatField()
+    output_type_id = models.ForeignKey(
+        SensorOutputType,
+        on_delete=models.CASCADE,
+        db_column="output_type_id"
+    )
 
     class Meta:
         db_table = 'sensor'
