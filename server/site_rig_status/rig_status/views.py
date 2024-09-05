@@ -46,6 +46,7 @@ from .serializers import (
     TechStatusSerializer,
 )
 
+
 # Отправка уведомления о новом пользователе
 # channel_layer = get_channel_layer()
 # async_to_sync(channel_layer.group_send)(
@@ -268,6 +269,17 @@ class SubsystemViewSet(viewsets.ModelViewSet):
     queryset = Subsystem.objects.all()
     serializer_class = SubsystemSerializer
     permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        query_rig_id = self.request.query_params.get("rig_id")
+
+        filtered_queryset = self.get_queryset()
+
+        if query_rig_id is not None:
+            filtered_queryset = filtered_queryset.filter(rig_id=query_rig_id)
+
+        query_data = self.get_serializer(filtered_queryset, many=True).data
+        return Response(query_data, status=status.HTTP_200_OK)
 
 
 @extend_schema_view(**SensorStatusDocumentation())

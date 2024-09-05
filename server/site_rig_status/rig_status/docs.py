@@ -580,6 +580,15 @@ class SubsystemDocumentation:
         return {
             'list': extend_schema(
                 tags=[tag],
+                parameters=[
+                    OpenApiParameter(
+                        name='rig_id',
+                        description='Идентификатор буровой установки',
+                        required=False,
+                        type=int,
+                        location=OpenApiParameter.QUERY,
+                    )
+                ],
                 description="Получить список всех подсистем"
             ),
             'retrieve': extend_schema(
