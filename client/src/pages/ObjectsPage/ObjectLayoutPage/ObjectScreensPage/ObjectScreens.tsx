@@ -51,7 +51,7 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
 
   return (
     <div className="object-screens__wrapper">
-      <div
+      div
         className="object-screens__block"
         onClick={handleClickMaximizeScreen}
       >
