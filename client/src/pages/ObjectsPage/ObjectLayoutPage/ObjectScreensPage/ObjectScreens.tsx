@@ -57,6 +57,31 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
       >
         <div style={{ padding: '15px', flex: 'none' }}>
           <h2>
+            Общий вид
+            {currentScreenTarget && (
+              <Button
+                style={{
+                  width: 'fit-content',
+                }}
+                variant="transparent"
+                onClick={handleClickMinimizeScreen}
+              >
+                <img src={CrossSVG} alt="cross" width={16} />
+              </Button>
+            )}
+          </h2>
+        </div>
+        <div>
+          <img src={Image3} alt="" />
+        </div>
+      </div>
+
+      <div
+        className="object-screens__block"
+        onClick={handleClickMaximizeScreen}
+      >
+        <div style={{ padding: '15px', flex: 'none' }}>
+          <h2>
             Буровая вид спереди
             {currentScreenTarget && (
               <Button
@@ -86,7 +111,7 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
       >
         <div style={{ padding: '15px', flex: 'none' }}>
           <h2>
-            Центр управления
+            Контроль талевой системы
             {currentScreenTarget && (
               <Button
                 style={{
@@ -102,31 +127,6 @@ const ObjectScreens: FC<ObjectScreensProps> = () => {
         </div>
         <div>
           <img src={Image2} alt="" />
-        </div>
-      </div>
-
-      <div
-        className="object-screens__block"
-        onClick={handleClickMaximizeScreen}
-      >
-        <div style={{ padding: '15px', flex: 'none' }}>
-          <h2>
-            Буровая вид спереди
-            {currentScreenTarget && (
-              <Button
-                style={{
-                  width: 'fit-content',
-                }}
-                variant="transparent"
-                onClick={handleClickMinimizeScreen}
-              >
-                <img src={CrossSVG} alt="cross" width={16} />
-              </Button>
-            )}
-          </h2>
-        </div>
-        <div>
-          <img src={Image3} alt="" />
         </div>
       </div>
     </div>

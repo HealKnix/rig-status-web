@@ -13,7 +13,8 @@
     "prettier": "prettier --ignore-unknown --write .",
     "eslint": "eslint **/*.{tsx,ts,js}",
     "eslint:fix": "eslint **/*.{tsx,ts,js} --fix",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives && npm run eslint:fix && npm run prettier"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives && npm run eslint:fix && npm run prettier",
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.48.0",
@@ -23,6 +24,8 @@
     "cookies-ts": "^1.0.5",
     "dotenv": "^16.4.5",
     "echarts-for-react": "^3.0.2",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,5 +46,11 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
+  },
+  "lint-staged": {
+    "src/**/*.{tsx,ts,jsx,js}": [
+      "npm run lint",
+      "npm run type-check"
+    ]
   }
 }
