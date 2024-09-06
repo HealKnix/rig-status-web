@@ -11,10 +11,20 @@
     "preview": "vite preview",
     "type-check": "tsc --build --force",
     "prettier": "prettier --ignore-unknown --write .",
-    "eslint": "eslint **/*.{tsx,ts,js}",
-    "eslint:fix": "eslint **/*.{tsx,ts,js} --fix",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives && npm run eslint:fix && npm run prettier",
+    "stylelint": "stylelint **/*.{css,scss,sass}",
+    "stylelint:fix": "stylelint **/*.{css,scss,sass} --fix",
+    "eslint": "eslint **/*.{tsx,ts,jsx,js}",
+    "eslint:fix": "eslint **/*.{tsx,ts,jsx,js} --fix",
+    "lint": "npm run prettier && npm run stylelint && npm run eslint && npm run type-check",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*": "npm run prettier",
+    "src/**/*.{tsx,ts,jsx,js}": [
+      "npm run eslint:fix",
+      "bash -c 'npm run type-check'"
+    ],
+    "src/**/*.{css,scss,sass}": "npm run stylelint:fix"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.48.0",
@@ -33,6 +43,7 @@
     "recharts": "^2.12.7",
     "reconnecting-websocket": "^4.4.0",
     "sass": "^1.77.4",
+    "stylelint": "^16.9.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -46,11 +57,5 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
-  },
-  "lint-staged": {
-    "src/**/*.{tsx,ts,jsx,js}": [
-      "npm run lint",
-      "npm run type-check"
-    ]
   }
 }
