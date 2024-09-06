@@ -6,11 +6,9 @@ progress {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-image: radial-gradient(
       closest-side,
       var(--white) 85%,
@@ -22,7 +20,7 @@ progress {
     max-width: 125px;
     color: var(--color);
     font-family:
-      DM Sans,
+      "DM Sans",
       Geometria;
     font-size: 56px;
     font-weight: bold;

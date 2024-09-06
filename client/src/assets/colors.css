@@ -17,19 +17,14 @@
     var(--thirdly-color) 10%,
     transparent 100%
   );
-
   --background-color: #f2f2f3;
   --border-color: #dbe1ed;
-
   --error-color: #ff4d55;
   --warning-color: #ffb200;
   --success-color: #00c472;
-
   --text-color: #1b2539;
   --text-additional-color: #6c7483;
-
   --white: #fff;
   --black: #000;
-
   --disabled-color: #c9cdd6;
 }

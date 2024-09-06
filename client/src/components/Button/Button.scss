@@ -1,4 +1,4 @@
-@import url('./colors-button.scss');
+@import './colors-button';
 
 .custom-btn {
   --bgColor: var(--primary-color);
@@ -55,6 +55,7 @@
 
   &:disabled {
     cursor: auto;
+
     --bgColor: var(--disabled-color);
     --colorOutline: var(--white);
   }

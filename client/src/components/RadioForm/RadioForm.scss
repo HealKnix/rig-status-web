@@ -18,7 +18,6 @@
     padding: 8px;
 
     & > .label-input-radio {
-      display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
@@ -69,7 +68,6 @@
     0 0 0 0 var(--black);
   border: 1px solid var(--black);
   border-radius: 50%;
-
   transition: 0.25s ease-in-out;
 }
 

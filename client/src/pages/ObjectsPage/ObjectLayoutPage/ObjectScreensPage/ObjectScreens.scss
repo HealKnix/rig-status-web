@@ -23,6 +23,7 @@
 
     &:not(.full-screen):hover {
       cursor: pointer;
+
       & > div > img {
         scale: 1.05;
       }

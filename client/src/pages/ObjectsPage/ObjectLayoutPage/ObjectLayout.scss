@@ -24,16 +24,15 @@
     overflow-x: auto;
 
     & > hr {
-      width: 0px;
-      border: 1px solid #33333311;
+      width: 0;
+      border: 1px solid #3331;
       height: 75%;
     }
 
     & > * {
       display: flex;
-      flex-direction: row;
+      flex-flow: row wrap;
       align-items: center;
-      flex-wrap: wrap;
       gap: 15px;
 
       & > * {

@@ -1,13 +1,11 @@
 #dialog-modal {
   cursor: pointer;
-
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   pointer-events: none;
   opacity: 0;
-
   width: 100%;
   height: 100%;
   padding: 24px;
@@ -16,9 +14,7 @@
   border: none;
   outline: none;
   margin: auto;
-
   transition: 0.2s ease-in-out;
-
   z-index: 10000;
 
   &[open] {
@@ -29,7 +25,6 @@
   &::backdrop {
     cursor: pointer;
     background-color: color-mix(in srgb, var(--text-color) 35%, transparent 0%);
-
     animation: backdrop-show 0.2s ease-in-out;
     @keyframes backdrop-show {
       0% {

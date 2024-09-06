@@ -15,7 +15,7 @@
     "stylelint:fix": "stylelint **/*.{css,scss,sass} --fix",
     "eslint": "eslint **/*.{tsx,ts,jsx,js}",
     "eslint:fix": "eslint **/*.{tsx,ts,jsx,js} --fix",
-    "lint": "npm run prettier && npm run stylelint && npm run eslint && npm run type-check",
+    "lint": "npm run prettier && npm run stylelint:fix && npm run eslint:fix && npm run type-check",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -44,6 +44,8 @@
     "reconnecting-websocket": "^4.4.0",
     "sass": "^1.77.4",
     "stylelint": "^16.9.0",
+    "stylelint-config-prettier-scss": "^1.0.0",
+    "stylelint-config-standard-scss": "^13.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

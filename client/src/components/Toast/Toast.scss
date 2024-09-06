@@ -19,12 +19,15 @@
     &.success {
       --accentColor: var(--success-color);
     }
+
     &.warning {
       --accentColor: var(--warning-color);
     }
+
     &.error {
       --accentColor: var(--error-color);
     }
+
     &.info {
       --accentColor: var(--primary-color);
     }
@@ -42,12 +45,12 @@
     box-shadow: 0 4px 10px 0
       color-mix(in srgb, var(--accentColor) 25%, transparent 0%);
     overflow: hidden;
-
     animation: toastAdd var(--toastDuration) ease-in-out both;
     @keyframes toastAdd {
       from {
         translate: 100%;
       }
+
       to {
         translate: 0;
       }
@@ -92,12 +95,12 @@
       height: 3px;
       bottom: 0;
       background-color: var(--accentColor);
-
       animation: toastProgress var(--toastProgressDuration) linear forwards;
       @keyframes toastProgress {
         from {
           width: 100%;
         }
+
         to {
           width: 0;
         }

@@ -2,7 +2,6 @@
   --accentColor: var(--primary-color);
 
   appearance: none;
-
   position: relative;
   display: block;
   width: 100%;
@@ -22,13 +21,13 @@
     background-image: url('../../assets/loading_divider.svg');
     background-position: 0 100%;
     background-size: contain;
-
     animation: in_progress 1.5s linear infinite;
 
     @keyframes in_progress {
       0% {
         background-position: -45px 0;
       }
+
       100% {
         background-position: 0 0;
       }
