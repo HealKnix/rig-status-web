@@ -90,7 +90,7 @@ export class Api implements ApiType {
     return data;
   }
 
-  async update<T>(apiName: ApiNames, dataBody: T, id: number | null) {
+  async update<T>(apiName: ApiNames, id: number | null, dataBody: T) {
     if (!id) return null;
 
     const { data } = await axios.patch<T>(

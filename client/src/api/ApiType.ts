@@ -24,8 +24,8 @@ export interface ApiType {
   post?: <T>(apiName: ApiNames, dataBody: T) => Promise<T>;
   update?: <T>(
     apiName: ApiNames,
-    dataBody: T,
     id: number | null,
+    dataBody: T,
   ) => Promise<T | null>;
   delete?: <T>(apiName: ApiNames, id: number | null) => Promise<T | null>;
 }

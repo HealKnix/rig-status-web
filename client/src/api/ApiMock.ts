@@ -143,24 +143,93 @@ export class ApiMock implements ApiType {
     return data;
   }
 
-  async update<T>(apiName: ApiNames, dataBody: T) {
-    const { data } = await axios.patch<T>(`/api/v1/${apiName}/`, dataBody, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': cookies.get('csrftoken'),
-      },
+  async update<T>(apiName: ApiNames, id: number | null, dataBody: T) {
+    const userId = userList.findIndex((user) => {
+      return (
+        user.sessionid == cookies.get('sessionid') &&
+        user.csrftoken === cookies.get('csrftoken')
+      );
     });
+
+    if (!userList[userId] || !id) return await delayRes(null, DELAY);
+
+    let data: T | null;
+
+    if (apiName === 'rigs') {
+      data = await delayRes(
+        <T>rigList.map((item) => {
+          if (item.id === id) {
+            item = {
+              ...item,
+              ...dataBody,
+            };
+          }
+          return item;
+        }),
+        DELAY,
+      );
+    } else if (apiName === 'subsystems') {
+      data = await delayRes(
+        <T>subsystemList.map((item) => {
+          if (item.id === id) {
+            item = {
+              ...item,
+              ...dataBody,
+            };
+          }
+          return item;
+        }),
+        DELAY,
+      );
+    } else if (apiName === 'sensors') {
+      data = await delayRes(
+        <T>sensorList.map((item) => {
+          if (item.id === id) {
+            item = {
+              ...item,
+              ...dataBody,
+            };
+          }
+          return item;
+        }),
+        DELAY,
+      );
+    } else {
+      data = await delayRes(null, DELAY);
+    }
+
+    console.log(data);
 
     return data;
   }
 
-  async delete<T>(apiName: ApiNames) {
-    const { data } = await axios.delete<T>(`/api/v1/${apiName}/`, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': cookies.get('csrftoken'),
-      },
+  async delete<T>(apiName: ApiNames, id: number | null) {
+    const userId = userList.findIndex((user) => {
+      return (
+        user.sessionid == cookies.get('sessionid') &&
+        user.csrftoken === cookies.get('csrftoken')
+      );
     });
+
+    if (!userList[userId] || !id) return await delayRes(null, DELAY);
+
+    let data: T | null;
+
+    if (apiName === 'rigs') {
+      data = await delayRes(<T>rigList.filter((rig) => rig.id !== id), DELAY);
+    } else if (apiName === 'subsystems') {
+      data = await delayRes(
+        <T>subsystemList.filter((subsystem) => subsystem.id !== id),
+        DELAY,
+      );
+    } else if (apiName === 'sensors') {
+      data = await delayRes(
+        <T>sensorList.filter((sensor) => sensor.id !== id),
+        DELAY,
+      );
+    } else {
+      data = await delayRes(null, DELAY);
+    }
 
     return data;
   }

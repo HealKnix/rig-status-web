@@ -14,7 +14,10 @@ import Switch from '@/components/Switch/Switch';
 import { useSensorDataWebSocket } from '@/hooks/useSensorDataWebSocket';
 import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
+import { Subsystem } from '@/models/Subsystem';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
+
+import { subsystemList } from '../../../../models/mock/subsystem';
 
 interface ObjectWorkplaceProps {}
 
@@ -82,15 +85,10 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           </h2>
           <Switch
             onChange={(e) => {
-              api.update<{
-                active: boolean;
-              }>(
-                'subsystems',
-                {
-                  active: e.currentTarget.checked,
-                },
-                1,
-              );
+              api.update<Partial<Subsystem>>('subsystems', 1, {
+                active: e.currentTarget.checked,
+              });
+              console.log(subsystemList);
             }}
           />
         </div>
