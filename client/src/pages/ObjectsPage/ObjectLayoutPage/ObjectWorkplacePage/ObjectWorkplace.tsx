@@ -17,8 +17,6 @@ import { Rig } from '@/models/Rig';
 import { Subsystem } from '@/models/Subsystem';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
 
-import { subsystemList } from '../../../../models/mock/subsystem';
-
 interface ObjectWorkplaceProps {}
 
 const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
@@ -88,7 +86,6 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               api.update<Partial<Subsystem>>('subsystems', 1, {
                 active: e.currentTarget.checked,
               });
-              console.log(subsystemList);
             }}
           />
         </div>

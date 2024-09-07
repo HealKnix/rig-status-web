@@ -198,8 +198,6 @@ export class ApiMock implements ApiType {
       data = await delayRes(null, DELAY);
     }
 
-    console.log(data);
-
     return data;
   }
 
