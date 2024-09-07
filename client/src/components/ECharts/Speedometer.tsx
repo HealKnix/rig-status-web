@@ -5,6 +5,7 @@ interface SpeedometerProps {
   color: string;
   size: number;
   value: number;
+  unite: string;
   min: number;
   max: number;
 }
@@ -13,6 +14,7 @@ const Speedometer: FC<SpeedometerProps> = ({
   color,
   size,
   value,
+  unite = '',
   min,
   max,
 }) => {
@@ -61,11 +63,11 @@ const Speedometer: FC<SpeedometerProps> = ({
         detail: {
           valueAnimation: true,
           fontSize: 16,
-          lineHeight: 20,
+          lineHeight: 16,
           fontFamily: 'Geometria',
-          offsetCenter: [0, 30],
+          offsetCenter: [0, 35],
           fontWeight: 'bolder',
-          formatter: '{value}\nм³/ч',
+          formatter: `{value}\n${unite}`,
           color: '#1b2539',
         },
         min: min,

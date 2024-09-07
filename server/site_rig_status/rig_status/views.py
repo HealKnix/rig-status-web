@@ -188,14 +188,29 @@ class SensorDataViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            f"sensor_data_{serializer.data['sensor_id']}",
-            {
-                "type": "send_sensor_data",
-                "message": serializer.data,
-            },
-        )
+        sensor: Sensor = Sensor.objects.get(id=serializer.data["sensor_id"])
+        subsystem: Subsystem = sensor.subsystem_id
+
+        if subsystem.active:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f"sensor_data_{serializer.data['sensor_id']}",
+                {
+                    "type": "send_sensor_data",
+                    "message": serializer.data,
+                },
+            )
+        else:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f"sensor_data_{serializer.data['sensor_id']}",
+                {
+                    "type": "send_sensor_data",
+                    "message": {
+                        "value": 0,
+                    },
+                },
+            )
 
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers

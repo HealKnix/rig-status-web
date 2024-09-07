@@ -13,7 +13,8 @@ import SatelliteSVG from '../SVGs/SatelliteSVG';
 export default function ObjectCard({
   id,
   name,
-  location,
+  longitude,
+  latitude,
   well_depth,
   bottom_hole_drilling,
   connection_speed,
@@ -54,7 +55,9 @@ export default function ObjectCard({
     >
       <span className="object-id">{id}</span>
       <span className="object-name">{name}</span>
-      <span className="object-location">{location}</span>
+      <span className="object-location">
+        {longitude}° {latitude}°
+      </span>
       <div className="object-connection">
         <SatelliteSVG connection_speed={connection_speed} />
       </div>

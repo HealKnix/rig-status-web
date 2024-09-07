@@ -94,7 +94,7 @@ export class Api implements ApiType {
     if (!id) return null;
 
     const { data } = await axios.patch<T>(
-      `/api/v1/${apiName}/${id}`,
+      `/api/v1/${apiName}/${id}/`,
       dataBody,
       {
         withCredentials: true,
@@ -110,7 +110,7 @@ export class Api implements ApiType {
   async delete<T>(apiName: ApiNames, id: number | null) {
     if (!id) return null;
 
-    const { data } = await axios.delete<T>(`/api/v1/${apiName}/${id}`, {
+    const { data } = await axios.delete<T>(`/api/v1/${apiName}/${id}/`, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),

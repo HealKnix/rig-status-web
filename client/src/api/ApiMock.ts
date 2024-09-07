@@ -2,6 +2,8 @@ import axios from 'axios';
 import Cookies from 'cookies-ts';
 
 import { rigList } from '@/models/mock/rig';
+import { sensorList } from '@/models/mock/sensor';
+import { subsystemList } from '@/models/mock/subsystem';
 import { userList } from '@/models/mock/user';
 
 import { ApiNames, ApiType } from './ApiType';
@@ -89,6 +91,10 @@ export class ApiMock implements ApiType {
 
     if (apiName === 'rigs') {
       data = await delayRes(<T[]>rigList, DELAY);
+    } else if (apiName === 'subsystems') {
+      data = await delayRes(<T[]>subsystemList, DELAY);
+    } else if (apiName === 'sensors') {
+      data = await delayRes(<T[]>sensorList, DELAY);
     } else {
       data = await delayRes([], DELAY);
     }
@@ -110,8 +116,15 @@ export class ApiMock implements ApiType {
 
     if (apiName === 'rigs') {
       const rigId = rigList.findIndex((rig) => rig.id === id);
-
       data = await delayRes(<T>rigList[rigId], DELAY);
+    } else if (apiName === 'subsystems') {
+      const subsystemId = subsystemList.findIndex(
+        (subsystem) => subsystem.id === id,
+      );
+      data = await delayRes(<T>subsystemList[subsystemId], DELAY);
+    } else if (apiName === 'sensors') {
+      const sensorsId = sensorList.findIndex((sensors) => sensors.id === id);
+      data = await delayRes(<T>sensorList[sensorsId], DELAY);
     } else {
       data = await delayRes(null, DELAY);
     }

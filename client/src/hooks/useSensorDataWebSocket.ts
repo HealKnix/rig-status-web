@@ -1,12 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
-interface SensorDataWebSocketProps {
-  sensor_id: number;
-}
-
-const SensorDataWebSocket: FC<SensorDataWebSocketProps> = ({ sensor_id }) => {
-  const [message, setMessages] = useState<string>('---');
+export const useSensorDataWebSocket = (sensor_id: number) => {
+  const [message, setMessage] = useState<number>(0);
 
   useEffect(() => {
     const rws = new ReconnectingWebSocket(
@@ -16,7 +12,7 @@ const SensorDataWebSocket: FC<SensorDataWebSocketProps> = ({ sensor_id }) => {
     rws.onmessage = (event: MessageEvent) => {
       const data = JSON.parse(event.data);
 
-      setMessages(data.message.value);
+      setMessage(data.message.value);
     };
 
     return () => {
@@ -26,5 +22,3 @@ const SensorDataWebSocket: FC<SensorDataWebSocketProps> = ({ sensor_id }) => {
 
   return message;
 };
-
-export default SensorDataWebSocket;

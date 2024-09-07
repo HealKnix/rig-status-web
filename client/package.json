@@ -11,11 +11,9 @@
     "preview": "vite preview",
     "type-check": "tsc --build --force",
     "prettier": "prettier --ignore-unknown --write .",
-    "stylelint": "stylelint **/*.{css,scss,sass}",
-    "stylelint:fix": "stylelint **/*.{css,scss,sass} --fix",
     "eslint": "eslint **/*.{tsx,ts,jsx,js}",
     "eslint:fix": "eslint **/*.{tsx,ts,jsx,js} --fix",
-    "lint": "npm run prettier && npm run stylelint:fix && npm run eslint:fix && npm run type-check",
+    "lint": "npm run prettier && npm run eslint:fix && npm run type-check",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -23,8 +21,7 @@
     "src/**/*.{tsx,ts,jsx,js}": [
       "npm run eslint:fix",
       "bash -c 'npm run type-check'"
-    ],
-    "src/**/*.{css,scss,sass}": "npm run stylelint:fix"
+    ]
   },
   "dependencies": {
     "@tanstack/react-query": "^5.48.0",
@@ -43,9 +40,6 @@
     "recharts": "^2.12.7",
     "reconnecting-websocket": "^4.4.0",
     "sass": "^1.77.4",
-    "stylelint": "^16.9.0",
-    "stylelint-config-prettier-scss": "^1.0.0",
-    "stylelint-config-standard-scss": "^13.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

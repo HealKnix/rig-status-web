@@ -3,14 +3,15 @@ import './ObjectWorkplace.scss';
 import { FC, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 
+import { api } from '@/api';
 import SpinningDrill from '@/assets/spinning_drill.webm';
 import Speedometer from '@/components/ECharts/Speedometer';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
-import SensorDataWebSocket from '@/components/SensorDataWebSocket/SensorDataWebSocket';
 import DrillSVG from '@/components/SVGs/DrillSVG';
 import LloSVG from '@/components/SVGs/LloSVG';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 import Switch from '@/components/Switch/Switch';
+import { useSensorDataWebSocket } from '@/hooks/useSensorDataWebSocket';
 import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
@@ -79,7 +80,19 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           <h2 className="link">
             Лебёдка <ShareSVG />
           </h2>
-          <Switch />
+          <Switch
+            onChange={(e) => {
+              api.update<{
+                active: boolean;
+              }>(
+                'subsystems',
+                {
+                  active: e.currentTarget.checked,
+                },
+                1,
+              );
+            }}
+          />
         </div>
 
         <div className="object-workplace__block__content">
@@ -90,7 +103,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={1} /> т
+                {useSensorDataWebSocket(1)} т
               </div>
             </div>
 
@@ -100,7 +113,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={2} /> кгс
+                {useSensorDataWebSocket(2)} кгс
               </div>
             </div>
 
@@ -110,7 +123,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={3} /> м
+                {useSensorDataWebSocket(3)} м
               </div>
             </div>
 
@@ -131,14 +144,16 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   color="#3A7CFF"
                   min={0}
                   max={100}
-                  value={10}
+                  value={useSensorDataWebSocket(4)}
+                  unite="м/ч"
                   size={96}
                 />
                 <Speedometer
                   color="#FF7C3A"
                   min={0}
                   max={100}
-                  value={10}
+                  value={useSensorDataWebSocket(5)}
+                  unite="кгс"
                   size={96}
                 />
               </div>
@@ -148,7 +163,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       </div>
 
       <div className="object-workplace__block">
-        <div className="object-workplace__block__header--pumps">
+        <div className="object-workplace__block__header pumps">
           <div>
             <Switch />
             <h2>БН1</h2>
@@ -173,39 +188,31 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
         </div>
 
         <div className="object-workplace__block__parameter">
-          <div className="parameter_left">
-            <SensorDataWebSocket sensor_id={6} /> кВт
-          </div>
+          <div className="parameter_left">{useSensorDataWebSocket(6)} кВт</div>
 
           <span className="parameter_name">Мощность</span>
 
-          <div className="parameter_right">
-            <SensorDataWebSocket sensor_id={6} /> кВт
-          </div>
+          <div className="parameter_right">{useSensorDataWebSocket(6)} кВт</div>
         </div>
 
         <div className="object-workplace__block__parameter">
           <div className="parameter_left">
-            <SensorDataWebSocket sensor_id={7} /> ход/мин
+            {useSensorDataWebSocket(7)} ход/мин
           </div>
 
           <span className="parameter_name">Ходы насоса</span>
 
           <div className="parameter_right">
-            <SensorDataWebSocket sensor_id={7} /> ход/мин
+            {useSensorDataWebSocket(7)} ход/мин
           </div>
         </div>
 
         <div className="object-workplace__block__parameter">
-          <div className="parameter_left">
-            <SensorDataWebSocket sensor_id={8} /> л/с
-          </div>
+          <div className="parameter_left">{useSensorDataWebSocket(8)} л/с</div>
 
           <span className="parameter_name">Расход</span>
 
-          <div className="parameter_right">
-            <SensorDataWebSocket sensor_id={8} /> л/с
-          </div>
+          <div className="parameter_right">{useSensorDataWebSocket(8)} л/с</div>
         </div>
 
         <div
@@ -225,14 +232,18 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Расход на входе</span>
-            <ProgressBar color="var(--primary-color)" value={40} max={100} />
+            <ProgressBar
+              color="var(--primary-color)"
+              value={useSensorDataWebSocket(9)}
+              max={300}
+            />
             <span
               style={{
                 textAlign: 'right',
                 fontWeight: '500',
               }}
             >
-              <SensorDataWebSocket sensor_id={9} /> л/с
+              {useSensorDataWebSocket(9)} л/с
             </span>
           </div>
 
@@ -245,14 +256,18 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Поток на выходе</span>
-            <ProgressBar color="var(--primary-color)" value={20} max={100} />
+            <ProgressBar
+              color="var(--primary-color)"
+              value={useSensorDataWebSocket(10)}
+              max={300}
+            />
             <span
               style={{
                 textAlign: 'right',
                 fontWeight: '500',
               }}
             >
-              <SensorDataWebSocket sensor_id={10} /> л/с
+              {useSensorDataWebSocket(10)} л/с
             </span>
           </div>
 
@@ -265,14 +280,18 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Давление манифольда</span>
-            <ProgressBar color="var(--primary-color)" value={55} max={100} />
+            <ProgressBar
+              color="var(--primary-color)"
+              value={useSensorDataWebSocket(11)}
+              max={100}
+            />
             <span
               style={{
                 textAlign: 'right',
                 fontWeight: '500',
               }}
             >
-              <SensorDataWebSocket sensor_id={11} /> кПа
+              {useSensorDataWebSocket(11)} кПа
             </span>
           </div>
 
@@ -285,14 +304,18 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             }}
           >
             <span>Перепад давления</span>
-            <ProgressBar color="var(--primary-color)" value={35} max={100} />
+            <ProgressBar
+              color="var(--primary-color)"
+              value={useSensorDataWebSocket(12)}
+              max={100}
+            />
             <span
               style={{
                 textAlign: 'right',
                 fontWeight: '500',
               }}
             >
-              <SensorDataWebSocket sensor_id={12} /> кПа
+              {useSensorDataWebSocket(12)} кПа
             </span>
           </div>
         </div>
@@ -318,7 +341,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={20} /> кН
+                {useSensorDataWebSocket(20)} кН
               </div>
             </div>
 
@@ -331,8 +354,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 <Speedometer
                   color="#3A7CFF"
                   min={0}
-                  max={100}
-                  value={10}
+                  max={150}
+                  value={useSensorDataWebSocket(21)}
+                  unite="об/мин"
                   size={96}
                 />
               </div>
@@ -344,7 +368,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={22} /> кН·м
+                {useSensorDataWebSocket(22)} кН·м
               </div>
             </div>
 
@@ -354,7 +378,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={23} /> кВт
+                {useSensorDataWebSocket(23)} кВт
               </div>
             </div>
 
@@ -364,7 +388,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={24} />
+                {useSensorDataWebSocket(24)}
                 °C
               </div>
             </div>
@@ -388,7 +412,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={25} /> кг/м³
+                {useSensorDataWebSocket(25)} кг/м³
               </div>
             </div>
 
@@ -398,7 +422,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={26} /> °C
+                {useSensorDataWebSocket(26)} °C
               </div>
             </div>
 
@@ -408,7 +432,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={27} /> мг/м³
+                {useSensorDataWebSocket(27)} мг/м³
               </div>
             </div>
 
@@ -418,7 +442,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={28} /> %
+                {useSensorDataWebSocket(28)} %
               </div>
             </div>
 
@@ -428,7 +452,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={29} /> м³/сек
+                {useSensorDataWebSocket(29)} м³/сек
               </div>
             </div>
 
@@ -442,8 +466,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   color="#3A7CFF"
                   size={96}
                   min={0}
-                  max={100}
-                  value={10}
+                  max={15}
+                  value={useSensorDataWebSocket(30)}
+                  unite="м³/сек"
                 />
               </div>
             </div>
@@ -504,12 +529,12 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  <SensorDataWebSocket sensor_id={33} /> МПа
+                  {useSensorDataWebSocket(33)} МПа
                 </span>
                 <ProgressBar
                   color="var(--primary-color)"
-                  value={40}
-                  max={100}
+                  value={useSensorDataWebSocket(33)}
+                  max={150}
                 />
               </div>
               <div className="object-workplace__block__content__table__column">
@@ -529,7 +554,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  <SensorDataWebSocket sensor_id={34} /> МПа
+                  {useSensorDataWebSocket(34)} МПа
                 </span>
                 <div
                   style={{
@@ -538,8 +563,8 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 >
                   <ProgressBar
                     color="var(--primary-color)"
-                    value={20}
-                    max={100}
+                    value={useSensorDataWebSocket(34)}
+                    max={150}
                   />
                 </div>
               </div>
@@ -560,12 +585,10 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 >
                   <ProgressBar
                     color="var(--thirdly-color)"
-                    value={40}
+                    value={useSensorDataWebSocket(35)}
                     max={100}
                   />
-                  <span>
-                    <SensorDataWebSocket sensor_id={35} /> МПа
-                  </span>
+                  <span>{useSensorDataWebSocket(35)} МПа</span>
                 </div>
               </div>
             </div>
@@ -599,7 +622,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={37} /> мм
+                {useSensorDataWebSocket(37)} мм
               </div>
             </div>
 
@@ -632,7 +655,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={39} /> кН·м
+                {useSensorDataWebSocket(39)} кН·м
               </div>
             </div>
 
@@ -642,7 +665,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={40} /> кН·м
+                {useSensorDataWebSocket(40)} кН·м
               </div>
             </div>
 
@@ -652,7 +675,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <SensorDataWebSocket sensor_id={41} /> об/мин
+                {useSensorDataWebSocket(41)} об/мин
               </div>
             </div>
           </div>

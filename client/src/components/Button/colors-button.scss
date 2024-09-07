@@ -14,10 +14,9 @@
 }
 
 .custom-btn.transparent {
-  background-color: transparent;
-
   --colorOutline: var(--bgColor);
 
+  background-color: transparent;
   color: var(--text-color);
 
   &:hover {

@@ -5,7 +5,8 @@ export type ApiNames =
   | 'drilling-statuses'
   | 'sensors'
   | 'sensor-data'
-  | 'tech-statuses';
+  | 'tech-statuses'
+  | 'subsystems';
 
 export interface ApiType {
   login?: (

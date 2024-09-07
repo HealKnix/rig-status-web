@@ -86,10 +86,10 @@ export default function Header() {
         {objectIdStore.idIsNotNull() && (
           <>
             <span className="object-data__longitude">
-              С.Ш. <b>{rigData?.location.split('°')[0]}°</b>
+              С.Ш. <b>{rigData?.longitude}°</b>
             </span>
             <span className="object-data__latitude">
-              В.Д. <b>{rigData?.location.split('°')[1]}°</b>
+              В.Д. <b>{rigData?.latitude}°</b>
             </span>
           </>
         )}

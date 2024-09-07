@@ -31,7 +31,7 @@
     }
 
     & > .object-workplace__block__header,
-    & > .object-workplace__block__header--pumps {
+    & > .object-workplace__block__header.pumps {
       display: flex;
       justify-content: space-between;
       gap: 15px;
@@ -50,7 +50,7 @@
       }
     }
 
-    & > .object-workplace__block__header--pumps {
+    & > .object-workplace__block__header.pumps {
       & > * {
         display: flex;
         flex-wrap: wrap;
@@ -59,12 +59,11 @@
 
         @media (width <= 600px) {
           &:first-child {
-            flex-direction: column;
-            flex-wrap: nowrap;
+            flex-flow: column nowrap;
           }
+
           &:last-child {
-            flex-wrap: nowrap;
-            flex-direction: column-reverse;
+            flex-flow: column-reverse nowrap;
           }
         }
       }

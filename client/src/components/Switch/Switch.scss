@@ -4,6 +4,8 @@
   position: relative;
   cursor: pointer;
   appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   width: 60px;
   min-width: 60px;
   max-width: 60px;
@@ -36,7 +38,8 @@
     border-radius: 50%;
     background-color: var(--white);
     transition: 0.15s ease-in-out;
-    box-shadow: 2px 2px 4px rgb(62 66 100 / 10%);
+
+    box-shadow: 2px 2px 4px rgba(62, 66, 100, 0.1);
   }
 
   &:checked::after {

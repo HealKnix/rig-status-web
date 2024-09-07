@@ -6,19 +6,23 @@ import requests
 
 session = requests.Session()
 
-auth_user = requests.post('http://localhost:8000/login/', json={
-    'email': 'www.test@gmail.com',
-    'password': 'test',
-}).json()
+auth_user = requests.post(
+    "http://localhost:8000/login/",
+    json={
+        "email": "www.test@gmail.com",
+        "password": "test",
+    },
+).json()
 
-cookies = {
-    'sessionid': auth_user['sessionid'],
-    'csrftoken': auth_user['csrftoken']
-}
+cookies = {"sessionid": auth_user["sessionid"], "csrftoken": auth_user["csrftoken"]}
 
-query_rigs = requests.get('http://localhost:8000/api/v1/rigs/', cookies=cookies).json()
-query_subsystems = requests.get('http://localhost:8000/api/v1/subsystems/', cookies=cookies).json()
-query_sensors = requests.get('http://localhost:8000/api/v1/sensors/', cookies=cookies).json()
+query_rigs = requests.get("http://localhost:8000/api/v1/rigs/", cookies=cookies).json()
+query_subsystems = requests.get(
+    "http://localhost:8000/api/v1/subsystems/", cookies=cookies
+).json()
+query_sensors = requests.get(
+    "http://localhost:8000/api/v1/sensors/", cookies=cookies
+).json()
 
 # Типы для параметров и значений сенсоров
 SensorLimits = Dict[str, Union[int, float]]
@@ -27,7 +31,7 @@ SubsystemParameters = Dict[str, SensorParameters]
 SensorData = Dict[str, Union[int, str, float]]
 
 # Список идентификаторов буровых установок
-rigs_id = [rig['id'] for rig in query_rigs]
+rigs_id = [rig["id"] for rig in query_rigs]
 
 subsystems = [subsystem for subsystem in query_subsystems]
 sensors = [sensor for sensor in query_sensors]
@@ -36,7 +40,7 @@ sensors = [sensor for sensor in query_sensors]
 def get_subsystems(rig_id: int) -> list:
     result = []
     for subsystem in subsystems:
-        if subsystem['rig_id'] == rig_id:
+        if subsystem["rig_id"] == rig_id:
             result.append(subsystem)
 
     return result
@@ -45,7 +49,7 @@ def get_subsystems(rig_id: int) -> list:
 def get_sensors(subsystem_id: int) -> list:
     result = []
     for sensor in sensors:
-        if sensor['subsystem_id'] == subsystem_id:
+        if sensor["subsystem_id"] == subsystem_id:
             result.append(sensor)
 
     return result
@@ -53,12 +57,14 @@ def get_sensors(subsystem_id: int) -> list:
 
 def get_subsystem_parameters(rig_id: int) -> dict:
     return {
-        subsystem['id']: {
-            sensor['id']: {
-                'min_value': sensor['min_value'],
-                'max_value': sensor['max_value'],
-            } for sensor in get_sensors(subsystem["id"])
-        } for subsystem in get_subsystems(rig_id)
+        subsystem["id"]: {
+            sensor["id"]: {
+                "min_value": sensor["min_value"],
+                "max_value": sensor["max_value"],
+            }
+            for sensor in get_sensors(subsystem["id"])
+        }
+        for subsystem in get_subsystems(rig_id)
     }
 
 
@@ -98,13 +104,13 @@ for rig_id in rigs_id:
 
 
 def update_sensor_value(
-        rig_id: int, sensor_id: str, min_value: float, max_value: float
+    rig_id: int, sensor_id: str, min_value: float, max_value: float
 ) -> None:
     current_value = sensor_parameters_dict[rig_id][sensor_id]["current_value"]
     min_flag = sensor_parameters_dict[rig_id][sensor_id]["min_flag"]
     max_flag = sensor_parameters_dict[rig_id][sensor_id]["max_flag"]
 
-    generated_diff = float(np.random.normal(0, (min_value + max_value) / 100, 1)[0])
+    generated_diff = float(np.random.normal(0, (min_value + max_value) / 50, 1)[0])
 
     if not max_flag and current_value > max_value + max_value * percentage:
         sensor_parameters_dict[rig_id][sensor_id]["max_flag"] = True
@@ -124,14 +130,16 @@ def update_sensor_value(
 
 
 def create_sensor_data(
-        max_value: float,
-        rig_id: int,
-        sensor_id: str,
+    max_value: float,
+    rig_id: int,
+    sensor_id: str,
 ) -> SensorData:
     if sensor_parameters_dict[rig_id][sensor_id]["current_value"] <= 0:
         sensor_parameters_dict[rig_id][sensor_id]["current_value"] = float(
             np.clip(
-                np.random.normal(max_value * percentage * 2, (max_value * percentage) / 2),
+                np.random.normal(
+                    max_value * percentage * 2, (max_value * percentage) / 2
+                ),
                 0,
                 max_value,
             )
@@ -160,15 +168,14 @@ def generate_sensors_data() -> list:
 
                 update_sensor_value(rig_id, sensor_id, min_value, max_value)
 
-                result_data.append(create_sensor_data(
-                    max_value, rig_id, sensor_id
-                ))
+                result_data.append(create_sensor_data(max_value, rig_id, sensor_id))
 
     for sensor in result_data:
         session.post(
             f"http://localhost:8000/api/v1/sensor-data/",
-            json=sensor, cookies=cookies,
-            headers={'X-CSRFToken': cookies['csrftoken']}
+            json=sensor,
+            cookies=cookies,
+            headers={"X-CSRFToken": cookies["csrftoken"]},
         )
 
     return result_data
