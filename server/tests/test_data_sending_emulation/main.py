@@ -3,10 +3,13 @@ import asyncio
 import uvicorn
 from fastapi import BackgroundTasks, FastAPI
 from pydantic import BaseModel
-
 from send_data_emulation import generate_sensors_data
 
 app = FastAPI()
+
+# Глобальная переменная для переключения работы генератора
+toggle_generator_work = False
+
 
 # Глобальная переменная для коэффициента
 coefficient = 1.0
@@ -25,12 +28,8 @@ async def set_coefficient(coef: Coefficient):
     return {"message": f"Coefficient set to {coefficient}", "status": "200"}
 
 
-toggle_generator_work = False
-
-
 async def generator_task():
     global toggle_generator_work
-
     while toggle_generator_work:
         generate_sensors_data()
 

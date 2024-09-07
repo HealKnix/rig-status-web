@@ -21,38 +21,17 @@
     background-color: var(--white);
     transition: 0.15s ease-in-out;
 
-    // &:has(
-    //     > .object-workplace__block__title > input[type='checkbox']:checked
-    //   )::after {
-    //   pointer-events: none;
-    //   position: absolute;
-    //   content: '';
-    //   inset: 0px;
-    //   padding: 1px;
-    //   border-radius: inherit;
-    //   background: linear-gradient(
-    //     to right,
-    //     var(--success-color),
-    //     var(--success-color)
-    //   );
-    //   mask:
-    //     linear-gradient(var(--white) 0 0) content-box,
-    //     linear-gradient(var(--white) 0 0);
-    //   -webkit-mask:
-    //     linear-gradient(var(--white) 0 0) content-box,
-    //     linear-gradient(var(--white) 0 0);
-    //   mask-composite: exclude;
-    //   -webkit-mask-composite: xor;
-    // }
-
-    &:has(> .object-workplace__block__title > input[type='checkbox']:checked),
+    &:has(> .object-workplace__block__header > input[type='checkbox']:checked),
     &:has(
-        > .object-workplace__block__title > div > input[type='checkbox']:checked
+        > .object-workplace__block__header
+          > div
+          > input[type='checkbox']:checked
       ) {
       box-shadow: inset 0 0 0 1px var(--success-color);
     }
 
-    & > .object-workplace__block__title {
+    & > .object-workplace__block__header,
+    & > .object-workplace__block__header--pumps {
       display: flex;
       justify-content: space-between;
       gap: 15px;
@@ -71,7 +50,54 @@
       }
     }
 
+    & > .object-workplace__block__header--pumps {
+      & > * {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 15px;
+
+        @media (width <= 600px) {
+          &:first-child {
+            flex-direction: column;
+            flex-wrap: nowrap;
+          }
+          &:last-child {
+            flex-wrap: nowrap;
+            flex-direction: column-reverse;
+          }
+        }
+      }
+    }
+
+    & > .object-workplace__block__parameters {
+      text-align: center;
+    }
+
+    & > .object-workplace__block__parameter {
+      display: flex;
+      gap: 15px;
+
+      & > .parameter_left {
+        flex: 1;
+        text-align: right;
+      }
+
+      & > .parameter_name {
+        width: 115px;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      & > .parameter_right {
+        flex: 1;
+        text-align: left;
+      }
+    }
+
     & > .object-workplace__block__content {
+      width: 100%;
+
       & > .object-workplace__block__content__row {
         align-items: center;
       }
@@ -87,6 +113,7 @@
         & > .object-workplace__block__content__table__row {
           display: grid;
           grid-template-columns: 1fr 1fr;
+          gap: 15px;
           align-items: center;
           padding: 2px 5px;
 

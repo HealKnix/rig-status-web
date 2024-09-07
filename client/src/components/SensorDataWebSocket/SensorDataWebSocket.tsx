@@ -6,7 +6,7 @@ interface SensorDataWebSocketProps {
 }
 
 const SensorDataWebSocket: FC<SensorDataWebSocketProps> = ({ sensor_id }) => {
-  const [messages, setMessages] = useState<string>('---');
+  const [message, setMessages] = useState<string>('---');
 
   useEffect(() => {
     const rws = new ReconnectingWebSocket(
@@ -24,14 +24,7 @@ const SensorDataWebSocket: FC<SensorDataWebSocketProps> = ({ sensor_id }) => {
     };
   }, []);
 
-  return (
-    <div>
-      <h1>Значение из датчика</h1>
-      <ul>
-        <li>{messages}</li>
-      </ul>
-    </div>
-  );
+  return message;
 };
 
 export default SensorDataWebSocket;

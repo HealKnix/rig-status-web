@@ -1,11 +1,12 @@
 import './ObjectWorkplace.scss';
 
-import EChartsReact from 'echarts-for-react';
 import { FC, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 
 import SpinningDrill from '@/assets/spinning_drill.webm';
+import Speedometer from '@/components/ECharts/Speedometer';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import SensorDataWebSocket from '@/components/SensorDataWebSocket/SensorDataWebSocket';
 import DrillSVG from '@/components/SVGs/DrillSVG';
 import LloSVG from '@/components/SVGs/LloSVG';
 import ShareSVG from '@/components/SVGs/ShareSVG';
@@ -29,195 +30,6 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       objectIdStore.setId(null);
     };
   }, [id]);
-
-  const options1: echarts.EChartsOption = {
-    series: [
-      {
-        type: 'gauge',
-        itemStyle: {
-          color: '#3a7cff',
-        },
-        radius: 48,
-        progress: {
-          show: true,
-          width: 8,
-        },
-        axisLine: {
-          lineStyle: {
-            width: 8,
-          },
-        },
-        pointer: {
-          show: true,
-          width: 2,
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        anchor: {
-          show: true,
-          showAbove: true,
-          size: 2,
-          itemStyle: {
-            borderColor: '#3a7cff',
-            borderWidth: 4,
-          },
-        },
-        title: {
-          show: false,
-        },
-        detail: {
-          valueAnimation: true,
-          fontSize: 16,
-          lineHeight: 20,
-          fontFamily: 'Geometria',
-          offsetCenter: [0, 30],
-          fontWeight: 'bolder',
-          formatter: '{value}\nм³/ч',
-          color: '#1b2539',
-        },
-        min: 0,
-        max: 100,
-        data: [
-          {
-            value: 10,
-          },
-        ],
-      },
-    ],
-  };
-
-  const options2: echarts.EChartsOption = {
-    series: [
-      {
-        type: 'gauge',
-        itemStyle: {
-          color: '#ff7c3a',
-        },
-        radius: 48,
-        progress: {
-          show: true,
-          width: 8,
-        },
-        axisLine: {
-          lineStyle: {
-            width: 8,
-          },
-        },
-        pointer: {
-          show: true,
-          width: 2,
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        anchor: {
-          show: true,
-          showAbove: true,
-          size: 2,
-          itemStyle: {
-            borderColor: '#ff7c3a',
-            borderWidth: 4,
-          },
-        },
-        title: {
-          show: false,
-        },
-        detail: {
-          valueAnimation: true,
-          fontSize: 16,
-          lineHeight: 20,
-          fontFamily: 'Geometria',
-          offsetCenter: [0, 30],
-          fontWeight: 'bolder',
-          formatter: '{value}\nм³/ч',
-          color: '#1b2539',
-        },
-        min: 0,
-        max: 100,
-        data: [
-          {
-            value: 10,
-          },
-        ],
-      },
-    ],
-  };
-
-  const options3: echarts.EChartsOption = {
-    series: [
-      {
-        type: 'gauge',
-        itemStyle: {
-          color: '#3a7cff',
-        },
-        radius: 48,
-        progress: {
-          show: true,
-          width: 8,
-        },
-        axisLine: {
-          lineStyle: {
-            width: 8,
-          },
-        },
-        pointer: {
-          show: true,
-          width: 2,
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        anchor: {
-          show: true,
-          showAbove: true,
-          size: 2,
-          itemStyle: {
-            borderColor: '#3a7cff',
-            borderWidth: 4,
-          },
-        },
-        title: {
-          show: false,
-        },
-        detail: {
-          valueAnimation: true,
-          fontSize: 16,
-          lineHeight: 20,
-          fontFamily: 'Geometria',
-          offsetCenter: [0, 30],
-          fontWeight: 'bolder',
-          formatter: '{value}\nоб/мин',
-          color: '#1b2539',
-        },
-        min: 0,
-        max: 200,
-        data: [
-          {
-            value: 129,
-          },
-        ],
-      },
-    ],
-  };
 
   return (
     <div className="object-workplace__wrapper">
@@ -263,7 +75,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       </div>
 
       <div className="object-workplace__block">
-        <div className="object-workplace__block__title">
+        <div className="object-workplace__block__header">
           <h2 className="link">
             Лебёдка <ShareSVG />
           </h2>
@@ -278,7 +90,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={1} /> т
               </div>
             </div>
 
@@ -288,7 +100,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                1110 кг
+                <SensorDataWebSocket sensor_id={2} /> кгс
               </div>
             </div>
 
@@ -298,7 +110,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={3} /> м
               </div>
             </div>
 
@@ -315,19 +127,19 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <EChartsReact
-                  option={options1}
-                  style={{
-                    width: '96px',
-                    height: '96px',
-                  }}
+                <Speedometer
+                  color="#3A7CFF"
+                  min={0}
+                  max={100}
+                  value={10}
+                  size={96}
                 />
-                <EChartsReact
-                  option={options2}
-                  style={{
-                    width: '96px',
-                    height: '96px',
-                  }}
+                <Speedometer
+                  color="#FF7C3A"
+                  min={0}
+                  max={100}
+                  value={10}
+                  size={96}
                 />
               </div>
             </div>
@@ -335,97 +147,64 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
         </div>
       </div>
 
-      <div
-        className="object-workplace__block"
-        style={{
-          gridColumn: 'auto',
-        }}
-      >
-        <div
-          className="object-workplace__block__title"
-          style={{
-            display: 'grid',
-            gridAutoFlow: 'column',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
+      <div className="object-workplace__block">
+        <div className="object-workplace__block__header--pumps">
+          <div>
             <Switch />
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
             <h2>БН1</h2>
-            <br />
-            <span>10 ход/мин</span>
-            <span>10 кг</span>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
-            <h2 className="link">
-              Насосы <ShareSVG />
-            </h2>
-            <span
-              style={{
-                color: 'var(--primary-color)',
-              }}
-            >
-              Параметры
-            </span>
-            <span
-              style={{
-                fontWeight: '500',
-              }}
-            >
-              Ходы насоса
-            </span>
-            <span
-              style={{
-                fontWeight: '500',
-              }}
-            >
-              Расход
-            </span>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
+          <h2 className="link">
+            Насосы <ShareSVG />
+          </h2>
+          <div>
             <h2>БН2</h2>
-            <br />
-            <span>0 ход/мин</span>
-            <span>10 кг</span>
+            <Switch />
           </div>
-          <div
+        </div>
+
+        <div className="object-workplace__block__parameters">
+          <span
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '10px',
+              color: 'var(--primary-color)',
             }}
           >
-            <Switch />
+            Параметры
+          </span>
+        </div>
+
+        <div className="object-workplace__block__parameter">
+          <div className="parameter_left">
+            <SensorDataWebSocket sensor_id={6} /> кВт
+          </div>
+
+          <span className="parameter_name">Мощность</span>
+
+          <div className="parameter_right">
+            <SensorDataWebSocket sensor_id={6} /> кВт
+          </div>
+        </div>
+
+        <div className="object-workplace__block__parameter">
+          <div className="parameter_left">
+            <SensorDataWebSocket sensor_id={7} /> ход/мин
+          </div>
+
+          <span className="parameter_name">Ходы насоса</span>
+
+          <div className="parameter_right">
+            <SensorDataWebSocket sensor_id={7} /> ход/мин
+          </div>
+        </div>
+
+        <div className="object-workplace__block__parameter">
+          <div className="parameter_left">
+            <SensorDataWebSocket sensor_id={8} /> л/с
+          </div>
+
+          <span className="parameter_name">Расход</span>
+
+          <div className="parameter_right">
+            <SensorDataWebSocket sensor_id={8} /> л/с
           </div>
         </div>
 
@@ -453,7 +232,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              10 кг
+              <SensorDataWebSocket sensor_id={9} /> л/с
             </span>
           </div>
 
@@ -473,7 +252,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              10 кг
+              <SensorDataWebSocket sensor_id={10} /> л/с
             </span>
           </div>
 
@@ -493,7 +272,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              10 кг
+              <SensorDataWebSocket sensor_id={11} /> кПа
             </span>
           </div>
 
@@ -513,7 +292,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              10 м³/ч
+              <SensorDataWebSocket sensor_id={12} /> кПа
             </span>
           </div>
         </div>
@@ -525,7 +304,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           border: '1px solid var(--primary-color)',
         }}
       >
-        <div className="object-workplace__block__title">
+        <div className="object-workplace__block__header">
           <h2 className="link">
             ВЗД <ShareSVG />
           </h2>
@@ -539,7 +318,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                100 кН
+                <SensorDataWebSocket sensor_id={20} /> кН
               </div>
             </div>
 
@@ -549,12 +328,12 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <EChartsReact
-                  option={options3}
-                  style={{
-                    width: '96px',
-                    height: '96px',
-                  }}
+                <Speedometer
+                  color="#3A7CFF"
+                  min={0}
+                  max={100}
+                  value={10}
+                  size={96}
                 />
               </div>
             </div>
@@ -565,7 +344,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                1 кН*м
+                <SensorDataWebSocket sensor_id={22} /> кН·м
               </div>
             </div>
 
@@ -575,7 +354,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                кВт
+                <SensorDataWebSocket sensor_id={23} /> кВт
               </div>
             </div>
 
@@ -585,7 +364,8 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                75°C
+                <SensorDataWebSocket sensor_id={24} />
+                °C
               </div>
             </div>
           </div>
@@ -593,7 +373,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       </div>
 
       <div className="object-workplace__block">
-        <div className="object-workplace__block__title">
+        <div className="object-workplace__block__header">
           <h2 className="link">
             Система БР <ShareSVG />
           </h2>
@@ -608,7 +388,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={25} /> кг/м³
               </div>
             </div>
 
@@ -618,7 +398,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                1110 кг
+                <SensorDataWebSocket sensor_id={26} /> °C
               </div>
             </div>
 
@@ -628,7 +408,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={27} /> мг/м³
               </div>
             </div>
 
@@ -638,7 +418,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 м³/ч
+                <SensorDataWebSocket sensor_id={28} /> %
               </div>
             </div>
 
@@ -648,7 +428,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 м/сек
+                <SensorDataWebSocket sensor_id={29} /> м³/сек
               </div>
             </div>
 
@@ -658,12 +438,12 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                <EChartsReact
-                  option={options1}
-                  style={{
-                    width: '96px',
-                    height: '96px',
-                  }}
+                <Speedometer
+                  color="#3A7CFF"
+                  size={96}
+                  min={0}
+                  max={100}
+                  value={10}
                 />
               </div>
             </div>
@@ -672,7 +452,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       </div>
 
       <div className="object-workplace__block">
-        <div className="object-workplace__block__title">
+        <div className="object-workplace__block__header">
           <h2 className="link">
             АПД <ShareSVG />
           </h2>
@@ -724,7 +504,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  40 кПа
+                  <SensorDataWebSocket sensor_id={33} /> МПа
                 </span>
                 <ProgressBar
                   color="var(--primary-color)"
@@ -749,7 +529,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  20 кПа
+                  <SensorDataWebSocket sensor_id={34} /> МПа
                 </span>
                 <div
                   style={{
@@ -783,7 +563,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     value={40}
                     max={100}
                   />
-                  <span>20 кПа</span>
+                  <span>
+                    <SensorDataWebSocket sensor_id={35} /> МПа
+                  </span>
                 </div>
               </div>
             </div>
@@ -792,7 +574,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       </div>
 
       <div className="object-workplace__block">
-        <div className="object-workplace__block__title">
+        <div className="object-workplace__block__header">
           <h2 className="link">
             Дефектоскоп <ShareSVG />
           </h2>
@@ -817,7 +599,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={37} /> мм
               </div>
             </div>
 
@@ -835,7 +617,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       </div>
 
       <div className="object-workplace__block">
-        <div className="object-workplace__block__title">
+        <div className="object-workplace__block__header">
           <h2 className="link">
             ВСП <ShareSVG />
           </h2>
@@ -850,7 +632,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={39} /> кН·м
               </div>
             </div>
 
@@ -860,7 +642,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={40} /> кН·м
               </div>
             </div>
 
@@ -870,7 +652,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
 
               <div className="object-workplace__block__content__table__column">
-                10 кг
+                <SensorDataWebSocket sensor_id={41} /> об/мин
               </div>
             </div>
           </div>
