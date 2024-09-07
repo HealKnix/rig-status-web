@@ -4,7 +4,6 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.core.exceptions import ValidationError
-from django.utils import timezone
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -52,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     patronymic = models.CharField(_("Отчество"), max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(blank=True, null=True)
 
     objects = CustomUserManager()
@@ -115,7 +114,7 @@ class Rig(models.Model):
     tech_status_id = models.ForeignKey(
         TechStatus, on_delete=models.CASCADE, db_column="tech_status_id"
     )
-    start_date = models.DateField(default=timezone.now)
+    start_date = models.DateField(auto_now_add=True)
     end_date_fact = models.DateField(null=True)
     end_date_plan = models.DateField()
     tech_date = models.DateField(null=True)
@@ -208,7 +207,7 @@ class SensorData(models.Model):
         Sensor, on_delete=models.CASCADE, db_column="sensor_id"
     )
     value = models.DecimalField(max_digits=8, decimal_places=2)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "sensor_data"

@@ -120,7 +120,7 @@ export class ApiMock implements ApiType {
   }
 
   async post<T>(apiName: ApiNames, dataBody: T) {
-    const { data } = await axios.post<T>(`/api/${apiName}/`, dataBody, {
+    const { data } = await axios.post<T>(`/api/v1/${apiName}/`, dataBody, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),
@@ -131,7 +131,7 @@ export class ApiMock implements ApiType {
   }
 
   async update<T>(apiName: ApiNames, dataBody: T) {
-    const { data } = await axios.patch<T>(`/api/${apiName}/`, dataBody, {
+    const { data } = await axios.patch<T>(`/api/v1/${apiName}/`, dataBody, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),
@@ -142,7 +142,7 @@ export class ApiMock implements ApiType {
   }
 
   async delete<T>(apiName: ApiNames) {
-    const { data } = await axios.delete<T>(`/api/${apiName}/`, {
+    const { data } = await axios.delete<T>(`/api/v1/${apiName}/`, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),

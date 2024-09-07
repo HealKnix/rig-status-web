@@ -62,7 +62,7 @@ export class Api implements ApiType {
   }
 
   async get<T>(apiName: ApiNames) {
-    const { data } = await axios.get<T[]>(`/api/${apiName}/`, {
+    const { data } = await axios.get<T[]>(`/api/v1/${apiName}/`, {
       withCredentials: true,
     });
 
@@ -72,7 +72,7 @@ export class Api implements ApiType {
   async getById<T>(apiName: ApiNames, id: number | null) {
     if (!id) return null;
 
-    const { data } = await axios.get<T>(`/api/${apiName}/${id}/`, {
+    const { data } = await axios.get<T>(`/api/v1/${apiName}/${id}/`, {
       withCredentials: true,
     });
 
@@ -80,7 +80,7 @@ export class Api implements ApiType {
   }
 
   async post<T>(apiName: ApiNames, dataBody: T) {
-    const { data } = await axios.post<T>(`/api/${apiName}/`, dataBody, {
+    const { data } = await axios.post<T>(`/api/v1/${apiName}/`, dataBody, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),
@@ -93,12 +93,16 @@ export class Api implements ApiType {
   async update<T>(apiName: ApiNames, dataBody: T, id: number | null) {
     if (!id) return null;
 
-    const { data } = await axios.patch<T>(`/api/${apiName}/${id}`, dataBody, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': cookies.get('csrftoken'),
+    const { data } = await axios.patch<T>(
+      `/api/v1/${apiName}/${id}`,
+      dataBody,
+      {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': cookies.get('csrftoken'),
+        },
       },
-    });
+    );
 
     return data;
   }
@@ -106,7 +110,7 @@ export class Api implements ApiType {
   async delete<T>(apiName: ApiNames, id: number | null) {
     if (!id) return null;
 
-    const { data } = await axios.delete<T>(`/api/${apiName}/${id}`, {
+    const { data } = await axios.delete<T>(`/api/v1/${apiName}/${id}`, {
       withCredentials: true,
       headers: {
         'X-CSRFToken': cookies.get('csrftoken'),

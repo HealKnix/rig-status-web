@@ -1,5 +1,4 @@
 import asyncio
-import json
 
 import uvicorn
 from fastapi import BackgroundTasks, FastAPI
@@ -33,12 +32,8 @@ async def generator_task():
     global toggle_generator_work
 
     while toggle_generator_work:
-        print(
-            json.dumps(
-                generate_sensors_data(),
-                indent=2,
-            )
-        )
+        generate_sensors_data()
+
         await asyncio.sleep(1)
 
 

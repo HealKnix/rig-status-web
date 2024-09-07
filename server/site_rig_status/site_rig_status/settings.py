@@ -35,6 +35,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'daphne',
     'corsheaders',
     'django.contrib.admin',
@@ -48,7 +49,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_spectacular',
     'rig_status.apps.RigStatusConfig',
-    'channels',
 ]
 
 ASGI_APPLICATION = 'site_rig_status.asgi.application'

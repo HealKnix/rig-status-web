@@ -19,7 +19,7 @@ from django.urls import path, include
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
-    SpectacularRedocView
+    SpectacularRedocView,
 )
 
 from rig_status.views import LoginViewSet, LogoutViewSet, AuthenticatedAPIView
@@ -33,7 +33,7 @@ urlpatterns = [
     path('auth-login/', AuthenticatedAPIView.as_view(), name='auth-login'),
     path('login/', LoginViewSet.as_view(), name='login'),
     path('logout/', LogoutViewSet.as_view(), name='logout'),
-    path('api/', include('rig_status.urls'), name='api'),
+    path('api/v1/', include('rig_status.urls'), name='api'),
     # path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
 
     # Yaml openapi

@@ -4,6 +4,8 @@ from typing import Dict, Union
 import numpy as np
 import requests
 
+session = requests.Session()
+
 auth_user = requests.post('http://localhost:8000/login/', json={
     'email': 'www.test@gmail.com',
     'password': 'test',
@@ -14,9 +16,9 @@ cookies = {
     'csrftoken': auth_user['csrftoken']
 }
 
-query_rigs = requests.get('http://localhost:8000/api/rigs', cookies=cookies).json()
-query_subsystems = requests.get('http://localhost:8000/api/subsystems/', cookies=cookies).json()
-query_sensors = requests.get('http://localhost:8000/api/sensors/', cookies=cookies).json()
+query_rigs = requests.get('http://localhost:8000/api/v1/rigs/', cookies=cookies).json()
+query_subsystems = requests.get('http://localhost:8000/api/v1/subsystems/', cookies=cookies).json()
+query_sensors = requests.get('http://localhost:8000/api/v1/sensors/', cookies=cookies).json()
 
 # Типы для параметров и значений сенсоров
 SensorLimits = Dict[str, Union[int, float]]
@@ -142,35 +144,31 @@ def create_sensor_data(
     }
 
 
-def generate_sensors_data() -> Dict[int, Dict[str, Dict[str, SensorData]]]:
-    result_data: Dict[int, Dict[str, Dict[str, SensorData]]] = {}
+def generate_sensors_data() -> list:
+    result_data = []
 
     for rig_id in rigs_id:
-        subsystem_dict: Dict[str, Dict[str, SensorData]] = {}
-
         subsystem_parameters = get_subsystem_parameters(rig_id)
 
         if not subsystem_parameters:
             continue
 
         for subsystem_id, subsystem_values in subsystem_parameters.items():
-            sensor_values: Dict[str, SensorData] = {}
-
             for sensor_id, limits in subsystem_values.items():
                 min_value = limits["min_value"]
                 max_value = limits["max_value"]
 
                 update_sensor_value(rig_id, sensor_id, min_value, max_value)
 
-                sensor_values[sensor_id] = create_sensor_data(
+                result_data.append(create_sensor_data(
                     max_value, rig_id, sensor_id
-                )
+                ))
 
-            subsystem_dict[subsystem_id] = sensor_values
-
-        result_data[rig_id] = subsystem_dict
+    for sensor in result_data:
+        session.post(
+            f"http://localhost:8000/api/v1/sensor-data/",
+            json=sensor, cookies=cookies,
+            headers={'X-CSRFToken': cookies['csrftoken']}
+        )
 
     return result_data
-
-
-generate_sensors_data()

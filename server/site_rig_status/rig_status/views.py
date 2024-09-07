@@ -190,10 +190,10 @@ class SensorDataViewSet(viewsets.ModelViewSet):
 
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "sensor_data",
+            f"sensor_data_{serializer.data['sensor_id']}",
             {
                 "type": "send_sensor_data",
-                "data": serializer.data,
+                "message": serializer.data,
             },
         )
 
