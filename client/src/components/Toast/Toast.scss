@@ -11,6 +11,10 @@
   overflow: hidden auto;
   z-index: 9999;
 
+  &:not(:has(.toast)) {
+    display: none;
+  }
+
   & > .toast {
     --toastDuration: 0.15s;
     --toastProgressDuration: 5s;

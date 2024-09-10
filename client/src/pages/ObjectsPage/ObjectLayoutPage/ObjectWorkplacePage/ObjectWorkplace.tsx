@@ -4,7 +4,6 @@ import { FC, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 
 import { api } from '@/api';
-import SpinningDrill from '@/assets/spinning_drill.webm';
 import Speedometer from '@/components/ECharts/Speedometer';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import DrillSVG from '@/components/SVGs/DrillSVG';
@@ -12,10 +11,11 @@ import LloSVG from '@/components/SVGs/LloSVG';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 import Switch from '@/components/Switch/Switch';
 import { useSensorDataWebSocket } from '@/hooks/useSensorDataWebSocket';
-import { DrillingStatus } from '@/models/DrillingStatus';
 import { Rig } from '@/models/Rig';
 import { Subsystem } from '@/models/Subsystem';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
+
+import Robot from './Robot/Robot';
 
 interface ObjectWorkplaceProps {}
 
@@ -35,46 +35,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
   return (
     <div className="object-workplace__wrapper">
-      <div
-        className="object-workplace__block"
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          border: '2px dashed var(--primary-color)',
-        }}
-      >
-        <h2>Текущая глубина</h2>
-        <span
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          <h2 style={{ color: 'var(--primary-color)' }}>
-            {rig?.bottom_hole_drilling} м
-          </h2>
-          <video
-            src={SpinningDrill}
-            style={{
-              objectFit: 'cover',
-            }}
-            width={100}
-            height={100}
-            autoPlay
-            muted
-            loop
-          ></video>
-          <h4>
-            осталось{' '}
-            {Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м
-          </h4>
-        </span>
-        <h2>Горная порода</h2>
-        <h2 style={{ color: 'var(--primary-color)' }}>Песчаник</h2>
-        <h2>Текущий процесс</h2>
-        <h2 style={{ color: 'var(--primary-color)' }}>
-          {DrillingStatus[rig?.drilling_status_id ?? 0]}
-        </h2>
-      </div>
+      <Robot />
 
       <div className="object-workplace__block">
         <div className="object-workplace__block__header">

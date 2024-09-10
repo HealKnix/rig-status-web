@@ -8,6 +8,7 @@ header {
   background-color: var(--white);
   border-left: 2px solid var(--background-color);
   overflow-x: auto;
+  text-wrap: nowrap;
 
   & > .header__object-name {
     display: flex;
@@ -25,5 +26,18 @@ header {
   & > .header__object-data {
     display: flex;
     gap: 15px;
+
+    & > hr {
+      width: 0;
+      height: auto;
+      border: 1px solid #3331;
+    }
+
+    & > * {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

@@ -6,7 +6,7 @@ import {
   Outlet,
   useLocation,
   useNavigate,
-  useParams,
+  useParams
 } from 'react-router-dom';
 
 import { api } from '@/api';
@@ -78,19 +78,11 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
 
         <div className="object-header__content">
           <div>
-            <span
-              style={{
-                textWrap: 'nowrap',
-              }}
-            >
-              Дата начала <b>03.06.2024</b>
+            <span>
+              Горная порода: <b>Песчаник</b>
             </span>
-            <span
-              style={{
-                textWrap: 'nowrap',
-              }}
-            >
-              Дата окончания <b>03.06.2024</b>
+            <span>
+              Текущий процесс: <b>Бурение</b>
             </span>
           </div>
 
@@ -98,10 +90,13 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
 
           <div>
             <span>
-              Тип скважины: <b>ГС</b>
+              Текущая глубина: <b>{rig?.bottom_hole_drilling} м</b>
             </span>
             <span>
-              № скважины: <b>XXXX</b>
+              Осталось:{' '}
+              <b>
+                {Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м
+              </b>
             </span>
           </div>
 

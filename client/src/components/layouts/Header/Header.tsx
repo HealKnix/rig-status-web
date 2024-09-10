@@ -61,38 +61,63 @@ export default function Header() {
         )}
       </div>
       {objectIdStore.idIsNotNull() && (
-        <div className="header__well-pad">
-          Кустовая площадка - {rigData?.tech_status_id}
-        </div>
+        <div className="header__well-pad">Кустовая площадка - 38</div>
       )}
       <div className="header__object-data">
         {objectIdStore.idIsNotNull() && (
-          <span className="object-data__status">
-            Статус: <b>{DrillingStatus[rigData?.drilling_status_id ?? 0]}</b>
-          </span>
-        )}
-        <span className="object-data__current-time">
-          Время:{' '}
-          <b>
-            {time?.hour}:{time?.minute}
-          </b>
-        </span>
-        <span className="object-data__current-date">
-          Дата:{' '}
-          <b>
-            {time?.day}.{time?.month}.{time?.year}
-          </b>
-        </span>
-        {objectIdStore.idIsNotNull() && (
           <>
-            <span className="object-data__longitude">
-              С.Ш. <b>{rigData?.longitude}°</b>
+            <div>
+              <span className="object-data__latitude">
+                Дата начала: <b>{rigData?.start_date.toLocaleDateString()}</b>
+              </span>
+              <span className="object-data__longitude">
+                Дата конца: <b>{rigData?.end_date_plan.toLocaleDateString()}</b>
+              </span>
+            </div>
+            <hr />
+            <div>
+              <span className="object-data__latitude">
+                Тип скважины: <b>ГС</b>
+              </span>
+              <span className="object-data__longitude">
+                № скважины: <b>XXX</b>
+              </span>
+            </div>
+            <hr />
+            <span className="object-data__status">
+              Статус:{' '}
+              <b
+                style={{
+                  color: 'var(--primary-color)',
+                }}
+              >
+                {DrillingStatus[rigData?.drilling_status_id ?? 0]}
+              </b>
             </span>
-            <span className="object-data__latitude">
-              В.Д. <b>{rigData?.latitude}°</b>
-            </span>
+            <hr />
+            <div>
+              <span className="object-data__latitude">
+                В.Д. <b>{rigData?.latitude}°</b>
+              </span>
+              <span className="object-data__longitude">
+                С.Ш. <b>{rigData?.longitude}°</b>
+              </span>
+            </div>
+            <hr />
           </>
         )}
+        <div>
+          <span className="object-data__current-time">
+            <b>
+              {time?.hour}:{time?.minute}
+            </b>
+          </span>
+          <span className="object-data__current-date">
+            <b>
+              {time?.day}.{time?.month}.{time?.year}
+            </b>
+          </span>
+        </div>
       </div>
     </header>
   );

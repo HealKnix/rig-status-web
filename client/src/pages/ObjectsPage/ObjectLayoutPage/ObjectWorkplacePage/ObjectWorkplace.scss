@@ -95,6 +95,9 @@
     }
 
     & > .object-workplace__block__content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
       width: 100%;
 
       & > .object-workplace__block__content__row {
