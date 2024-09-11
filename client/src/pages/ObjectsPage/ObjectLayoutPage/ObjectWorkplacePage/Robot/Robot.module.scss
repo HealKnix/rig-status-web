@@ -1,0 +1,133 @@
+.block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 6px;
+  padding: 25px;
+  border: 1px solid var(--border-color);
+  background-color: var(--white);
+  transition: 0.15s ease-in-out;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 24px;
+  font-weight: bold;
+
+  h2 {
+    font-size: 24px;
+  }
+
+  a {
+    color: var(--text-color);
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  button {
+    width: fit-content;
+    padding: 8px 15px;
+
+    svg {
+      rotate: 180deg;
+    }
+
+    path {
+      stroke: var(--white);
+    }
+  }
+
+  .link {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.15s ease-in-out;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  & > * {
+    border-bottom: 1px solid var(--background-color);
+  }
+
+  & > .table_row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 2px 5px;
+
+    & > .table_column > span {
+      font-weight: 500;
+    }
+
+    & > *:last-child {
+      text-align: right;
+      font-weight: 500;
+    }
+  }
+}
+
+.robot_content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  & > .robot_name {
+    cursor: pointer;
+    max-width: none !important;
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  & > .robot_time {
+    display: flex;
+    gap: 10px;
+
+    & > .robot_indicator {
+      flex: none;
+      width: 20px;
+      height: 20px;
+      background-color: var(--text-additional-color);
+      border-radius: 50%;
+
+      &.working {
+        background-color: var(--success-color);
+      }
+
+      &.complete {
+        background-color: var(--warning-color);
+      }
+
+      &.waiting {
+        background-color: var(--text-additional-color);
+      }
+    }
+  }
+
+  & > .robot_status {
+    max-width: none !important;
+    text-align: right;
+  }
+}

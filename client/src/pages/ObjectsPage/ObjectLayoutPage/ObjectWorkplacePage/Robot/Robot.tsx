@@ -1,103 +1,210 @@
-import './Robot.scss';
+import { useState } from 'react';
 
-import { FC } from 'react';
-
+import Button from '@/components/Button/Button';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 
-interface RobotProps {}
+import ChevronSVG from '../../../../../components/SVGs/ChevronSVG';
+import styles from './Robot.module.scss';
 
-const robotList: {
+interface RobotParameter {
+  id: number;
+  name: string;
+  value: number;
+  unit: string;
+}
+
+interface Robot {
+  id: number;
   name: string;
   indicator: 'working' | 'complete' | 'waiting';
   time: string;
   status: 'Выполнено' | 'Перемещение...' | 'Ожидание';
-}[] = [
+  parameters: RobotParameter[];
+  watchable: boolean;
+}
+
+const robotList: Robot[] = [
   {
+    id: 1,
     name: 'КМУ-1',
     indicator: 'working',
     time: '3 сек',
     status: 'Выполнено',
+    parameters: [{ id: 1, name: 'Мощность', value: 12.54, unit: 'кВт' }],
+    watchable: true,
   },
   {
+    id: 2,
     name: 'Лента подачи',
     indicator: 'working',
     time: '3 сек',
     status: 'Перемещение...',
+    parameters: [{ id: 2, name: 'Мощность', value: 12.54, unit: 'кВт' }],
+    watchable: false,
   },
   {
+    id: 3,
     name: 'КМУ-2',
     indicator: 'complete',
     time: '3 сек',
     status: 'Выполнено',
+    parameters: [{ id: 3, name: 'Скорость', value: 11, unit: 'труб/с' }],
+    watchable: false,
   },
   {
+    id: 4,
     name: 'АКБ',
     indicator: 'waiting',
     time: '3 сек',
     status: 'Ожидание',
+    parameters: [{ id: 4, name: 'Скорость', value: 11, unit: 'труб/с' }],
+    watchable: false,
   },
   {
+    id: 5,
     name: 'РМ',
     indicator: 'waiting',
     time: '3/4/5 сек',
     status: 'Ожидание',
+    parameters: [{ id: 5, name: 'Скорость', value: 11, unit: 'труб/с' }],
+    watchable: false,
   },
 ];
 
-const Robot: FC<RobotProps> = () => {
+const Robot = () => {
+  const [robot, setRobot] = useState<Robot | null>(null);
+
   return (
     <div
-      className="robot__block"
+      className={styles.block}
       style={{
         border: '2px dashed var(--primary-color)',
       }}
     >
-      <div className="robot__block__header">
-        <h2 className="link">
-          Робот <ShareSVG />
-        </h2>
-      </div>
-
-      <div className="robot__block__content">
-        <div className="robot__block__content__table">
-          <div className="robot__block__content__table__row">
-            <div className="robot__block__content__table__column">
-              Ø Текущая труба
-            </div>
-
-            <div className="robot__block__content__table__column">1 000 кг</div>
-          </div>
-
-          <div
-            className="robot__block__content__table__row"
-            style={{
-              borderBottom: '1px solid var(--background-color)',
+      <div className={styles.header}>
+        {robot && (
+          <>
+            <Button
+              onClick={() => {
+                setRobot(null);
+              }}
+            >
+              <ChevronSVG />
+            </Button>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                setRobot(null);
+              }}
+            >
+              Робот
+            </a>{' '}
+            /{' '}
+            <span
+              style={{
+                color: 'var(--primary-color)',
+              }}
+            >
+              {robot.name}
+            </span>
+          </>
+        )}
+        {!robot && (
+          <h2
+            className={styles.link}
+            onClick={() => {
+              setRobot(null);
             }}
           >
-            <div className="robot__block__content__table__column">
-              Общее время операции
-            </div>
+            Робот <ShareSVG />
+          </h2>
+        )}
+      </div>
 
-            <div className="robot__block__content__table__column">24 сек</div>
+      <div className={styles.content}>
+        <div className={styles.table}>
+          <div className={styles.table_row}>
+            <div className={styles.table_column}>Ø Текущая труба</div>
+            <div className={styles.table_column}>1 000 кг</div>
+          </div>
+
+          <div className={styles.table_row}>
+            <div className={styles.table_column}>Общее время операции</div>
+            <div className={styles.table_column}>24 сек</div>
           </div>
         </div>
 
-        {robotList.map((robot, index) => (
-          <div className="robot__block__content__robot" key={index}>
-            <div className="robot__block__content__robot-name">
-              {robot.name}
-            </div>
-            <div className="robot__block__content__robot-time">
+        {robot && (
+          <>
+            <div className={styles.robot_content} key={robot.id}>
               <div
-                className={`robot__block__content__robot-indicator ${robot.indicator}`}
-              ></div>
-              {robot.time}
+                className={styles.robot_name}
+                onClick={() => {
+                  setRobot(robot);
+                }}
+              >
+                {robot.name}
+              </div>
+
+              <div className={styles.robot_time}>
+                <div className={`${styles.robot_indicator}`}></div>
+                {robot.time}
+              </div>
+
+              <div className={styles.robot_status}>{robot.status}</div>
             </div>
-            <div className="robot__block__content__robot-status">
-              {robot.status}
-            </div>
-          </div>
-        ))}
+            {robot.parameters && (
+              <div className={styles.table}>
+                {robot.parameters.map((param) => (
+                  <div className={styles.table_row}>
+                    <div className={styles.table_column}>{param.name}</div>
+                    <div className={styles.table_column}>
+                      {param.value} {param.unit}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {robot.watchable && (
+              <Button variant="primary" outlined>
+                Наблюдать
+              </Button>
+            )}
+          </>
+        )}
+
+        {!robot &&
+          robotList.map((robot) => {
+            let indicator = '';
+
+            if (robot.indicator === 'complete') {
+              indicator = styles.complete;
+            } else if (robot.indicator === 'waiting') {
+              indicator = styles.waiting;
+            } else if (robot.indicator === 'working') {
+              indicator = styles.working;
+            }
+
+            return (
+              <div className={styles.robot_content} key={robot.id}>
+                <div
+                  className={styles.robot_name}
+                  onClick={() => {
+                    setRobot(robot);
+                  }}
+                >
+                  {robot.name}
+                </div>
+                <div className={styles.robot_time}>
+                  <div
+                    className={`${styles.robot_indicator} ${indicator}`}
+                  ></div>
+                  {robot.time}
+                </div>
+                <div className={styles.robot_status}>{robot.status}</div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

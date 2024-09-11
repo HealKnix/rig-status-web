@@ -41,6 +41,7 @@ html:has(dialog[open]) {
 }
 
 a {
+  cursor: pointer;
   color: var(--primary-color);
   text-decoration: none;
 }
