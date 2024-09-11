@@ -93,6 +93,7 @@ const Robot = () => {
             </Button>
             <div style={{ display: 'flex', gap: 5 }}>
               <a
+                href="/#"
                 onClick={(e) => {
                   e.preventDefault();
                   setRobot(null);
@@ -100,7 +101,7 @@ const Robot = () => {
               >
                 Робот
               </a>
-              /
+              {''}/{''}
               <span
                 style={{
                   color: 'var(--primary-color)',
@@ -112,12 +113,7 @@ const Robot = () => {
           </>
         )}
         {!robot && (
-          <h2
-            className={styles.link}
-            onClick={() => {
-              setRobot(null);
-            }}
-          >
+          <h2>
             Робот <ShareSVG />
           </h2>
         )}
@@ -138,15 +134,11 @@ const Robot = () => {
 
         {robot && (
           <>
-            <RobotRow
-              className={styles.robot_name_non_clickable}
-              robot={robot}
-              setRobot={setRobot}
-            />
+            <RobotRow robot={robot} setRobot={setRobot} />
             {robot.parameters && (
               <div className={styles.table}>
                 {robot.parameters.map((param) => (
-                  <div className={styles.table_row}>
+                  <div className={styles.table_row} key={param.id}>
                     <div className={styles.table_column}>{param.name}</div>
                     <div className={styles.table_column}>
                       {param.value} {param.unit}
@@ -166,11 +158,7 @@ const Robot = () => {
         {!robot &&
           robotList.map((robot) => {
             return (
-              <RobotRow
-                className={styles.robot_name}
-                robot={robot}
-                setRobot={setRobot}
-              />
+              <RobotRow robot={robot} setRobot={setRobot} key={robot.id} />
             );
           })}
       </div>
@@ -181,10 +169,9 @@ const Robot = () => {
 export default Robot;
 
 const RobotRow: FC<{
-  className: string;
   robot: Robot;
   setRobot: (robot: Robot) => void;
-}> = ({ className, robot, setRobot }) => {
+}> = ({ robot, setRobot }) => {
   let indicator = '';
 
   if (robot.indicator === 'complete') {
@@ -197,14 +184,16 @@ const RobotRow: FC<{
 
   return (
     <div className={styles.robot_content} key={robot.id}>
-      <div
-        className={className}
-        onClick={() => {
+      <a
+        href="/#"
+        className={styles.robot_name}
+        onClick={(e) => {
+          e.preventDefault();
           setRobot(robot);
         }}
       >
         {robot.name}
-      </div>
+      </a>
 
       <div className={styles.robot_time}>
         <div className={`${styles.robot_indicator} ${indicator}`}></div>

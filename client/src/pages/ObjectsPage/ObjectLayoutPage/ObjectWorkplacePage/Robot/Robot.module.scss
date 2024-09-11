@@ -92,17 +92,13 @@
 .robot_content {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
 
   & > .robot_name {
     cursor: pointer;
     color: var(--primary-color);
     font-weight: bold;
     text-decoration: underline;
-  }
-
-  & > .robot_name_non_clickable {
-    color: var(--primary-color);
-    font-weight: bold;
   }
 
   & > .robot_time {
