@@ -11,8 +11,8 @@
     "preview": "vite preview",
     "type-check": "tsc --build --force",
     "prettier": "prettier --ignore-unknown --write .",
-    "eslint": "eslint **/*.{tsx,ts,jsx,js}",
-    "eslint:fix": "eslint **/*.{tsx,ts,jsx,js} --fix",
+    "eslint": "eslint **/*.{tsx,ts,js}",
+    "eslint:fix": "eslint **/*.{tsx,ts,js} --fix",
     "lint": "npm run prettier && npm run eslint:fix && npm run type-check",
     "prepare": "husky"
   },
