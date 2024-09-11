@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
 import Button from '@/components/Button/Button';
 import ShareSVG from '@/components/SVGs/ShareSVG';
@@ -91,22 +91,24 @@ const Robot = () => {
             >
               <ChevronSVG />
             </Button>
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                setRobot(null);
-              }}
-            >
-              Робот
-            </a>{' '}
-            /{' '}
-            <span
-              style={{
-                color: 'var(--primary-color)',
-              }}
-            >
-              {robot.name}
-            </span>
+            <div style={{ display: 'flex', gap: 5 }}>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  setRobot(null);
+                }}
+              >
+                Робот
+              </a>
+              /
+              <span
+                style={{
+                  color: 'var(--primary-color)',
+                }}
+              >
+                {robot.name}
+              </span>
+            </div>
           </>
         )}
         {!robot && (
@@ -136,23 +138,11 @@ const Robot = () => {
 
         {robot && (
           <>
-            <div className={styles.robot_content} key={robot.id}>
-              <div
-                className={styles.robot_name}
-                onClick={() => {
-                  setRobot(robot);
-                }}
-              >
-                {robot.name}
-              </div>
-
-              <div className={styles.robot_time}>
-                <div className={`${styles.robot_indicator}`}></div>
-                {robot.time}
-              </div>
-
-              <div className={styles.robot_status}>{robot.status}</div>
-            </div>
+            <RobotRow
+              className={styles.robot_name_non_clickable}
+              robot={robot}
+              setRobot={setRobot}
+            />
             {robot.parameters && (
               <div className={styles.table}>
                 {robot.parameters.map((param) => (
@@ -175,34 +165,12 @@ const Robot = () => {
 
         {!robot &&
           robotList.map((robot) => {
-            let indicator = '';
-
-            if (robot.indicator === 'complete') {
-              indicator = styles.complete;
-            } else if (robot.indicator === 'waiting') {
-              indicator = styles.waiting;
-            } else if (robot.indicator === 'working') {
-              indicator = styles.working;
-            }
-
             return (
-              <div className={styles.robot_content} key={robot.id}>
-                <div
-                  className={styles.robot_name}
-                  onClick={() => {
-                    setRobot(robot);
-                  }}
-                >
-                  {robot.name}
-                </div>
-                <div className={styles.robot_time}>
-                  <div
-                    className={`${styles.robot_indicator} ${indicator}`}
-                  ></div>
-                  {robot.time}
-                </div>
-                <div className={styles.robot_status}>{robot.status}</div>
-              </div>
+              <RobotRow
+                className={styles.robot_name}
+                robot={robot}
+                setRobot={setRobot}
+              />
             );
           })}
       </div>
@@ -211,3 +179,39 @@ const Robot = () => {
 };
 
 export default Robot;
+
+const RobotRow: FC<{
+  className: string;
+  robot: Robot;
+  setRobot: (robot: Robot) => void;
+}> = ({ className, robot, setRobot }) => {
+  let indicator = '';
+
+  if (robot.indicator === 'complete') {
+    indicator = styles.complete;
+  } else if (robot.indicator === 'waiting') {
+    indicator = styles.waiting;
+  } else if (robot.indicator === 'working') {
+    indicator = styles.working;
+  }
+
+  return (
+    <div className={styles.robot_content} key={robot.id}>
+      <div
+        className={className}
+        onClick={() => {
+          setRobot(robot);
+        }}
+      >
+        {robot.name}
+      </div>
+
+      <div className={styles.robot_time}>
+        <div className={`${styles.robot_indicator} ${indicator}`}></div>
+        {robot.time}
+      </div>
+
+      <div className={styles.robot_status}>{robot.status}</div>
+    </div>
+  );
+};

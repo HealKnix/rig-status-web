@@ -62,6 +62,8 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
 
   if (isFetching && !isFetched) return <Loader />;
 
+  console.log(rig);
+
   return (
     <div className="object-layout__wrapper">
       <div className="object-header">

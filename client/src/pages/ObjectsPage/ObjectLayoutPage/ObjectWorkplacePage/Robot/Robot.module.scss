@@ -95,10 +95,14 @@
 
   & > .robot_name {
     cursor: pointer;
-    max-width: none !important;
     color: var(--primary-color);
     font-weight: bold;
     text-decoration: underline;
+  }
+
+  & > .robot_name_non_clickable {
+    color: var(--primary-color);
+    font-weight: bold;
   }
 
   & > .robot_time {
@@ -127,7 +131,6 @@
   }
 
   & > .robot_status {
-    max-width: none !important;
     text-align: right;
   }
 }

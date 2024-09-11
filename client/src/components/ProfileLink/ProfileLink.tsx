@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useModalStore } from '@/store/useModalStore';
 
 import ChevronSVG from '../SVGs/ChevronSVG';
+import UserSVG from '../SVGs/UserSVG';
 
 interface ProfileLinkProps {}
 
@@ -21,7 +22,7 @@ const ProfileLink: FC<ProfileLinkProps> = () => {
       }}
     >
       <div className="profile-link__wrapper">
-        <div className="profile-image"></div>
+        <UserSVG />
         <div className="profile-text">
           <div className="profile-text__short-name">
             {`${authStore.user?.last_name} ${authStore.user?.first_name?.[0]}.  ${authStore.user?.patronymic?.[0]}.`}
