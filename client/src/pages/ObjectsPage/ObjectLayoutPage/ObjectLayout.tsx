@@ -6,7 +6,7 @@ import {
   Outlet,
   useLocation,
   useNavigate,
-  useParams
+  useParams,
 } from 'react-router-dom';
 
 import { api } from '@/api';

@@ -1,7 +1,7 @@
 import './ObjectWorkplace.scss';
 
 import { FC, useEffect } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { api } from '@/api';
 import Speedometer from '@/components/ECharts/Speedometer';
@@ -11,7 +11,7 @@ import LloSVG from '@/components/SVGs/LloSVG';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 import Switch from '@/components/Switch/Switch';
 import { useSensorDataWebSocket } from '@/hooks/useSensorDataWebSocket';
-import { Rig } from '@/models/Rig';
+// import { Rig } from '@/models/Rig';
 import { Subsystem } from '@/models/Subsystem';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
 
@@ -23,7 +23,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
 
-  const { rig } = useOutletContext<{ rig: Rig }>();
+  // const { rig } = useOutletContext<{ rig: Rig }>();
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
