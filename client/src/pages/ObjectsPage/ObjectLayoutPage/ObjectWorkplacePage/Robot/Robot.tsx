@@ -80,7 +80,18 @@ const Robot = () => {
 
   useEffect(() => {
     if (robotId) {
-      setRobot(robotList.filter((robot) => robot.id === Number(robotId))[0]);
+      setRobot(() => {
+        const robot = robotList.filter(
+          (robot) => robot.id === Number(robotId),
+        )[0];
+
+        if (!robot) {
+          searchParams.delete('robot_id');
+          setSearchParams(searchParams);
+        }
+
+        return robot;
+      });
     }
   }, [robotId]);
 
