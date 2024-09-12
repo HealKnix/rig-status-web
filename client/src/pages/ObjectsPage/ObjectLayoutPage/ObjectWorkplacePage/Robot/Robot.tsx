@@ -1,17 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import Button from '@/components/Button/Button';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 
 import ChevronSVG from '../../../../../components/SVGs/ChevronSVG';
 import styles from './Robot.module.scss';
-
-interface RobotParameter {
-  id: number;
-  name: string;
-  value: number;
-  unit: string;
-}
 
 interface Robot {
   id: number;
@@ -71,8 +65,24 @@ const robotList: Robot[] = [
   },
 ];
 
+interface RobotParameter {
+  id: number;
+  name: string;
+  value: number;
+  unit: string;
+}
+
 const Robot = () => {
   const [robot, setRobot] = useState<Robot | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const robotId = searchParams.get('robot_id');
+
+  useEffect(() => {
+    if (robotId) {
+      setRobot(robotList.filter((robot) => robot.id === Number(robotId))[0]);
+    }
+  }, [robotId]);
 
   return (
     <div
@@ -87,6 +97,8 @@ const Robot = () => {
             <Button
               onClick={() => {
                 setRobot(null);
+                searchParams.delete('robot_id');
+                setSearchParams(searchParams);
               }}
             >
               <ChevronSVG />
@@ -97,6 +109,8 @@ const Robot = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   setRobot(null);
+                  searchParams.delete('robot_id');
+                  setSearchParams(searchParams);
                 }}
               >
                 Робот
@@ -134,7 +148,14 @@ const Robot = () => {
 
         {robot && (
           <>
-            <RobotRow robot={robot} setRobot={setRobot} />
+            <RobotRow
+              robot={robot}
+              callback={() => {
+                setRobot(null);
+                searchParams.set('robot_id', robot.id.toString());
+                setSearchParams(searchParams);
+              }}
+            />
             {robot.parameters && (
               <div className={styles.table}>
                 {robot.parameters.map((param) => (
@@ -158,7 +179,15 @@ const Robot = () => {
         {!robot &&
           robotList.map((robot) => {
             return (
-              <RobotRow robot={robot} setRobot={setRobot} key={robot.id} />
+              <RobotRow
+                robot={robot}
+                callback={() => {
+                  setRobot(null);
+                  searchParams.set('robot_id', robot.id.toString());
+                  setSearchParams(searchParams);
+                }}
+                key={robot.id}
+              />
             );
           })}
       </div>
@@ -170,8 +199,8 @@ export default Robot;
 
 const RobotRow: FC<{
   robot: Robot;
-  setRobot: (robot: Robot) => void;
-}> = ({ robot, setRobot }) => {
+  callback: () => void;
+}> = ({ robot, callback }) => {
   let indicator = '';
 
   if (robot.indicator === 'complete') {
@@ -189,7 +218,7 @@ const RobotRow: FC<{
         className={styles.robot_name}
         onClick={(e) => {
           e.preventDefault();
-          setRobot(robot);
+          callback();
         }}
       >
         {robot.name}

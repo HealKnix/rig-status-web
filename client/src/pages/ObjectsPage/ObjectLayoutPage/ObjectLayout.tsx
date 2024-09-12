@@ -1,13 +1,7 @@
 import './ObjectLayout.scss';
 
 import { FC, useEffect } from 'react';
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 import { api } from '@/api';
 import Loader from '@/components/Loader/Loader';
@@ -20,33 +14,26 @@ import { useQuery } from '@tanstack/react-query';
 interface ObjectLayoutProps {}
 
 const ObjectLayout: FC<ObjectLayoutProps> = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { id } = useParams();
   const toastStore = useToastStore();
 
   const {
     data: rig,
-    isFetching,
-    isFetched,
+    isLoading,
+    isSuccess,
   } = useQuery({
     queryKey: ['object get by id', id],
     queryFn: () => api.getById<Rig>('rigs', Number(id)),
   });
 
   useEffect(() => {
-    if (location.key === 'default') {
-      navigate('workplace');
+    if (isSuccess) {
+      toastStore.addToast(
+        'info',
+        `До конца бурения осталось ${Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м.`,
+      );
     }
-  }, [location.key]);
-
-  useEffect(() => {
-    if (!isFetched) return;
-    toastStore.addToast(
-      'info',
-      `До конца бурения осталось ${Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м.`,
-    );
-  }, [isFetched]);
+  }, [isSuccess]);
 
   let progressBarColor = 'var(--text-additional-color)';
 
@@ -60,9 +47,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
     progressBarColor = 'var(--text-additional-color)';
   }
 
-  if (isFetching && !isFetched) return <Loader />;
-
-  console.log(rig);
+  if (isLoading) return <Loader />;
 
   return (
     <div className="object-layout__wrapper">

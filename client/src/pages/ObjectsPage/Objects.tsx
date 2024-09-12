@@ -7,12 +7,12 @@ import { Rig } from '@/models/Rig';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Objects() {
-  const { data, isFetching, isFetched } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['rig list'],
     queryFn: () => api.get<Rig>('rigs'),
   });
 
-  if (isFetching && !isFetched) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="objects__wrapper">
