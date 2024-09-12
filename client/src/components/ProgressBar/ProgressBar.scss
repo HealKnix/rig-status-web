@@ -1,4 +1,5 @@
 .progress-bar {
+  --width: 0;
   --accentColor: var(--primary-color);
 
   appearance: none;
@@ -9,6 +10,11 @@
   overflow: hidden;
   border-radius: 6px;
   box-shadow: 0 0 0 1.5px var(--accentColor);
+  background-image: linear-gradient(
+    to right,
+    var(--accentColor) var(--width),
+    #fff 0
+  );
 
   &.in-progress::after {
     position: absolute;
@@ -33,18 +39,4 @@
       }
     }
   }
-}
-
-.progress-bar::-moz-progress-bar {
-  border-radius: 6px;
-  background-color: var(--accentColor);
-}
-
-.progress-bar::-webkit-progress-bar {
-  border-radius: 6px;
-  background-color: var(--white);
-}
-
-.progress-bar::-webkit-progress-value {
-  background-color: var(--accentColor);
 }
