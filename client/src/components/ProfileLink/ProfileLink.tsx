@@ -3,7 +3,6 @@ import './ProfileLink.scss';
 import { FC } from 'react';
 
 import { useAuthStore } from '@/store/useAuthStore';
-import { useModalStore } from '@/store/useModalStore';
 
 import ChevronSVG from '../SVGs/ChevronSVG';
 import UserSVG from '../SVGs/UserSVG';
@@ -12,15 +11,9 @@ interface ProfileLinkProps {}
 
 const ProfileLink: FC<ProfileLinkProps> = () => {
   const authStore = useAuthStore();
-  const modalStore = useModalStore();
 
   return (
-    <div
-      className="profile-link"
-      onClick={() => {
-        modalStore.openLogoutModal();
-      }}
-    >
+    <div className="profile-link">
       <div className="profile-link__wrapper">
         <UserSVG />
         <div className="profile-text">

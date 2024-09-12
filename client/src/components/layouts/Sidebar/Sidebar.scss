@@ -13,7 +13,6 @@
   max-width: 300px;
   height: 100%;
   background-color: var(--white);
-  overflow: hidden;
   transition: max-width 0.15s ease-in-out;
 
   & > .sidebar__logo {
@@ -87,6 +86,10 @@
     display: flex;
     align-items: end;
     height: 100%;
+
+    & > * {
+      flex: 1;
+    }
   }
 }
 

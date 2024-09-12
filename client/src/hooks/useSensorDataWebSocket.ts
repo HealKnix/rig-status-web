@@ -5,19 +5,21 @@ export const useSensorDataWebSocket = (sensor_id: number) => {
   const [message, setMessage] = useState<number>(0);
 
   useEffect(() => {
-    const rws = new ReconnectingWebSocket(
-      import.meta.env.VITE_WS_URL + `ws/sensor_data/${sensor_id}/`,
-    );
+    if (!import.meta.env.VITE_API_MOCK) {
+      const rws = new ReconnectingWebSocket(
+        import.meta.env.VITE_WS_URL + `ws/sensor_data/${sensor_id}/`,
+      );
 
-    rws.onmessage = (event: MessageEvent) => {
-      const data = JSON.parse(event.data);
+      rws.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
 
-      setMessage(data.message.value);
-    };
+        setMessage(data.message.value);
+      };
 
-    return () => {
-      rws.close();
-    };
+      return () => {
+        rws.close();
+      };
+    }
   }, []);
 
   return message;

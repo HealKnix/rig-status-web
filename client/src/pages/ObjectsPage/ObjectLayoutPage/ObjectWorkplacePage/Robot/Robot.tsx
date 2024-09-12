@@ -10,7 +10,7 @@ import styles from './Robot.module.scss';
 interface Robot {
   id: number;
   name: string;
-  indicator: 'working' | 'complete' | 'waiting';
+  indicator: string;
   time: string;
   status: 'Выполнено' | 'Перемещение...' | 'Ожидание';
   parameters: RobotParameter[];
@@ -42,7 +42,7 @@ const robotList: Robot[] = [
     indicator: 'complete',
     time: '3 сек',
     status: 'Выполнено',
-    parameters: [{ id: 3, name: 'Скорость', value: 11, unit: 'труб/с' }],
+    parameters: [{ id: 3, name: 'Скорость', value: 1, unit: 'труб/с' }],
     watchable: false,
   },
   {
@@ -51,7 +51,7 @@ const robotList: Robot[] = [
     indicator: 'waiting',
     time: '3 сек',
     status: 'Ожидание',
-    parameters: [{ id: 4, name: 'Скорость', value: 11, unit: 'труб/с' }],
+    parameters: [{ id: 4, name: 'Скорость', value: 1, unit: 'труб/с' }],
     watchable: false,
   },
   {
@@ -60,7 +60,7 @@ const robotList: Robot[] = [
     indicator: 'waiting',
     time: '3/4/5 сек',
     status: 'Ожидание',
-    parameters: [{ id: 5, name: 'Скорость', value: 11, unit: 'труб/с' }],
+    parameters: [{ id: 5, name: 'Скорость', value: 1, unit: 'труб/с' }],
     watchable: false,
   },
 ];
@@ -138,7 +138,7 @@ const Robot = () => {
           </>
         )}
         {!robot && (
-          <h2>
+          <h2 className="link">
             Робот <ShareSVG />
           </h2>
         )}
@@ -191,6 +191,7 @@ const Robot = () => {
           robotList.map((robot) => {
             return (
               <RobotRow
+                link
                 robot={robot}
                 callback={() => {
                   setRobot(null);
@@ -209,34 +210,33 @@ const Robot = () => {
 export default Robot;
 
 const RobotRow: FC<{
+  link?: boolean;
   robot: Robot;
   callback: () => void;
-}> = ({ robot, callback }) => {
-  let indicator = '';
-
-  if (robot.indicator === 'complete') {
-    indicator = styles.complete;
-  } else if (robot.indicator === 'waiting') {
-    indicator = styles.waiting;
-  } else if (robot.indicator === 'working') {
-    indicator = styles.working;
-  }
-
+}> = ({ link, robot, callback }) => {
   return (
     <div className={styles.robot_content} key={robot.id}>
-      <a
-        href="/#"
-        className={styles.robot_name}
-        onClick={(e) => {
-          e.preventDefault();
-          callback();
-        }}
-      >
-        {robot.name}
-      </a>
+      {link && (
+        <a
+          href="/#"
+          className={styles.robot_name}
+          onClick={(e) => {
+            e.preventDefault();
+            callback();
+          }}
+        >
+          {robot.name}
+        </a>
+      )}
+
+      {!link && (
+        <span className={styles['robot_name--no-link']}>{robot.name}</span>
+      )}
 
       <div className={styles.robot_time}>
-        <div className={`${styles.robot_indicator} ${indicator}`}></div>
+        <div
+          className={`${styles.robot_indicator} ${styles[robot.indicator]}`}
+        ></div>
         {robot.time}
       </div>
 

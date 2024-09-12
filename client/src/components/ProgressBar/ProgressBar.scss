@@ -13,7 +13,7 @@
   background-image: linear-gradient(
     to right,
     var(--accentColor) var(--width),
-    #fff 0
+    transparent 0
   );
 
   &.in-progress::after {

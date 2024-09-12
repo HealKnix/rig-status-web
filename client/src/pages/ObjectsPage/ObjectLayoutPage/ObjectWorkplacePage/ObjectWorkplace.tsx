@@ -1,9 +1,12 @@
 import './ObjectWorkplace.scss';
 
+import { ChartBar, Diameter } from 'lucide-react';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { api } from '@/api';
+import Button from '@/components/Button/Button';
+import Dropdown from '@/components/Dropdown/Dropdown';
 import Speedometer from '@/components/ECharts/Speedometer';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import DrillSVG from '@/components/SVGs/DrillSVG';
@@ -354,9 +357,23 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
       <div className="object-workplace__block">
         <div className="object-workplace__block__header">
-          <h2 className="link">
-            Система БР <ShareSVG />
-          </h2>
+          <Dropdown
+            target={
+              <h2 className="link">
+                Система БР <ShareSVG />
+              </h2>
+            }
+            placement="bottomLeft"
+          >
+            <Button variant="transparent">
+              <ChartBar strokeWidth={1.5} />
+              Графики
+            </Button>
+            <Button variant="transparent">
+              <Diameter strokeWidth={1.5} />
+              Настроить границы
+            </Button>
+          </Dropdown>
           <Switch />
         </div>
 
