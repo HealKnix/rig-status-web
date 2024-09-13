@@ -4,7 +4,7 @@ import { Bell, LogOut, Settings } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import Button from '@/components/Button/Button';
-import Dropdown from '@/components/Dropdown/Dropdown';
+import DropdownMenu from '@/components/DropdownMenu/DropdownMenu';
 import ProfileLink from '@/components/ProfileLink/ProfileLink';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
 import ConsoleSVG from '@/components/SVGs/ConsoleSVG';
@@ -88,7 +88,7 @@ export default function Sidebar() {
       </div>
 
       <div className="sidebar__bottom">
-        <Dropdown placement="rightBottom" target={<ProfileLink />}>
+        <DropdownMenu placement="rightBottom" target={<ProfileLink />}>
           <Button variant="transparent">
             <Settings strokeWidth={1.5} />
             Настройки
@@ -101,7 +101,7 @@ export default function Sidebar() {
             <LogOut strokeWidth={1.5} />
             Выход
           </Button>
-        </Dropdown>
+        </DropdownMenu>
       </div>
     </div>
   );

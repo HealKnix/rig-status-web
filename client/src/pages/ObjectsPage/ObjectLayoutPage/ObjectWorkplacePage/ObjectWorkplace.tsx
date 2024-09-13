@@ -1,13 +1,19 @@
 import './ObjectWorkplace.scss';
 
-import { ChartBar, Diameter } from 'lucide-react';
+import {
+  ArrowLeftToLine,
+  ArrowRightToLine,
+  ChartBar,
+  Diameter,
+} from 'lucide-react';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { api } from '@/api';
 import Button from '@/components/Button/Button';
-import Dropdown from '@/components/Dropdown/Dropdown';
+import DropdownMenu from '@/components/DropdownMenu/DropdownMenu';
 import Speedometer from '@/components/ECharts/Speedometer';
+import Input from '@/components/Input/Input';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import DrillSVG from '@/components/SVGs/DrillSVG';
 import LloSVG from '@/components/SVGs/LloSVG';
@@ -357,7 +363,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
       <div className="object-workplace__block">
         <div className="object-workplace__block__header">
-          <Dropdown
+          <DropdownMenu
             target={
               <h2 className="link">
                 Система БР <ShareSVG />
@@ -369,11 +375,47 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               <ChartBar strokeWidth={1.5} />
               Графики
             </Button>
-            <Button variant="transparent">
-              <Diameter strokeWidth={1.5} />
-              Настроить границы
-            </Button>
-          </Dropdown>
+            <DropdownMenu
+              target={
+                <Button variant="transparent">
+                  <Diameter strokeWidth={1.5} />
+                  Настроить границы
+                </Button>
+              }
+              placement="rightTop"
+            >
+              <DropdownMenu
+                target={
+                  <Button variant="transparent">
+                    <ArrowLeftToLine strokeWidth={1.5} />
+                    Минимальное значение
+                  </Button>
+                }
+                placement="top"
+              >
+                <Input
+                  placeholder="Введите мин. порог"
+                  type="number"
+                  movable_placeholder
+                />
+              </DropdownMenu>
+              <DropdownMenu
+                target={
+                  <Button variant="transparent">
+                    <ArrowRightToLine strokeWidth={1.5} />
+                    Максимальное значение
+                  </Button>
+                }
+                placement="bottom"
+              >
+                <Input
+                  placeholder="Введите макс. порог"
+                  type="number"
+                  movable_placeholder
+                />
+              </DropdownMenu>
+            </DropdownMenu>
+          </DropdownMenu>
           <Switch />
         </div>
 
