@@ -10,7 +10,6 @@ import { useInitializeAuth } from '@/hooks/useInitializeAuth';
 
 import Login from '../LoginPage/Login';
 import ObjectLayout from '../ObjectsPage/ObjectLayoutPage/ObjectLayout';
-import ObjectRobot from '../ObjectsPage/ObjectLayoutPage/ObjectRobotPage/ObjectRobot';
 import ObjectScreens from '../ObjectsPage/ObjectLayoutPage/ObjectScreensPage/ObjectScreens';
 import ObjectWorkplace from '../ObjectsPage/ObjectLayoutPage/ObjectWorkplacePage/ObjectWorkplace';
 import ObjectWorkProgress from '../ObjectsPage/ObjectLayoutPage/ObjectWorkProgressPage/ObjectWorkProgress';
@@ -32,7 +31,6 @@ export default function App() {
             <Route path="/objects/:id" element={<ObjectLayout />}>
               <Route path="workplace" element={<ObjectWorkplace />} />
               <Route path="screens" element={<ObjectScreens />} />
-              <Route path="robot" element={<ObjectRobot />} />
               <Route path="work-progress" element={<ObjectWorkProgress />} />
             </Route>
           </Routes>

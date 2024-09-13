@@ -10,6 +10,10 @@
     & > button {
       background-color: var(--primary-color) !important;
       color: white !important;
+
+      &:focus-visible {
+        outline-color: var(--white);
+      }
     }
   }
 }
@@ -22,9 +26,9 @@
   flex-direction: column;
   gap: 4px;
   width: 250px;
+  padding: 4px;
   scale: 0.95;
   opacity: 0;
-  padding: 4px;
   border-radius: 12px;
   background-color: var(--white);
   border: 1px solid var(--border-color);
@@ -169,6 +173,11 @@
     top: calc(100% + var(--dropdownMenuMargin));
     left: 0;
     translate: -10px -10px;
+  }
+  &.closing.bottomLeft {
+    top: 0;
+    left: 0;
+    translate: -100px -100px;
   }
 
   &.bottomRight {

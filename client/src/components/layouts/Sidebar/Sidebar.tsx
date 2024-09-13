@@ -10,7 +10,6 @@ import ChevronSVG from '@/components/SVGs/ChevronSVG';
 import ConsoleSVG from '@/components/SVGs/ConsoleSVG';
 import LineChartSVG from '@/components/SVGs/LineChartSVG';
 import RigSVG from '@/components/SVGs/RigSVG';
-import RobotSVG from '@/components/SVGs/RobotSVG';
 import ScreensSVG from '@/components/SVGs/ScreensSVG';
 import { useModalStore } from '@/store/useModalStore';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
@@ -59,16 +58,6 @@ export default function Sidebar() {
                 <span>
                   <ScreensSVG />
                   <span>Экраны</span>
-                </span>
-                <ChevronSVG />
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink to={`/objects/${objectIdStore.id}/robot`}>
-                <span>
-                  <RobotSVG />
-                  <span>Робот</span>
                 </span>
                 <ChevronSVG />
               </NavLink>

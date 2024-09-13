@@ -21,7 +21,7 @@ interface DropdownMenuProps {
   children: ReactNode | ReactNode[];
 }
 
-const ANIMATION_DELAY = 0;
+const DELAY = 25;
 
 const DropdownMenu: FC<DropdownMenuProps> = ({
   placement = 'right',
@@ -42,13 +42,13 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
     const closeDropdownModal = () => {
       setTimeout(() => {
         setShow(false);
-      }, ANIMATION_DELAY);
+      }, DELAY);
     };
 
     const toggleDropdownModal = () => {
       setTimeout(() => {
         setShow((pv) => !pv);
-      }, ANIMATION_DELAY);
+      }, DELAY);
     };
 
     const handleClick = () => {
@@ -100,7 +100,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
       {show && (
         <FocusTrap>
           <div
-            className={`${styles['dropdown-menu__content']} ${styles[placement]}`}
+            className={`${styles['dropdown-menu__content']} ${show && styles.show} ${styles[placement]}`}
           >
             {children}
           </div>
