@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  overflow-y: auto;
+  padding-bottom: 15px;
 
   &:has(> .object-screens__block.full-screen) {
     visibility: hidden;
@@ -20,6 +20,12 @@
     border: 1px solid var(--border-color);
     background-color: var(--white);
     overflow: hidden;
+
+    @media (width <= 500px) {
+      & {
+        min-width: 100%;
+      }
+    }
 
     &:not(.full-screen):hover {
       cursor: pointer;
@@ -58,6 +64,12 @@
 
       & > div:has(> img) > img {
         object-fit: contain;
+      }
+    }
+
+    @media (width <= 500px) {
+      &.full-screen {
+        min-width: auto;
       }
     }
   }

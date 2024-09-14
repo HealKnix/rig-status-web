@@ -9,6 +9,21 @@
   display: flex;
   gap: 15px;
 
+  @media (width <= 750px) {
+    & {
+      flex-direction: column;
+    }
+    .object-header__btn-back {
+      max-width: fit-content;
+    }
+  }
+
+  @media (width <= 500px) {
+    .object-header__btn-back {
+      max-width: none;
+    }
+  }
+
   & > * {
     display: flex;
     align-items: center;
