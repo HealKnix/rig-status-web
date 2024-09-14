@@ -51,6 +51,16 @@
     }
 
     & > .object-workplace__block__header.pumps {
+      & > *:nth-child(1),
+      & > *:nth-child(3) {
+        flex: 1;
+        justify-content: space-around;
+      }
+
+      & > .link {
+        justify-content: center;
+      }
+
       & > * {
         display: flex;
         flex-wrap: wrap;
