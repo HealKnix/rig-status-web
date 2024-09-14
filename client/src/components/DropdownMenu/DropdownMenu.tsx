@@ -17,19 +17,42 @@ interface DropdownMenuProps {
     | 'leftBottom'
     | 'left'
     | 'leftTop';
+  delay?: number;
   target: ReactNode | ReactNode[];
   children: ReactNode | ReactNode[];
 }
 
-const DELAY = 25;
-
 const DropdownMenu: FC<DropdownMenuProps> = ({
   placement = 'right',
+  delay = 150,
   target,
   children,
 }) => {
   const [show, setShow] = useState(false);
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
+  const [showStyle, setShowStyle] = useState('');
+
+  const closeDropdownModal = () => {
+    setShowStyle('');
+    setTimeout(() => {
+      setShow(false);
+    }, delay);
+  };
+
+  const toggleDropdownModal = () => {
+    if (!show) {
+      setShow(true);
+      setTimeout(() => {
+        setShowStyle(styles.show);
+      }, 0);
+    }
+    if (show) {
+      setShowStyle('');
+      setTimeout(() => {
+        setShow(false);
+      }, delay);
+    }
+  };
 
   useEffect(() => {
     const dropdownMenuTargetEl = dropdownMenuRef.current?.children.item(
@@ -38,18 +61,6 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
     const dropdownMenuContentEl = dropdownMenuRef.current?.children.item(
       1,
     ) as HTMLElement;
-
-    const closeDropdownModal = () => {
-      setTimeout(() => {
-        setShow(false);
-      }, DELAY);
-    };
-
-    const toggleDropdownModal = () => {
-      setTimeout(() => {
-        setShow((pv) => !pv);
-      }, DELAY);
-    };
 
     const handleClick = () => {
       if (dropdownMenuTargetEl.tagName === 'BUTTON') {
@@ -65,6 +76,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
 
     const handleClickClose = (e: MouseEvent) => {
       if ((e.currentTarget as HTMLElement).tagName === 'BUTTON') {
+        (e.currentTarget as HTMLElement).setAttribute('disabled', '');
         dropdownMenuRef.current?.classList.remove(styles.active);
         closeDropdownModal();
       }
@@ -95,12 +107,17 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
   }, [show]);
 
   return (
-    <div className={`${styles['dropdown-menu']}`} ref={dropdownMenuRef}>
+    <div className={styles['dropdown-menu']} ref={dropdownMenuRef}>
       {target}
       {show && (
         <FocusTrap>
           <div
-            className={`${styles['dropdown-menu__content']} ${show && styles.show} ${styles[placement]}`}
+            style={
+              {
+                '--dropdownMenuDelay': `${delay}ms`,
+              } as React.CSSProperties
+            }
+            className={`${styles['dropdown-menu__content']} ${showStyle} ${styles[placement]}`}
           >
             {children}
           </div>
