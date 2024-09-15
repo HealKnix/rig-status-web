@@ -6,7 +6,7 @@ export const useInitializeAuth = () => {
   const authStore = useAuthStore();
 
   const { isLoading } = useQuery({
-    queryKey: ['api auth'],
+    queryKey: ['auth'],
     queryFn: () =>
       api.auth().then((res) => {
         authStore.setUser(res);

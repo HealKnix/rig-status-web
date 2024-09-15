@@ -1,6 +1,10 @@
 .dropdown-menu {
   position: relative;
 
+  &:first-child {
+    cursor: pointer;
+  }
+
   &.active {
     & > button {
       background-color: var(--primary-color) !important;

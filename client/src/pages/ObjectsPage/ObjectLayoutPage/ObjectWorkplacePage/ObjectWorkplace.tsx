@@ -1,12 +1,7 @@
 import './ObjectWorkplace.scss';
 
-import {
-  ArrowLeftToLine,
-  ArrowRightToLine,
-  ChartBar,
-  Diameter,
-} from 'lucide-react';
-import { FC, useEffect } from 'react';
+import { ArrowLeftToLine, ArrowRightToLine } from 'lucide-react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { api } from '@/api';
@@ -20,9 +15,13 @@ import LloSVG from '@/components/SVGs/LloSVG';
 import ShareSVG from '@/components/SVGs/ShareSVG';
 import Switch from '@/components/Switch/Switch';
 import { useSensorDataWebSocket } from '@/hooks/useSensorDataWebSocket';
+import { Sensor } from '@/models/Sensor';
+import { SensorOutputTypeId } from '@/models/SensorOutputType';
 // import { Rig } from '@/models/Rig';
 import { Subsystem } from '@/models/Subsystem';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
+import { useToastStore } from '@/store/useToastStore';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Robot from './Robot/Robot';
 
@@ -33,6 +32,17 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
   const objectIdStore = useObjectIdStore();
 
   // const { rig } = useOutletContext<{ rig: Rig }>();
+
+  const { data: sensorListQuery, isFetched: sensorListFetched } = useQuery({
+    queryKey: ['sensors'],
+    queryFn: () => api.get<Sensor>('sensors'),
+    initialData: [],
+  });
+
+  const { data: subsystemListQuery } = useQuery({
+    queryKey: ['subsystems'],
+    queryFn: () => api.get<Subsystem>('subsystems'),
+  });
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
@@ -51,46 +61,16 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           <h2 className="link">
             Лебёдка <ShareSVG />
           </h2>
-          <Switch
-            onChange={(e) => {
-              api.update<Partial<Subsystem>>('subsystems', 1, {
-                active: e.currentTarget.checked,
-              });
-            }}
-          />
+          <Switch defaultChecked={subsystemListQuery?.[0].active} />
         </div>
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Вес на крюке
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[0]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(1)} т
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[1]} />}
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Нагрузка на долото
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(2)} кгс
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Положение крюка
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(3)} м
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[2]} />}
 
             <div className="object-workplace__block__content__table__row--with-graphs">
               <div className="object-workplace__block__content__table__column">
@@ -130,7 +110,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
       <div className="object-workplace__block">
         <div className="object-workplace__block__header pumps">
           <div>
-            <Switch />
+            <Switch defaultChecked={subsystemListQuery?.[1].active} />
             <h2>БН1</h2>
           </div>
           <h2 className="link">
@@ -138,7 +118,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           </h2>
           <div>
             <h2>БН2</h2>
-            <Switch />
+            <Switch defaultChecked={subsystemListQuery?.[2].active} />
           </div>
         </div>
 
@@ -300,193 +280,39 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Осевая нагрузка
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[19]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(20)} кН
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[20]} />}
 
-            <div className="object-workplace__block__content__table__row--with-graph">
-              <div className="object-workplace__block__content__table__column">
-                Частота вращения вала
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[21]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                <Speedometer
-                  color="#3A7CFF"
-                  min={0}
-                  max={150}
-                  value={useSensorDataWebSocket(21)}
-                  unite="об/мин"
-                  size={96}
-                />
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[22]} />}
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Момент силы
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(22)} кН·м
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Мощность
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(23)} кВт
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Температура
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(24)}
-                °C
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[23]} />}
           </div>
         </div>
       </div>
 
       <div className="object-workplace__block">
         <div className="object-workplace__block__header">
-          <DropdownMenu
-            target={
-              <h2 className="link">
-                Система БР <ShareSVG />
-              </h2>
-            }
-            placement="bottomLeft"
-          >
-            <Button variant="transparent">
-              <ChartBar strokeWidth={1.5} />
-              Графики
-            </Button>
-            <DropdownMenu
-              target={
-                <Button variant="transparent">
-                  <Diameter strokeWidth={1.5} />
-                  Настроить границы
-                </Button>
-              }
-              placement="rightTop"
-            >
-              <DropdownMenu
-                target={
-                  <Button variant="transparent">
-                    <ArrowLeftToLine strokeWidth={1.5} />
-                    Минимальное значение
-                  </Button>
-                }
-                placement="top"
-              >
-                <Input
-                  placeholder="Введите мин. порог"
-                  type="number"
-                  movable_placeholder
-                />
-              </DropdownMenu>
-              <DropdownMenu
-                target={
-                  <Button variant="transparent">
-                    <ArrowRightToLine strokeWidth={1.5} />
-                    Максимальное значение
-                  </Button>
-                }
-                placement="bottom"
-              >
-                <Input
-                  placeholder="Введите макс. порог"
-                  type="number"
-                  movable_placeholder
-                />
-              </DropdownMenu>
-            </DropdownMenu>
-          </DropdownMenu>
-          <Switch />
+          <h2 className="link">
+            Система БР <ShareSVG />
+          </h2>
         </div>
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Плотность
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[24]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(25)} кг/м³
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[25]} />}
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Температура
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[26]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(26)} °C
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[27]} />}
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Сероводород
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[28]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(27)} мг/м³
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Загазованность
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(28)} %
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Объём в ёмкостях
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(29)} м³/сек
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row--with-graph">
-              <div className="object-workplace__block__content__table__column">
-                Водоотдача
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                <Speedometer
-                  color="#3A7CFF"
-                  size={96}
-                  min={0}
-                  max={15}
-                  value={useSensorDataWebSocket(30)}
-                  unite="м³/сек"
-                />
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[29]} />}
           </div>
         </div>
       </div>
@@ -496,7 +322,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           <h2 className="link">
             АПД <ShareSVG />
           </h2>
-          <Switch />
+          <Switch defaultChecked={subsystemListQuery?.[5].active} />
         </div>
 
         <div className="object-workplace__block__content">
@@ -585,28 +411,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Давление в стояночном тормозе
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 100px',
-                    gridAutoFlow: 'column',
-                  }}
-                >
-                  <ProgressBar
-                    color="var(--thirdly-color)"
-                    value={useSensorDataWebSocket(35)}
-                    max={100}
-                  />
-                  <span>{useSensorDataWebSocket(35)} МПа</span>
-                </div>
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[34]} />}
           </div>
         </div>
       </div>
@@ -616,7 +421,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           <h2 className="link">
             Дефектоскоп <ShareSVG />
           </h2>
-          <Switch />
+          <Switch defaultChecked={subsystemListQuery?.[6].active} />
         </div>
 
         <div className="object-workplace__block__content">
@@ -631,25 +436,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Толщина тела трубы
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[36]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(37)} мм
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Дефекты
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                Есть
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[37]} />}
           </div>
         </div>
       </div>
@@ -659,40 +448,16 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
           <h2 className="link">
             ВСП <ShareSVG />
           </h2>
-          <Switch />
+          <Switch defaultChecked={subsystemListQuery?.[7].active} />
         </div>
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Момент ключа
-              </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[38]} />}
 
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(39)} кН·м
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[39]} />}
 
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Момент ГК
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(40)} кН·м
-              </div>
-            </div>
-
-            <div className="object-workplace__block__content__table__row">
-              <div className="object-workplace__block__content__table__column">
-                Частота вращения
-              </div>
-
-              <div className="object-workplace__block__content__table__column">
-                {useSensorDataWebSocket(41)} об/мин
-              </div>
-            </div>
+            {sensorListFetched && <SensorRow sensor={sensorListQuery[40]} />}
           </div>
         </div>
       </div>
@@ -701,3 +466,167 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 };
 
 export default ObjectWorkplace;
+
+const SensorRow = ({ sensor }: { sensor: Sensor | null }) => {
+  const toastStore = useToastStore();
+  const sensorDataWebSocket = useSensorDataWebSocket(sensor?.id ?? -1);
+
+  const [minValue, setMinValue] = useState<number | string>(
+    sensor?.min_value ?? '',
+  );
+  const [maxValue, setMaxValue] = useState<number | string>(
+    sensor?.max_value ?? '',
+  );
+
+  const client = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationKey: ['sensors', 'update'],
+    mutationFn: () =>
+      api.update<Partial<Sensor>>('sensors', sensor?.id ?? -1, {
+        min_value: Number(minValue),
+        max_value: Number(maxValue),
+      }),
+    onSuccess: () => {
+      toastStore.addToast('success', 'Велична успешно назначена!');
+      return client.invalidateQueries({
+        queryKey: ['sensors'],
+      });
+    },
+  });
+
+  const { data: subsystemQuery } = useQuery({
+    queryKey: ['subsystems', 'id', sensor?.subsystem_id],
+    queryFn: () =>
+      api.getById<Subsystem>('subsystems', sensor?.subsystem_id ?? -1),
+    initialData: null,
+  });
+
+  const getWarningBound = () =>
+    (Math.abs(1 - Number(Number(minValue) / sensorDataWebSocket)) <= 0.15 ||
+      Math.abs(1 - Number(sensorDataWebSocket) / Number(maxValue)) <= 0.15) &&
+    subsystemQuery?.active;
+
+  const getAlertBound = () =>
+    (sensorDataWebSocket <= Number(minValue) ||
+      sensorDataWebSocket >= Number(maxValue)) &&
+    subsystemQuery?.active;
+
+  return (
+    <div
+      className={`object-workplace__block__content__table__row${sensor?.output_type_id === SensorOutputTypeId.SPEEDOMETER ? '--with-graph' : ''} ${getWarningBound() ? 'warning' : ''} ${getAlertBound() ? 'alert' : ''}`}
+      style={
+        sensor?.output_type_id === SensorOutputTypeId.PROGRESSBAR
+          ? {
+              display: 'grid',
+              gap: '10px',
+              gridTemplateColumns: '1fr 1fr 100px',
+            }
+          : {}
+      }
+    >
+      <DropdownMenu
+        target={
+          <div className="object-workplace__block__content__table__column">
+            {sensor?.name}
+          </div>
+        }
+        placement="bottomLeft"
+      >
+        <DropdownMenu
+          target={
+            <Button variant="transparent">
+              <ArrowLeftToLine strokeWidth={1.5} />
+              Минимальное значение
+            </Button>
+          }
+          placement="top"
+        >
+          <Input
+            placeholder="Введите мин. порог"
+            type="number"
+            value={minValue}
+            onInput={(e) => {
+              setMinValue(e.currentTarget.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                mutate();
+              }
+            }}
+            movable_placeholder
+          />
+        </DropdownMenu>
+        <DropdownMenu
+          target={
+            <Button variant="transparent">
+              <ArrowRightToLine strokeWidth={1.5} />
+              Максимальное значение
+            </Button>
+          }
+          placement="bottom"
+        >
+          <Input
+            placeholder="Введите макс. порог"
+            type="number"
+            value={maxValue}
+            onInput={(e) => {
+              setMaxValue(e.currentTarget.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                mutate();
+              }
+            }}
+            movable_placeholder
+          />
+        </DropdownMenu>
+      </DropdownMenu>
+
+      {sensor?.output_type_id === SensorOutputTypeId.PROGRESSBAR && (
+        <>
+          <ProgressBar
+            color="var(--primary-color)"
+            value={sensorDataWebSocket}
+            max={sensor.max_value}
+          />
+          <span
+            style={{
+              textAlign: 'right',
+              fontWeight: '500',
+            }}
+          >
+            {sensorDataWebSocket} {sensor.unit}
+          </span>
+        </>
+      )}
+
+      {sensor?.output_type_id !== SensorOutputTypeId.PROGRESSBAR && (
+        <div className="object-workplace__block__content__table__column">
+          {sensor?.output_type_id === SensorOutputTypeId.SPEEDOMETER && (
+            <Speedometer
+              color="#3A7CFF"
+              textColor={
+                getAlertBound()
+                  ? '#ff4d55'
+                  : getWarningBound()
+                    ? '#ffb200'
+                    : undefined
+              }
+              min={sensor.min_value}
+              max={sensor.max_value}
+              value={sensorDataWebSocket}
+              unite={sensor.unit ?? ''}
+              size={96}
+            />
+          )}
+          {sensor?.output_type_id === SensorOutputTypeId.TEXT && (
+            <>
+              {sensorDataWebSocket} {sensor?.unit}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};

@@ -1,3 +1,6 @@
+import { SensorOutputTypeId } from './SensorOutputType';
+import { SensorStatusId } from './SensorStatus';
+
 export interface Sensor {
   id: number;
   rig_id: number;
@@ -5,8 +8,8 @@ export interface Sensor {
   name: string;
   data_type: string;
   unit: string | null;
-  status_id: number;
+  status_id: SensorStatusId;
   min_value: number;
   max_value: number;
-  output_type_id: number;
+  output_type_id: SensorOutputTypeId;
 }

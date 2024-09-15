@@ -129,6 +129,13 @@
           align-items: center;
           padding: 2px 5px;
 
+          &.warning {
+            color: var(--warning-color);
+          }
+          &.alert {
+            color: var(--error-color);
+          }
+
           & > .object-workplace__block__content__table__column > span {
             font-weight: 500;
           }
@@ -145,6 +152,13 @@
           align-items: center;
           padding-bottom: 5px;
           gap: 50px;
+
+          &.warning {
+            color: var(--warning-color);
+          }
+          &.alert {
+            color: var(--error-color);
+          }
 
           & > * {
             display: flex;
@@ -163,6 +177,13 @@
           align-items: center;
           flex-wrap: wrap;
           gap: 25px;
+
+          &.warning {
+            color: var(--warning-color);
+          }
+          &.alert {
+            color: var(--error-color);
+          }
 
           & > *:first-child {
             display: flex;

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
+import { SensorData } from '@/models/SensorData';
+
 export const useSensorDataWebSocket = (sensor_id: number) => {
   const [message, setMessage] = useState<number>(0);
 
@@ -11,9 +13,9 @@ export const useSensorDataWebSocket = (sensor_id: number) => {
       );
 
       rws.onmessage = (event: MessageEvent) => {
-        const data = JSON.parse(event.data);
+        const data = JSON.parse(event.data).message as SensorData;
 
-        setMessage(data.message.value);
+        setMessage(data.value);
       };
 
       return () => {

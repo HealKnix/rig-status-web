@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 interface SpeedometerProps {
   color: string;
+  textColor?: string;
   size: number;
   value: number;
   unite: string;
@@ -12,6 +13,7 @@ interface SpeedometerProps {
 
 const Speedometer: FC<SpeedometerProps> = ({
   color,
+  textColor = '#1b2539',
   size,
   value,
   unite = '',
@@ -68,7 +70,7 @@ const Speedometer: FC<SpeedometerProps> = ({
           offsetCenter: [0, 35],
           fontWeight: 'bolder',
           formatter: `{value}\n${unite}`,
-          color: '#1b2539',
+          color: textColor,
         },
         min: min,
         max: max,

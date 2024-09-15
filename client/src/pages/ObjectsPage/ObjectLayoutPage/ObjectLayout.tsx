@@ -18,36 +18,36 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
   const toastStore = useToastStore();
 
   const {
-    data: rig,
-    isLoading,
-    isSuccess,
+    data: rigQuery,
+    isLoading: rigIsLoading,
+    isSuccess: rigIsSuccess,
   } = useQuery({
-    queryKey: ['object get by id', id],
+    queryKey: ['objects', 'get', 'id', id],
     queryFn: () => api.getById<Rig>('rigs', Number(id)),
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (rigIsSuccess) {
       toastStore.addToast(
         'info',
-        `До конца бурения осталось ${Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м.`,
+        `До конца бурения осталось ${Number(rigQuery?.well_depth) - Number(rigQuery?.bottom_hole_drilling)} м.`,
       );
     }
-  }, [isSuccess]);
+  }, [rigIsSuccess]);
 
   let progressBarColor = 'var(--text-additional-color)';
 
-  if (rig?.drilling_status_id === 1) {
+  if (rigQuery?.drilling_status_id === 1) {
     progressBarColor = 'var(--success-color)';
-  } else if (rig?.drilling_status_id === 2) {
+  } else if (rigQuery?.drilling_status_id === 2) {
     progressBarColor = 'var(--warning-color)';
-  } else if (rig?.drilling_status_id === 3) {
+  } else if (rigQuery?.drilling_status_id === 3) {
     progressBarColor = 'var(--error-color)';
-  } else if (rig?.drilling_status_id === 4) {
+  } else if (rigQuery?.drilling_status_id === 4) {
     progressBarColor = 'var(--text-additional-color)';
   }
 
-  if (isLoading) return <Loader />;
+  if (rigIsLoading) return <Loader />;
 
   return (
     <div className="object-layout__wrapper">
@@ -77,12 +77,14 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
 
           <div>
             <span>
-              Текущая глубина: <b>{rig?.bottom_hole_drilling} м</b>
+              Текущая глубина: <b>{rigQuery?.bottom_hole_drilling} м</b>
             </span>
             <span>
               Осталось:{' '}
               <b>
-                {Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м
+                {Number(rigQuery?.well_depth) -
+                  Number(rigQuery?.bottom_hole_drilling)}{' '}
+                м
               </b>
             </span>
           </div>
@@ -98,7 +100,8 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
                 }}
               >
                 {(
-                  ((rig?.bottom_hole_drilling ?? 0) / (rig?.well_depth ?? 1)) *
+                  ((rigQuery?.bottom_hole_drilling ?? 0) /
+                    (rigQuery?.well_depth ?? 1)) *
                   100
                 ).toFixed(1)}
                 %
@@ -106,9 +109,10 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
             </span>
             <div style={{ flex: 1 }}>
               <ProgressBar
-                loader={rig?.drilling_status_id === 1}
+                loader={rigQuery?.drilling_status_id === 1}
                 value={
-                  ((rig?.bottom_hole_drilling ?? 0) / (rig?.well_depth ?? 1)) *
+                  ((rigQuery?.bottom_hole_drilling ?? 0) /
+                    (rigQuery?.well_depth ?? 1)) *
                   100
                 }
                 color={progressBarColor}
@@ -119,7 +123,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
         </div>
       </div>
 
-      <Outlet context={{ rig }} />
+      <Outlet context={{ rigQuery }} />
     </div>
   );
 };

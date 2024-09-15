@@ -33,7 +33,7 @@ export const subsystemList: Subsystem[] = [
     id: 5,
     name: 'Система БР',
     description: '',
-    active: true,
+    active: false,
     rig_id: 1,
   },
   {
