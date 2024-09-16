@@ -36,17 +36,20 @@ export default function Login() {
             .login(inputEmail, inputPassword)
             .then((res) => {
               setIsFetching(false);
+
+              if (!res) throw new AxiosError('Сотрудник не найден');
+
               authStore.setUser(res?.user ?? null);
               toastStore.addToast(
                 'success',
                 `Добро пожаловать, ${res?.user.first_name}!`,
               );
               navigate('/');
+
               return res;
             })
             .catch((error: AxiosError) => {
               setIsFetching(false);
-              console.log(error);
 
               if (error.response?.status === 400) {
                 toastStore.addToast('error', 'Сотрудник не найден');
@@ -94,7 +97,10 @@ export default function Login() {
 
               const loginData = await api.login('www.test@gmail.com', 'test');
               authStore.setUser(loginData?.user ?? null);
-              toastStore.addToast('success', 'Вы вошли в систему');
+              toastStore.addToast(
+                'success',
+                `Добро пожаловать, ${loginData?.user.first_name}!`,
+              );
 
               btn.disabled = false;
             }}

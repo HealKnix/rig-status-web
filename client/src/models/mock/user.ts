@@ -15,7 +15,7 @@ export const userList: User[] = [
   {
     id: 1,
     user_name: 'admin',
-    first_name: 'Адин',
+    first_name: 'Админ',
     last_name: 'Админов',
     patronymic: 'Админович',
     email: 'www.admin@gmail.com',
