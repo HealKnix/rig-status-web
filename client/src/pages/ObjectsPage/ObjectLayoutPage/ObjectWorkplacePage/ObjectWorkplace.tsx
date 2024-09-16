@@ -52,11 +52,11 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={0 + 1} />
+            <SensorRow sensor_id={1} />
 
-            <SensorRow sensor_id={1 + 1} />
+            <SensorRow sensor_id={2} />
 
-            <SensorRow sensor_id={2 + 1} />
+            <SensorRow sensor_id={3} />
 
             <div className="object-workplace__block__content__table__row--with-graphs">
               <div className="object-workplace__block__content__table__column">
@@ -256,15 +256,15 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={19 + 1} />
+            <SensorRow sensor_id={20} />
 
-            <SensorRow sensor_id={20 + 1} />
+            <SensorRow sensor_id={21} />
 
-            <SensorRow sensor_id={21 + 1} />
+            <SensorRow sensor_id={22} />
 
-            <SensorRow sensor_id={22 + 1} />
+            <SensorRow sensor_id={23} />
 
-            <SensorRow sensor_id={23 + 1} />
+            <SensorRow sensor_id={24} />
           </div>
         </div>
       </div>
@@ -276,17 +276,17 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={24 + 1} />
+            <SensorRow sensor_id={25} />
 
-            <SensorRow sensor_id={25 + 1} />
+            <SensorRow sensor_id={26} />
 
-            <SensorRow sensor_id={26 + 1} />
+            <SensorRow sensor_id={27} />
 
-            <SensorRow sensor_id={27 + 1} />
+            <SensorRow sensor_id={28} />
 
-            <SensorRow sensor_id={28 + 1} />
+            <SensorRow sensor_id={29} />
 
-            <SensorRow sensor_id={29 + 1} />
+            <SensorRow sensor_id={30} />
           </div>
         </div>
       </div>
@@ -382,7 +382,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <SensorRow sensor_id={34 + 1} />
+            <SensorRow sensor_id={35} />
           </div>
         </div>
       </div>
@@ -404,9 +404,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <SensorRow sensor_id={36 + 1} />
+            <SensorRow sensor_id={37} />
 
-            <SensorRow sensor_id={37 + 1} />
+            <SensorRow sensor_id={38} />
           </div>
         </div>
       </div>
@@ -418,11 +418,11 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={38 + 1} />
+            <SensorRow sensor_id={39} />
 
-            <SensorRow sensor_id={39 + 1} />
+            <SensorRow sensor_id={40} />
 
-            <SensorRow sensor_id={40 + 1} />
+            <SensorRow sensor_id={41} />
           </div>
         </div>
       </div>
