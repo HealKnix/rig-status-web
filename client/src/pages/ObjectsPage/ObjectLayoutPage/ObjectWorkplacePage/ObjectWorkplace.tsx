@@ -190,7 +190,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(10)} л/с
+              {useSensorDataWebSocket(10) ?? 0} л/с
             </span>
           </div>
 
@@ -214,7 +214,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(11)} кПа
+              {useSensorDataWebSocket(11) ?? 0} кПа
             </span>
           </div>
 
@@ -238,7 +238,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(12)} кПа
+              {useSensorDataWebSocket(12) ?? 0} кПа
             </span>
           </div>
         </div>
