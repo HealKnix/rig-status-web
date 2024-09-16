@@ -1,6 +1,6 @@
 import './ObjectWorkplace.scss';
 
-import { ArrowLeftToLine, ArrowRightToLine } from 'lucide-react';
+import { ArrowLeftToLine, ArrowRightToLine, SendHorizonal } from 'lucide-react';
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -442,7 +442,7 @@ const SubsystemHeader = ({
         `Подсистема "${data?.name}" ${data?.active ? 'включена' : 'отключена'}`,
       );
       return client.invalidateQueries({
-        queryKey: ['subsystems'],
+        queryKey: ['subsystems', 'id', subsystem_id],
       });
     },
   });
@@ -559,11 +559,15 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
               </Button>
             }
             placement="top"
+            style={{
+              display: 'flex',
+            }}
           >
             <Input
               placeholder="Введите мин. порог"
               type="number"
               value={minValue}
+              min={0}
               onInput={(e) => {
                 setMinValue(e.currentTarget.value);
               }}
@@ -573,7 +577,14 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
                 }
               }}
               movable_placeholder
+              style={{
+                flex: '1',
+                maxWidth: '150px',
+              }}
             />
+            <Button outlined onClick={() => mutate()}>
+              <SendHorizonal size={16} />
+            </Button>
           </DropdownMenu>
           <DropdownMenu
             target={
@@ -582,22 +593,28 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
                 Максимальное значение
               </Button>
             }
-            placement="bottom"
+            placement="bottomLeft"
+            style={{
+              display: 'flex',
+            }}
           >
             <Input
               placeholder="Введите макс. порог"
               type="number"
               value={maxValue}
+              min={0}
               onInput={(e) => {
                 setMaxValue(e.currentTarget.value);
               }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  mutate();
-                }
-              }}
               movable_placeholder
+              style={{
+                flex: '1',
+                maxWidth: '150px',
+              }}
             />
+            <Button outlined onClick={() => mutate()}>
+              <SendHorizonal size={16} />
+            </Button>
           </DropdownMenu>
         </DropdownMenu>
 

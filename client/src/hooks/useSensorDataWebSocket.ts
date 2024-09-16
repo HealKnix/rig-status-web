@@ -3,28 +3,33 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import { SensorData } from '@/models/SensorData';
 
-export const useSensorDataWebSocket = (sensor_id: number) => {
+const useSensorDataWebSocketProduction = (sensor_id: number) => {
   const [sensorDataWebsocket, setSensorDataWebsocket] = useState<number | null>(
     null,
   );
 
   useEffect(() => {
-    if (!import.meta.env.VITE_API_MOCK) {
-      const rws = new ReconnectingWebSocket(
-        import.meta.env.VITE_WS_URL + `ws/sensor_data/${sensor_id}/`,
-      );
+    const rws = new ReconnectingWebSocket(
+      import.meta.env.VITE_WS_URL + `ws/sensor_data/${sensor_id}/`,
+    );
 
-      rws.onmessage = (event: MessageEvent) => {
-        const data = JSON.parse(event.data).message as SensorData;
+    rws.onmessage = (event: MessageEvent) => {
+      const data = JSON.parse(event.data).message as SensorData;
 
-        setSensorDataWebsocket(data.value);
-      };
+      setSensorDataWebsocket(data.value);
+    };
 
-      return () => {
-        rws.close();
-      };
-    }
+    return () => {
+      rws.close();
+    };
   }, []);
 
   return sensorDataWebsocket;
 };
+
+const useSensorDataWebSocketMock = () => 0;
+
+export const useSensorDataWebSocket =
+  import.meta.env.VITE_API_MOCK === 'false'
+    ? useSensorDataWebSocketProduction
+    : useSensorDataWebSocketMock;

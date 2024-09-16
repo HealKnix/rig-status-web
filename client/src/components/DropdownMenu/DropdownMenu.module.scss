@@ -28,7 +28,6 @@
   display: grid;
   position: absolute;
   gap: 4px;
-  width: 250px;
   padding: 4px;
   border-radius: 12px;
   background-color: var(--white);
@@ -38,15 +37,20 @@
   z-index: 10000;
   transition: var(--dropdownMenuDelay) ease-in-out;
 
-  button {
+  & button {
     justify-content: left;
     text-transform: none;
     text-align: start;
     gap: 10px;
+    font-size: 14px;
 
     & > * {
       flex: none;
     }
+  }
+
+  & input {
+    font-size: 15px !important;
   }
 
   // ==== Появление в центре ====

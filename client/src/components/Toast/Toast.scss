@@ -16,6 +16,31 @@
     --toastProgressDuration: 5s;
     --accentColor: var(--text-additional-color);
 
+    cursor: pointer;
+    user-select: none;
+    flex: none;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    height: fit-content;
+    border-radius: 12px;
+    background-color: var(--white);
+    padding: 15px;
+    box-shadow: 0 4px 10px 0
+      color-mix(in srgb, var(--accentColor) 25%, transparent 0%);
+    overflow: hidden;
+
+    animation: toastAdd var(--toastDuration) ease-in-out both;
+    @keyframes toastAdd {
+      from {
+        translate: 100%;
+      }
+
+      to {
+        translate: 0;
+      }
+    }
+
     &.success {
       --accentColor: var(--success-color);
     }
@@ -30,30 +55,6 @@
 
     &.info {
       --accentColor: var(--primary-color);
-    }
-
-    cursor: pointer;
-    user-select: none;
-    flex: none;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-    height: fit-content;
-    border-radius: 12px;
-    background-color: var(--white);
-    padding: 15px;
-    box-shadow: 0 4px 10px 0
-      color-mix(in srgb, var(--accentColor) 25%, transparent 0%);
-    overflow: hidden;
-    animation: toastAdd var(--toastDuration) ease-in-out both;
-    @keyframes toastAdd {
-      from {
-        translate: 100%;
-      }
-
-      to {
-        translate: 0;
-      }
     }
 
     & > .toast-right {

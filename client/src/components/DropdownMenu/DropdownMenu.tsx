@@ -20,6 +20,7 @@ interface DropdownMenuProps {
   delay?: number;
   target: ReactNode | ReactNode[];
   children: ReactNode | ReactNode[];
+  style?: React.CSSProperties;
 }
 
 const DropdownMenu: FC<DropdownMenuProps> = ({
@@ -27,6 +28,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
   delay = 150,
   target,
   children,
+  style = {},
 }) => {
   const [show, setShow] = useState(false);
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
@@ -95,14 +97,14 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
     dropdownMenuContentEl?.childNodes.forEach((child) => {
       (child as HTMLElement).addEventListener('click', handleClickClose);
     });
-    window.addEventListener('click', handleClickOutside);
+    window.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       dropdownMenuTargetEl?.removeEventListener('click', handleClick);
       dropdownMenuContentEl?.childNodes.forEach((child) => {
         (child as HTMLElement).removeEventListener('click', handleClickClose);
       });
-      window.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('mousedown', handleClickOutside);
     };
   }, [show]);
 
@@ -114,6 +116,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
           <div
             style={
               {
+                ...style,
                 '--dropdownMenuDelay': `${delay}ms`,
               } as React.CSSProperties
             }
