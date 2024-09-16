@@ -11,7 +11,7 @@ export default function ObjectWorkProgress() {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
 
-  const { rig } = useOutletContext<{ rig: Rig }>();
+  const { rigQuery } = useOutletContext<{ rigQuery: Rig }>();
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
@@ -258,11 +258,13 @@ export default function ObjectWorkProgress() {
             }}
           >
             <h2 style={{ color: 'var(--primary-color)' }}>
-              {rig?.bottom_hole_drilling} м
+              {rigQuery.bottom_hole_drilling} м
             </h2>
             <h4>
               осталось{' '}
-              {Number(rig?.well_depth) - Number(rig?.bottom_hole_drilling)} м
+              {Number(rigQuery.well_depth) -
+                Number(rigQuery.bottom_hole_drilling)}{' '}
+              м
             </h4>
           </div>
 

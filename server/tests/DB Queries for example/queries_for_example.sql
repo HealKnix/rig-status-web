@@ -22,12 +22,13 @@ VALUES (1, '1'),
        (3, '3'),
        (4, '4');
 -- ---------------------------------------------------------------------------------------------------------------------
-INSERT INTO rig (id, name, longitude, latitude, well_depth, well_number, well_pad_id, well_type_id, tech_date,
-                 drilling_status_id, tech_status_id, start_date, end_date_fact, end_date_plan)
-VALUES (1, 'Объект_1', 59.02, 93.83, 839, 1, 1, 1, '2024-06-06', 1, 1, CURRENT_DATE, NULL, '06/06/2025'),
-       (2, 'Объект_2', 58.95, 95.72, 839, 2, 2, 2, '2024-03-22', 2, 2, CURRENT_DATE, NULL, '19/02/2025'),
-       (3, 'Объект_3', 58.64, 94.83, 839, 3, 3, 3, '2024-12-16', 3, 3, CURRENT_DATE, NULL, '17/12/2024'),
-       (4, 'Объект_4', 58.64, 94.83, 839, 4, 4, 4, '2024-05-28', 4, 4, CURRENT_DATE, NULL, '24/11/2025');
+INSERT INTO rig (id, name, longitude, latitude, well_depth, well_number, well_pad_id, well_type_id,
+                 bottom_hole_drilling, connection_speed, tech_date, drilling_status_id, tech_status_id, start_date,
+                 end_date_fact, end_date_plan)
+VALUES (1, 'Объект_1', 59.02, 93.83, 1000, 1, 1, 1, 673, 150, '2024-06-06', 1, 1, CURRENT_DATE, NULL, '06/06/2025'),
+       (2, 'Объект_2', 58.95, 95.72, 1000, 2, 2, 2, 389, 43,  '2024-03-22', 2, 2, CURRENT_DATE, NULL, '19/02/2025'),
+       (3, 'Объект_3', 58.64, 94.83, 1000, 3, 3, 3, 839, 1,   '2024-12-16', 3, 3, CURRENT_DATE, NULL, '17/12/2024'),
+       (4, 'Объект_4', 58.64, 94.83, 1000, 4, 4, 4, 381, 0,   '2024-05-28', 4, 4, CURRENT_DATE, NULL, '24/11/2025');
 -- ---------------------------------------------------------------------------------------------------------------------
 INSERT INTO subsystem (id, name, description, active, rig_id)
 VALUES (1, 'Лебёдка',     '', TRUE,  1),

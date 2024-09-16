@@ -13,8 +13,8 @@ import { useQuery } from '@tanstack/react-query';
 export default function Header() {
   const objectIdStore = useObjectIdStore();
 
-  const { data: rigData } = useQuery({
-    queryKey: ['header rig by id', objectIdStore.id],
+  const { data: rigsDataQuery } = useQuery({
+    queryKey: ['header', 'rigs', 'id', objectIdStore.id],
     queryFn: () => api.getById<Rig>('rigs', objectIdStore.id),
   });
 
@@ -55,8 +55,10 @@ export default function Header() {
       <div className="header__object-name">
         {objectIdStore.idIsNotNull() && (
           <>
-            <SatelliteSVG connection_speed={rigData?.connection_speed ?? 0} />
-            <span>{rigData?.name}</span>
+            <SatelliteSVG
+              connection_speed={rigsDataQuery?.connection_speed ?? 0}
+            />
+            <span>{rigsDataQuery?.name}</span>
           </>
         )}
       </div>
@@ -68,10 +70,20 @@ export default function Header() {
           <>
             <div>
               <span className="object-data__latitude">
-                Дата начала: <b>{rigData?.start_date.toLocaleDateString()}</b>
+                Дата начала:{' '}
+                <b>
+                  {new Date(
+                    rigsDataQuery?.start_date ?? '',
+                  ).toLocaleDateString()}
+                </b>
               </span>
               <span className="object-data__longitude">
-                Дата конца: <b>{rigData?.end_date_plan.toLocaleDateString()}</b>
+                Дата конца:{' '}
+                <b>
+                  {new Date(
+                    rigsDataQuery?.end_date_plan ?? '',
+                  ).toLocaleDateString()}
+                </b>
               </span>
             </div>
             <hr />
@@ -91,16 +103,16 @@ export default function Header() {
                   color: 'var(--primary-color)',
                 }}
               >
-                {DrillingStatus[rigData?.drilling_status_id ?? 0]}
+                {DrillingStatus[rigsDataQuery?.drilling_status_id ?? 0]}
               </b>
             </span>
             <hr />
             <div>
               <span className="object-data__latitude">
-                В.Д. <b>{rigData?.latitude}°</b>
+                В.Д. <b>{rigsDataQuery?.latitude}°</b>
               </span>
               <span className="object-data__longitude">
-                С.Ш. <b>{rigData?.longitude}°</b>
+                С.Ш. <b>{rigsDataQuery?.longitude}°</b>
               </span>
             </div>
             <hr />

@@ -108,6 +108,8 @@ class Rig(models.Model):
     )
     well_number = models.FloatField()
     well_depth = models.FloatField()
+    bottom_hole_drilling = models.FloatField()
+    connection_speed = models.FloatField()
     drilling_status_id = models.ForeignKey(
         DrillingStatus, on_delete=models.CASCADE, db_column="drilling_status_id"
     )

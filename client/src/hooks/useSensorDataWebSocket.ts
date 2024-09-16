@@ -4,7 +4,9 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import { SensorData } from '@/models/SensorData';
 
 export const useSensorDataWebSocket = (sensor_id: number) => {
-  const [message, setMessage] = useState<number>(0);
+  const [sensorDataWebsocket, setSensorDataWebsocket] = useState<number | null>(
+    null,
+  );
 
   useEffect(() => {
     if (!import.meta.env.VITE_API_MOCK) {
@@ -15,7 +17,7 @@ export const useSensorDataWebSocket = (sensor_id: number) => {
       rws.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data).message as SensorData;
 
-        setMessage(data.value);
+        setSensorDataWebsocket(data.value);
       };
 
       return () => {
@@ -24,5 +26,5 @@ export const useSensorDataWebSocket = (sensor_id: number) => {
     }
   }, []);
 
-  return message;
+  return sensorDataWebsocket;
 };
