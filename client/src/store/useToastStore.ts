@@ -5,18 +5,23 @@ type ToastVariants = 'success' | 'error' | 'warning' | 'info';
 interface ToastProps {
   id: number;
   variant: ToastVariants;
+  title?: string;
   description: string;
 }
 
 interface ToastStore {
   toasts: ToastProps[];
-  addToast: (variant: ToastVariants, description: string) => void;
+  addToast: (
+    variant: ToastVariants,
+    description: string,
+    title?: string,
+  ) => void;
   delToast: (id: number) => void;
 }
 
 export const useToastStore = create<ToastStore>()((set) => ({
   toasts: [],
-  addToast: (variant: ToastVariants, description: string) => {
+  addToast: (variant: ToastVariants, description: string, title?: string) => {
     set((state) => ({
       toasts: [
         ...state.toasts,
@@ -25,6 +30,7 @@ export const useToastStore = create<ToastStore>()((set) => ({
             ? state.toasts[state.toasts.length - 1].id + 1
             : 0,
           variant: variant,
+          title: title,
           description: description,
         },
       ],

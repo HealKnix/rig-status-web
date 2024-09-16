@@ -45,10 +45,15 @@ const Toast = () => {
             </div>
             <div className="toast-right">
               <div className="toast-type-title">
-                {toast.variant === 'success' && 'Успешно'}
-                {toast.variant === 'warning' && 'Предупреждение'}
-                {toast.variant === 'error' && 'Ошибка'}
-                {toast.variant === 'info' && 'Информация'}
+                {!toast.title && (
+                  <>
+                    {toast.variant === 'success' && 'Успешно'}
+                    {toast.variant === 'warning' && 'Предупреждение'}
+                    {toast.variant === 'error' && 'Ошибка'}
+                    {toast.variant === 'info' && 'Информация'}
+                  </>
+                )}
+                {toast.title && toast.title}
               </div>
               <div className="toast-description">{toast.description}</div>
             </div>

@@ -1,5 +1,6 @@
 import './Login.scss';
 
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +18,8 @@ export default function Login() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
 
+  const [isFetching, setIsFetching] = useState(false);
+
   return (
     <div className="login-form">
       <form
@@ -28,15 +31,31 @@ export default function Login() {
             return;
           }
 
-          const loginData = await api.login(inputEmail, inputPassword);
+          setIsFetching(true);
+          await api
+            .login(inputEmail, inputPassword)
+            .then((res) => {
+              setIsFetching(false);
+              authStore.setUser(res?.user ?? null);
+              toastStore.addToast(
+                'success',
+                `Добро пожаловать, ${res?.user.first_name}!`,
+              );
+              navigate('/');
+              return res;
+            })
+            .catch((error: AxiosError) => {
+              setIsFetching(false);
+              console.log(error);
 
-          if (loginData) {
-            authStore.setUser(loginData.user);
-            toastStore.addToast('success', 'Вы вошли в систему');
-            navigate('/');
-          } else {
-            toastStore.addToast('error', 'Такого пользователя не существует');
-          }
+              if (error.response?.status === 400) {
+                toastStore.addToast('error', 'Сотрудник не найден');
+              } else {
+                toastStore.addToast('error', error.message);
+              }
+
+              return error;
+            });
         }}
       >
         <h1>Вход</h1>
@@ -49,6 +68,7 @@ export default function Login() {
           }}
           required
           movable_placeholder
+          disabled={isFetching}
         />
         <Input
           title="Пароль"
@@ -60,6 +80,7 @@ export default function Login() {
           autoComplete="current-password webauthn"
           required
           movable_placeholder
+          disabled={isFetching}
         />
 
         {import.meta.env.VITE_API_MOCK === 'true' && (
@@ -82,7 +103,7 @@ export default function Login() {
           </Button>
         )}
 
-        <Button outlined type="submit">
+        <Button outlined type="submit" disabled={isFetching}>
           Авторизоваться
         </Button>
       </form>
