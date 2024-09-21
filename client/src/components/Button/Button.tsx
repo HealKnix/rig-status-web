@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | 'primary'
     | 'primary-light'
     | 'black'
+    | 'white'
     | 'red'
     | 'green'
     | 'transparent';

@@ -4,6 +4,7 @@ import { FC, useEffect } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 
 import { api } from '@/api';
+import SpinningDrill from '@/assets/spinning_drill.webm';
 import Loader from '@/components/Loader/Loader';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import ChevronSVG from '@/components/SVGs/ChevronSVG';
@@ -64,13 +65,25 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
         </Link>
 
         <div className="object-header__content">
-          <div>
-            <span>
-              Горная порода: <b>Песчаник</b>
-            </span>
-            <span>
-              Текущий процесс: <b>Бурение</b>
-            </span>
+          <div
+            style={{
+              display: 'flex',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <span>
+                Горная порода: <b>Песчаник</b>
+              </span>
+              <span>
+                Текущий процесс: <b>Бурение</b>
+              </span>
+            </div>
+            <video src={SpinningDrill} height={100} autoPlay loop muted />
           </div>
 
           <hr />

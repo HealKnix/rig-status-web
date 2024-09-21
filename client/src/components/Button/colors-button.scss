@@ -13,6 +13,15 @@
   --colorOutline: var(--white);
 }
 
+.custom-btn.white {
+  --bgColor: var(--white);
+  --colorOutline: var(--text-color);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--bgColor) 100%, transparent 10%);
+  }
+}
+
 .custom-btn.transparent {
   --colorOutline: var(--bgColor);
 

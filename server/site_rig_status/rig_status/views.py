@@ -1,3 +1,5 @@
+import json
+
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.contrib.auth import authenticate, login, logout
@@ -175,12 +177,13 @@ class SensorViewSet(viewsets.ModelViewSet):
         query_data = self.get_serializer(filtered_queryset, many=True).data
         return Response(query_data, status=status.HTTP_200_OK)
 
-
 @extend_schema_view(**SensorDataDocumentation())
 class SensorDataViewSet(viewsets.ModelViewSet):
     queryset = SensorData.objects.all()
     serializer_class = SensorDataSerializer
     permission_classes = [IsAuthenticated]
+
+    sensors_data = {}
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -192,25 +195,21 @@ class SensorDataViewSet(viewsets.ModelViewSet):
         subsystem: Subsystem = sensor.subsystem_id
 
         if subsystem.active:
-            channel_layer = get_channel_layer()
-            async_to_sync(channel_layer.group_send)(
-                f"sensor_data_{serializer.data['sensor_id']}",
-                {
-                    "type": "send_sensor_data",
-                    "message": serializer.data,
-                },
-            )
+            self.sensors_data[sensor.id] = serializer.data["value"]
         else:
-            channel_layer = get_channel_layer()
-            async_to_sync(channel_layer.group_send)(
-                f"sensor_data_{serializer.data['sensor_id']}",
-                {
-                    "type": "send_sensor_data",
-                    "message": {
-                        "value": 0,
-                    },
+            self.sensors_data[sensor.id] = 0
+
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f"sensor_data_{subsystem.rig_id_id}",
+            {
+                "type": "send_sensor_data",
+                "message": {
+                    "value": self.sensors_data,
                 },
-            )
+            },
+        )
 
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers

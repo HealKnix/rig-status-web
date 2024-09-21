@@ -87,7 +87,7 @@ for rig_id in rigs_id:
         for sensor_id in subsystem_values:
             min_value = subsystem_values[sensor_id]["min_value"]
             max_value = subsystem_values[sensor_id]["max_value"]
-            std_dev = (max_value + min_value) / 4
+            std_dev = (max_value + min_value) / 8
             mean = (max_value + min_value) / 2
 
             # Генерация начального значения в пределах допустимого диапазона
@@ -110,7 +110,7 @@ def update_sensor_value(
     min_flag = sensor_parameters_dict[rig_id][sensor_id]["min_flag"]
     max_flag = sensor_parameters_dict[rig_id][sensor_id]["max_flag"]
 
-    generated_diff = float(np.random.normal(0, (min_value + max_value) / 50, 1)[0])
+    generated_diff = float(np.random.normal(0, (min_value + max_value) / 200, 1)[0])
 
     if not max_flag and current_value > max_value + max_value * percentage:
         sensor_parameters_dict[rig_id][sensor_id]["max_flag"] = True

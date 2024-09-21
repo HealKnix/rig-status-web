@@ -18,6 +18,7 @@ import { useSensorDataWebSocket } from '@/hooks/useSensorDataWebSocket';
 import { Sensor } from '@/models/Sensor';
 import { SensorOutputTypeId } from '@/models/SensorOutputType';
 import { Subsystem } from '@/models/Subsystem';
+import { useAlertStore } from '@/store/useAlertStore';
 import { useObjectIdStore } from '@/store/useObjectIdStore';
 import { useToastStore } from '@/store/useToastStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -29,6 +30,8 @@ interface ObjectWorkplaceProps {}
 const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
   const { id } = useParams();
   const objectIdStore = useObjectIdStore();
+
+  const getSensorData = useSensorDataWebSocket(id ?? -1);
 
   useEffect(() => {
     objectIdStore.setId(Number(id));
@@ -49,9 +52,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={1} />
-            <SensorRow sensor_id={2} />
-            <SensorRow sensor_id={3} />
+            <SensorRow sensor_id={1} getSensorData={getSensorData} />
+            <SensorRow sensor_id={2} getSensorData={getSensorData} />
+            <SensorRow sensor_id={3} getSensorData={getSensorData} />
 
             <div className="object-workplace__block__content__table__row--with-graphs">
               <div className="object-workplace__block__content__table__column">
@@ -70,7 +73,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   color="#3A7CFF"
                   min={0}
                   max={100}
-                  value={useSensorDataWebSocket(4) ?? 0}
+                  value={getSensorData(4) ?? 0}
                   unite="м/ч"
                   size={96}
                 />
@@ -78,7 +81,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   color="#FF7C3A"
                   min={0}
                   max={100}
-                  value={useSensorDataWebSocket(5) ?? 0}
+                  value={getSensorData(5) ?? 0}
                   unite="кгс"
                   size={96}
                 />
@@ -106,31 +109,27 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
         </div>
 
         <div className="object-workplace__block__parameter">
-          <div className="parameter_left">{useSensorDataWebSocket(6)} кВт</div>
+          <div className="parameter_left">{getSensorData(6)} кВт</div>
 
           <span className="parameter_name">Мощность</span>
 
-          <div className="parameter_right">{useSensorDataWebSocket(6)} кВт</div>
+          <div className="parameter_right">{getSensorData(6)} кВт</div>
         </div>
 
         <div className="object-workplace__block__parameter">
-          <div className="parameter_left">
-            {useSensorDataWebSocket(7)} ход/мин
-          </div>
+          <div className="parameter_left">{getSensorData(7)} ход/мин</div>
 
           <span className="parameter_name">Ходы насоса</span>
 
-          <div className="parameter_right">
-            {useSensorDataWebSocket(7)} ход/мин
-          </div>
+          <div className="parameter_right">{getSensorData(7)} ход/мин</div>
         </div>
 
         <div className="object-workplace__block__parameter">
-          <div className="parameter_left">{useSensorDataWebSocket(8)} л/с</div>
+          <div className="parameter_left">{getSensorData(8)} л/с</div>
 
           <span className="parameter_name">Расход</span>
 
-          <div className="parameter_right">{useSensorDataWebSocket(8)} л/с</div>
+          <div className="parameter_right">{getSensorData(8)} л/с</div>
         </div>
 
         <div
@@ -152,7 +151,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             <span>Расход на входе</span>
             <ProgressBar
               color="var(--primary-color)"
-              value={useSensorDataWebSocket(9) ?? 0}
+              value={getSensorData(9) ?? 0}
               max={300}
             />
             <span
@@ -161,7 +160,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(9) ?? 0} л/с
+              {getSensorData(9) ?? 0} л/с
             </span>
           </div>
 
@@ -176,7 +175,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             <span>Поток на выходе</span>
             <ProgressBar
               color="var(--primary-color)"
-              value={useSensorDataWebSocket(10) ?? 0}
+              value={getSensorData(10) ?? 0}
               max={300}
             />
             <span
@@ -185,7 +184,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(10) ?? 0} л/с
+              {getSensorData(10) ?? 0} л/с
             </span>
           </div>
 
@@ -200,7 +199,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             <span>Давление манифольда</span>
             <ProgressBar
               color="var(--primary-color)"
-              value={useSensorDataWebSocket(11) ?? 0}
+              value={getSensorData(11) ?? 0}
               max={100}
             />
             <span
@@ -209,7 +208,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(11) ?? 0} кПа
+              {getSensorData(11) ?? 0} кПа
             </span>
           </div>
 
@@ -224,7 +223,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
             <span>Перепад давления</span>
             <ProgressBar
               color="var(--primary-color)"
-              value={useSensorDataWebSocket(12) ?? 0}
+              value={getSensorData(12) ?? 0}
               max={100}
             />
             <span
@@ -233,7 +232,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 fontWeight: '500',
               }}
             >
-              {useSensorDataWebSocket(12) ?? 0} кПа
+              {getSensorData(12) ?? 0} кПа
             </span>
           </div>
         </div>
@@ -251,11 +250,11 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={20} />
-            <SensorRow sensor_id={21} />
-            <SensorRow sensor_id={22} />
-            <SensorRow sensor_id={23} />
-            <SensorRow sensor_id={24} />
+            <SensorRow sensor_id={20} getSensorData={getSensorData} />
+            <SensorRow sensor_id={21} getSensorData={getSensorData} />
+            <SensorRow sensor_id={22} getSensorData={getSensorData} />
+            <SensorRow sensor_id={23} getSensorData={getSensorData} />
+            <SensorRow sensor_id={24} getSensorData={getSensorData} />
           </div>
         </div>
       </div>
@@ -267,12 +266,12 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={25} />
-            <SensorRow sensor_id={26} />
-            <SensorRow sensor_id={27} />
-            <SensorRow sensor_id={28} />
-            <SensorRow sensor_id={29} />
-            <SensorRow sensor_id={30} />
+            <SensorRow sensor_id={25} getSensorData={getSensorData} />
+            <SensorRow sensor_id={26} getSensorData={getSensorData} />
+            <SensorRow sensor_id={27} getSensorData={getSensorData} />
+            <SensorRow sensor_id={28} getSensorData={getSensorData} />
+            <SensorRow sensor_id={29} getSensorData={getSensorData} />
+            <SensorRow sensor_id={30} getSensorData={getSensorData} />
           </div>
         </div>
       </div>
@@ -327,11 +326,11 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  {useSensorDataWebSocket(33)} МПа
+                  {getSensorData(33)} МПа
                 </span>
                 <ProgressBar
                   color="var(--primary-color)"
-                  value={useSensorDataWebSocket(33) ?? 0}
+                  value={getSensorData(33) ?? 0}
                   max={150}
                 />
               </div>
@@ -352,7 +351,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                     fontWeight: 500,
                   }}
                 >
-                  {useSensorDataWebSocket(34)} МПа
+                  {getSensorData(34)} МПа
                 </span>
                 <div
                   style={{
@@ -361,14 +360,14 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                 >
                   <ProgressBar
                     color="var(--primary-color)"
-                    value={useSensorDataWebSocket(34) ?? 0}
+                    value={getSensorData(34) ?? 0}
                     max={150}
                   />
                 </div>
               </div>
             </div>
 
-            <SensorRow sensor_id={35} />
+            <SensorRow sensor_id={35} getSensorData={getSensorData} />
           </div>
         </div>
       </div>
@@ -390,8 +389,8 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
               </div>
             </div>
 
-            <SensorRow sensor_id={37} />
-            <SensorRow sensor_id={38} />
+            <SensorRow sensor_id={37} getSensorData={getSensorData} />
+            <SensorRow sensor_id={38} getSensorData={getSensorData} />
           </div>
         </div>
       </div>
@@ -403,9 +402,9 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
         <div className="object-workplace__block__content">
           <div className="object-workplace__block__content__table">
-            <SensorRow sensor_id={39} />
-            <SensorRow sensor_id={40} />
-            <SensorRow sensor_id={41} />
+            <SensorRow sensor_id={39} getSensorData={getSensorData} />
+            <SensorRow sensor_id={40} getSensorData={getSensorData} />
+            <SensorRow sensor_id={41} getSensorData={getSensorData} />
           </div>
         </div>
       </div>
@@ -450,15 +449,15 @@ const SubsystemHeader = ({
   return (
     isSuccess &&
     ((placement == 'left' && (
-      <>
+      <div>
         <Switch defaultChecked={subsystem?.active} onChange={() => mutate()} />
         <h2 className="link">
           {subsystem?.name} <ShareSVG />
         </h2>
-      </>
+      </div>
     )) ||
       (placement == 'right' && (
-        <>
+        <div>
           <h2 className="link">
             {subsystem?.name} <ShareSVG />
           </h2>
@@ -466,16 +465,25 @@ const SubsystemHeader = ({
             defaultChecked={subsystem?.active}
             onChange={() => mutate()}
           />
-        </>
+        </div>
       )))
   );
 };
 
-const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
+const SensorRow = ({
+  sensor_id,
+  getSensorData,
+}: {
+  sensor_id: number;
+  getSensorData: (sensor_id: number) => number | undefined;
+}) => {
   const toastStore = useToastStore();
-  const sensorDataWebsocket = useSensorDataWebSocket(sensor_id) ?? 0;
-
+  const alertStore = useAlertStore();
+  const sensorDataWebsocket = getSensorData(sensor_id) ?? 0;
   const client = useQueryClient();
+
+  const [warning, setWarning] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const { data: sensor, isSuccess: sensorIsSuccess } = useQuery({
     queryKey: ['sensors', 'id', sensor_id],
@@ -496,8 +504,10 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
         min_value: Number(minValue),
         max_value: Number(maxValue),
       }),
-    onSuccess: () => {
+    onSuccess: (data) => {
       toastStore.addToast('success', 'Велична успешно назначена!');
+      setMinValue(data?.min_value ?? 0);
+      setMaxValue(data?.max_value ?? Infinity);
       return client.invalidateQueries({
         queryKey: ['sensors'],
       });
@@ -510,19 +520,48 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
       api.getById<Subsystem>('subsystems', sensor?.subsystem_id ?? -1),
   });
 
-  const getWarningBound = () =>
-    (Math.abs(1 - Number(Number(sensor?.min_value) / sensorDataWebsocket)) <=
-      0.15 ||
-      Math.abs(1 - Number(sensorDataWebsocket) / Number(sensor?.max_value)) <=
-        0.15) &&
-    subsystem?.active &&
-    sensorDataWebsocket;
+  useEffect(() => {
+    setWarning(() => {
+      if (
+        (Math.abs(
+          1 - Number(Number(sensor?.min_value) / sensorDataWebsocket),
+        ) <= 0.15 ||
+          Math.abs(
+            1 - Number(sensorDataWebsocket) / Number(sensor?.max_value),
+          ) <= 0.15) &&
+        subsystem?.active &&
+        sensorDataWebsocket
+      )
+        return true;
 
-  const getAlertBound = () =>
-    (sensorDataWebsocket <= Number(sensor?.min_value) ||
-      sensorDataWebsocket >= Number(sensor?.max_value)) &&
-    subsystem?.active &&
-    sensorDataWebsocket;
+      return false;
+    });
+    setAlert(() => {
+      if (
+        (sensorDataWebsocket <= Number(sensor?.min_value) ||
+          sensorDataWebsocket >= Number(sensor?.max_value)) &&
+        subsystem?.active &&
+        sensorDataWebsocket
+      )
+        return true;
+      return false;
+    });
+  }, [sensorDataWebsocket, minValue, maxValue]);
+
+  useEffect(() => {
+    if (!sensorDataWebsocket || !warning) return;
+    toastStore.addToast(
+      'warning',
+      `Параметр "${sensor?.name}" подходит к критическому значению!`,
+    );
+  }, [warning]);
+
+  useEffect(() => {
+    if (!sensorDataWebsocket || !alert) return;
+    alertStore.openAlert(
+      `Блок "${sensor?.name} (${subsystem?.name})": превышено допустимое критическое значение`,
+    );
+  }, [alert]);
 
   useEffect(() => {
     setMinValue(sensor?.min_value ?? 0);
@@ -532,7 +571,7 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
   return (
     sensorIsSuccess && (
       <div
-        className={`object-workplace__block__content__table__row${sensor?.output_type_id === SensorOutputTypeId.SPEEDOMETER ? '--with-graph' : ''} ${getWarningBound() ? 'warning' : ''} ${getAlertBound() ? 'alert' : ''}`}
+        className={`object-workplace__block__content__table__row${sensor?.output_type_id === SensorOutputTypeId.SPEEDOMETER ? '--with-graph' : ''}`}
         style={
           sensor?.output_type_id === SensorOutputTypeId.PROGRESSBAR
             ? {
@@ -623,7 +662,7 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
             <ProgressBar
               color="var(--primary-color)"
               value={sensorDataWebsocket}
-              max={sensor.max_value}
+              max={Number(maxValue)}
             />
             <span
               style={{
@@ -641,24 +680,20 @@ const SensorRow = ({ sensor_id }: { sensor_id: number }) => {
             {sensor?.output_type_id === SensorOutputTypeId.SPEEDOMETER && (
               <Speedometer
                 color="#3A7CFF"
-                textColor={
-                  getAlertBound()
-                    ? '#ff4d55'
-                    : getWarningBound()
-                      ? '#ffb200'
-                      : undefined
-                }
-                min={sensor.min_value}
-                max={sensor.max_value}
+                textColor={alert ? '#ff4d55' : warning ? '#ffb200' : undefined}
+                min={Number(minValue)}
+                max={Number(maxValue)}
                 value={sensorDataWebsocket}
                 unite={sensor.unit ?? ''}
                 size={96}
               />
             )}
             {sensor?.output_type_id === SensorOutputTypeId.TEXT && (
-              <>
+              <span
+                className={`${warning ? 'warning' : ''} ${alert ? 'alert' : ''}`}
+              >
                 {sensorDataWebsocket} {sensor?.unit}
-              </>
+              </span>
             )}
           </div>
         )}
