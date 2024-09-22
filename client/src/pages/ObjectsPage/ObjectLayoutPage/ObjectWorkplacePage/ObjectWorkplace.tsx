@@ -113,7 +113,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
           <span className="parameter_name">Мощность</span>
 
-          <div className="parameter_right">{getSensorData(6)} кВт</div>
+          <div className="parameter_right">{getSensorData(13)} кВт</div>
         </div>
 
         <div className="object-workplace__block__parameter">
@@ -121,7 +121,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
           <span className="parameter_name">Ходы насоса</span>
 
-          <div className="parameter_right">{getSensorData(7)} ход/мин</div>
+          <div className="parameter_right">{getSensorData(14)} ход/мин</div>
         </div>
 
         <div className="object-workplace__block__parameter">
@@ -129,7 +129,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
 
           <span className="parameter_name">Расход</span>
 
-          <div className="parameter_right">{getSensorData(8)} л/с</div>
+          <div className="parameter_right">{getSensorData(15)} л/с</div>
         </div>
 
         <div
@@ -359,7 +359,7 @@ const ObjectWorkplace: FC<ObjectWorkplaceProps> = () => {
                   }}
                 >
                   <ProgressBar
-                    color="var(--primary-color)"
+                    color={'var(--primary-color)'}
                     value={getSensorData(34) ?? 0}
                     max={150}
                   />
@@ -425,7 +425,7 @@ const SubsystemHeader = ({
   const client = useQueryClient();
 
   const { data: subsystem, isSuccess } = useQuery({
-    queryKey: ['subsystems', 'id', subsystem_id],
+    queryKey: ['subsystems', 'get', 'id', subsystem_id],
     queryFn: () => api.getById<Subsystem>('subsystems', subsystem_id ?? -1),
   });
 
@@ -438,10 +438,10 @@ const SubsystemHeader = ({
     onSuccess: (data) => {
       toastStore.addToast(
         'success',
-        `Подсистема "${data?.name}" ${data?.active ? 'включена' : 'отключена'}`,
+        `Подсистема "${data?.name ?? subsystem?.name}" ${(data?.active ?? subsystem?.active) ? 'включена' : 'отключена'}`,
       );
       return client.invalidateQueries({
-        queryKey: ['subsystems', 'id', subsystem_id],
+        queryKey: ['subsystems', 'get', 'id', subsystem_id],
       });
     },
   });
@@ -486,7 +486,7 @@ const SensorRow = ({
   const [alert, setAlert] = useState(false);
 
   const { data: sensor, isSuccess: sensorIsSuccess } = useQuery({
-    queryKey: ['sensors', 'id', sensor_id],
+    queryKey: ['sensors', 'get', 'id', sensor_id],
     queryFn: () => api.getById<Sensor>('sensors', sensor_id),
   });
 
@@ -509,7 +509,7 @@ const SensorRow = ({
       setMinValue(data?.min_value ?? 0);
       setMaxValue(data?.max_value ?? Infinity);
       return client.invalidateQueries({
-        queryKey: ['sensors'],
+        queryKey: ['sensors', 'get', 'id', sensor_id],
       });
     },
   });
@@ -546,7 +546,7 @@ const SensorRow = ({
         return true;
       return false;
     });
-  }, [sensorDataWebsocket, minValue, maxValue]);
+  }, [sensorDataWebsocket, sensor?.min_value, sensor?.max_value]);
 
   useEffect(() => {
     if (!sensorDataWebsocket || !warning) return;
@@ -597,7 +597,7 @@ const SensorRow = ({
                 Минимальное значение
               </Button>
             }
-            placement="top"
+            placement="topLeft"
             style={{
               display: 'flex',
             }}
@@ -660,7 +660,9 @@ const SensorRow = ({
         {sensor?.output_type_id === SensorOutputTypeId.PROGRESSBAR && (
           <>
             <ProgressBar
-              color="var(--primary-color)"
+              color={
+                alert ? '#ff4d55' : warning ? '#ffb200' : 'var(--primary-color)'
+              }
               value={sensorDataWebsocket}
               max={Number(maxValue)}
             />
@@ -679,7 +681,7 @@ const SensorRow = ({
           <div className="object-workplace__block__content__table__column">
             {sensor?.output_type_id === SensorOutputTypeId.SPEEDOMETER && (
               <Speedometer
-                color="#3A7CFF"
+                color={alert ? '#ff4d55' : warning ? '#ffb200' : '#3A7CFF'}
                 textColor={alert ? '#ff4d55' : warning ? '#ffb200' : undefined}
                 min={Number(minValue)}
                 max={Number(maxValue)}

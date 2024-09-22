@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from time import sleep
 from typing import Dict, Union
 
 import numpy as np
@@ -179,3 +180,8 @@ def generate_sensors_data() -> list:
         )
 
     return result_data
+
+while True:
+    generate_sensors_data()
+
+    sleep(1)

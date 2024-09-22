@@ -345,7 +345,7 @@ export const sensorList: Sensor[] = [
     id: 29,
     name: 'Объём в ёмкостях',
     data_type: 'volume_in_tanks',
-    unit: 'м³/сек',
+    unit: 'м³',
     output_type_id: 1,
     min_value: 50,
     max_value: 1000,

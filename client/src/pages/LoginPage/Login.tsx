@@ -86,28 +86,26 @@ export default function Login() {
           disabled={isFetching}
         />
 
-        {import.meta.env.VITE_API_MOCK === 'true' && (
-          <Button
-            type="button"
-            variant="black"
-            onClick={async (e) => {
-              const btn = e.currentTarget as HTMLButtonElement;
+        <Button
+          type="button"
+          variant="black"
+          onClick={async (e) => {
+            const btn = e.currentTarget as HTMLButtonElement;
 
-              btn.disabled = true;
+            btn.disabled = true;
 
-              const loginData = await api.login('www.test@gmail.com', 'test');
-              authStore.setUser(loginData?.user ?? null);
-              toastStore.addToast(
-                'success',
-                `Добро пожаловать, ${loginData?.user.first_name}!`,
-              );
+            const loginData = await api.login('www.test@gmail.com', 'test');
+            authStore.setUser(loginData?.user ?? null);
+            toastStore.addToast(
+              'success',
+              `Добро пожаловать, ${loginData?.user.first_name}!`,
+            );
 
-              btn.disabled = false;
-            }}
-          >
-            Войти под тестовым пользователем
-          </Button>
-        )}
+            btn.disabled = false;
+          }}
+        >
+          Войти под тестовым пользователем
+        </Button>
 
         <Button outlined type="submit" disabled={isFetching}>
           Авторизоваться

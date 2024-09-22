@@ -89,7 +89,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
           <hr />
 
           <div>
-            <span>
+            <span style={{ justifyContent: 'center' }}>
               Текущая глубина: <b>{rigQuery?.bottom_hole_drilling} м</b>
             </span>
             <span>
@@ -120,7 +120,7 @@ const ObjectLayout: FC<ObjectLayoutProps> = () => {
                 %
               </b>
             </span>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, minWidth: '100px' }}>
               <ProgressBar
                 loader={rigQuery?.drilling_status_id === 1}
                 value={
