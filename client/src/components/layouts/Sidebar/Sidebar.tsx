@@ -3,6 +3,7 @@ import './Sidebar.scss';
 import { Bell, HelpCircle, LogOut, Settings } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
+import UserManualPDF from '@/assets/Руководство_пользователя_RigStatus_v2.pdf';
 import Button from '@/components/Button/Button';
 import DropdownMenu from '@/components/DropdownMenu/DropdownMenu';
 import ProfileLink from '@/components/ProfileLink/ProfileLink';
@@ -80,7 +81,12 @@ export default function Sidebar() {
 
       <div className="sidebar__bottom">
         <DropdownMenu placement="rightBottom" target={<ProfileLink />}>
-          <Button variant="transparent">
+          <Button
+            variant="transparent"
+            onClick={() => {
+              window.open(UserManualPDF);
+            }}
+          >
             <HelpCircle strokeWidth={1.5} />
             Помощь
           </Button>
